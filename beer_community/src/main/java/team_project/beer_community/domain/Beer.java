@@ -1,5 +1,6 @@
 package team_project.beer_community.domain;
 
+import com.fasterxml.jackson.databind.ser.Serializers;
 import com.sun.istack.NotNull;
 import lombok.*;
 
@@ -12,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString(of = {"id", "beerName"})
 @Getter @Setter
-public class Beer {
+public class Beer extends BaseTimeEntity {
     @Id @GeneratedValue
     private int id;
 

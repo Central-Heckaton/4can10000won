@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString
 @Getter @Setter
-public class Admin {
+public class Admin extends BaseTimeEntity{
     @Id @GeneratedValue
     private int id;
 
@@ -26,9 +26,6 @@ public class Admin {
 
     @NotNull
     private String admin_email;
-
-//    @NotNull
-    private LocalDateTime created_date;
 
     public Admin(String admin_name, String admin_pw, String admin_email) {
         this.admin_name = admin_name;
