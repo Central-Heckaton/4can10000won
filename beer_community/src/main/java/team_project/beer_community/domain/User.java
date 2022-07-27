@@ -14,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)  //Spring data jpa 사용시 필요
 @ToString(of = {"id", "username"})
 @Table(name = "user")
-public class User {
+public class User extends BaseTimeEntity{
 
     @Id @GeneratedValue
     private int id;
@@ -30,9 +30,6 @@ public class User {
 
 //    @NotNull
     private LocalDate birthday;
-
-//    @NotNull
-    private LocalDateTime createdDate;
 
     private String imageUrl;
 

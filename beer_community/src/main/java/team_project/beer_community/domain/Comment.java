@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Table(name = "comment")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter @Setter
-public class Comment {
+public class Comment extends BaseTimeEntity{
     @Id @GeneratedValue
     private int id;
 
