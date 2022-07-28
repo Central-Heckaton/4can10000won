@@ -14,7 +14,7 @@ import javax.persistence.*;
 @Getter @Setter
 public class Comment extends BaseTimeEntity{
     @Id @GeneratedValue
-    private int id;
+    private Long id;
 
     @NotNull
     private String content;

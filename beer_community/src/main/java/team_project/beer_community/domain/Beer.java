@@ -6,6 +6,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -15,13 +16,16 @@ import java.util.List;
 @Getter @Setter
 public class Beer extends BaseTimeEntity {
     @Id @GeneratedValue
-    private int id;
+    private Long id;
 
     @OneToMany(mappedBy = "beer")
     private List<LikeBeer> likeBeers;
 
     @OneToMany(mappedBy = "beer")
     private List<Comment> comments;
+
+    @OneToMany(mappedBy = "beer")
+    private List<TasteEntity> tastes = new ArrayList<>();
 
     @NotNull
     private String beerName;
@@ -47,6 +51,10 @@ public class Beer extends BaseTimeEntity {
         this.beer_type = beer_type;
     }
 
+    public Beer(String beerName) {
+        this.beerName = beerName;
+    }
+
     //==연관관계 편의 메소드==//
     public void addLikeBeer(LikeBeer likeBeer){
         likeBeers.add(likeBeer);
@@ -56,5 +64,10 @@ public class Beer extends BaseTimeEntity {
     public void addComment(Comment comment){
         comments.add(comment);
         comment.setBeer(this);
+    }
+
+    public void addTasteEntity(TasteEntity tasteEntity){
+        tastes.add(tasteEntity);
+        tasteEntity.setBeer(this);
     }
 }
