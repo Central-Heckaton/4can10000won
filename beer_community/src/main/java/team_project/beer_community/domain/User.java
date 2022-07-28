@@ -32,10 +32,10 @@ public class User extends BaseTimeEntity{
 
     private String imageUrl;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Comment> comments = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<LikeBeer> likeBeers = new ArrayList<>();
 
     public User(String email, String password, String username) {

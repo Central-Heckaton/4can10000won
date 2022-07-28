@@ -18,13 +18,13 @@ public class Beer extends BaseTimeEntity {
     @Id @GeneratedValue
     private Long id;
 
-    @OneToMany(mappedBy = "beer")
+    @OneToMany(mappedBy = "beer", cascade = CascadeType.ALL)
     private List<LikeBeer> likeBeers;
 
-    @OneToMany(mappedBy = "beer")
+    @OneToMany(mappedBy = "beer", cascade = CascadeType.ALL)
     private List<Comment> comments;
 
-    @OneToMany(mappedBy = "beer")
+    @OneToMany(mappedBy = "beer", cascade = CascadeType.ALL)
     private List<TasteEntity> tastes = new ArrayList<>();
 
     @NotNull
