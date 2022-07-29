@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @Getter @Setter
 public class Admin extends BaseTimeEntity{
     @Id @GeneratedValue
-    private int id;
+    private Long id;
 
     @NotNull
     private String admin_name;

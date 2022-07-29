@@ -11,7 +11,7 @@ import javax.persistence.*;
 public class LikeBeer {
 
     @Id @GeneratedValue
-    private int id;
+    private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
@@ -21,7 +21,7 @@ public class LikeBeer {
     @JoinColumn(name = "beer_id")
     private Beer beer;
 
-    public LikeBeer(int id, User user, Beer beer) {
+    public LikeBeer(Long id, User user, Beer beer) {
         this.id = id;
         this.user = user;
         this.beer = beer;

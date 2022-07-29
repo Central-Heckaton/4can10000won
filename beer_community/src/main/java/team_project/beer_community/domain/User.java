@@ -5,7 +5,6 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,32 +16,32 @@ import java.util.List;
 public class User extends BaseTimeEntity{
 
     @Id @GeneratedValue
-    private int id;
+    private Long id;
 
     @NotNull
-    private String userEmail;
+    private String email;
 
     @NotNull
-    private String userPw;
+    private String password;
 
     @NotNull
-    private String userName;
+    private String username;
 
 //    @NotNull
     private LocalDate birthday;
 
     private String imageUrl;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Comment> comments = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<LikeBeer> likeBeers = new ArrayList<>();
 
-    public User(String userEmail, String userPw, String userName) {
-        this.userEmail = userEmail;
-        this.userPw = userPw;
-        this.userName = userName;
+    public User(String email, String password, String username) {
+        this.email = email;
+        this.password = password;
+        this.username = username;
     }
 
     //==연관관계 편의 메소드==//
