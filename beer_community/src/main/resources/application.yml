@@ -4,6 +4,8 @@ spring:
     username: root
     password: 1234
     driver-class-name: com.mysql.cj.jdbc.Driver
+  main:
+    allow-circular-references: true
 
   jpa:
     hibernate:
@@ -14,6 +16,17 @@ spring:
         format_sql: true
     database: mysql
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 1053412945892-im65lr8vu1dlsmjpdip3sh02130pc4it.apps.googleusercontent.com
+            client-secret: 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
+            scope:
+            - email
+            - profile
 
 logging.level:
   org.hibernate.SQL: debug

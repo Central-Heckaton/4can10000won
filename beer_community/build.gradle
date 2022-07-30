@@ -24,6 +24,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-mustache'
 	implementation 'org.springframework.boot:spring-boot-devtools'
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 	// Json 라이브러리(api에서 @RequestBody 사용 시 필요)
 	implementation 'com.fasterxml.jackson.datatype:jackson-datatype-hibernate5'
 
@@ -39,6 +40,7 @@ dependencies {
 	testImplementation 'org.springframework.security:spring-security-test'
 	testImplementation 'org.springframework.boot:spring-boot-starter-mustache'
 	testImplementation 'org.springframework.boot:spring-boot-devtools'
+	testImplementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 
 }
 

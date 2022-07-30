@@ -10,7 +10,7 @@ import java.util.List;
 
 @Entity
 @Getter @Setter //setter는 개발 단계동안 열어놓는다.
-@NoArgsConstructor(access = AccessLevel.PROTECTED)  //Spring data jpa 사용시 필요
+@NoArgsConstructor(access = AccessLevel.PROTECTED)  //Spring data jpa 사용시 필요(arguments가 없는 생성자 필수)
 @ToString(of = {"id", "username"})
 @Table(name = "user")
 public class User extends BaseTimeEntity{
@@ -32,11 +32,30 @@ public class User extends BaseTimeEntity{
 
     private String imageUrl;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    // 로그인-회원가입 진행을 위해 추가한 필드
+    private String role; // ROLE_USER, ROLE_ADMIN
+    private String provider; // google, naver
+    private String providerId; // 각 사이트에서 사용자별로 부여된 고유id
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL) // User가 삭제되면 User가 작성한 댓글들도 다 삭제됨
     private List<Comment> comments = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<LikeBeer> likeBeers = new ArrayList<>();
+
+    //회원가입시 사용되는 생성자
+    @Builder
+    public User(Long id, String email, String password, String username, LocalDate birthday, String imageUrl, String role, String provider, String providerId) {
+        this.id = id;
+        this.email = email;
+        this.password = password;
+        this.username = username;
+        this.birthday = birthday;
+        this.imageUrl = imageUrl;
+        this.role = role;
+        this.provider = provider;
+        this.providerId = providerId;
+    }
 
     public User(String email, String password, String username) {
         this.email = email;
