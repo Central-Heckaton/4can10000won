@@ -11,7 +11,7 @@ import java.util.List;
 @Entity
 @Getter @Setter //setter는 개발 단계동안 열어놓는다.
 @NoArgsConstructor(access = AccessLevel.PROTECTED)  //Spring data jpa 사용시 필요(arguments가 없는 생성자 필수)
-@ToString(of = {"id", "username"})
+@ToString(of = {"id", "username", "email"})
 @Table(name = "user")
 public class User extends BaseTimeEntity{
 

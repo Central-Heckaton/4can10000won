@@ -1,0 +1,26 @@
+.mainLoadingImg {
+  width: 12rem;
+  height: 28rem;
+  margin-top: 3.5rem;
+}
+.mainLoadingText {
+  margin-top: 1rem;
+  background-color: rgb(253 215 77);
+  color: rgb(48 23 23);
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  width: 15rem;
+  height: 2rem;
+  border-radius: 10px;
+  font-weight: bold;
+}
+
+.main {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgb(243, 250, 242);
+}

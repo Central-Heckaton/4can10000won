@@ -8,12 +8,14 @@
 <h1>로그인 페이지</h1>
 <br/>
 <form action="/login" method="POST">
-    <input type="text" name="username" placeholder="username을 입력해주세요"/>
+<!--    <input type="text" name="username" placeholder="username을 입력해주세요"/>-->
+    <input type="email" name="email" placeholder="email을 입력해주세요"/>
     <br/>
     <input type="password" name="password" placeholder="password을 입력해주세요"/>
     <button>로그인</button>
 </form>
-<a href="/oauth2/authorization/google">구글 로그인</a>
+<a href="/oauth2/authorization/google">구글 로그인</a>|
+<a href="/oauth2/authorization/naver">네이버 로그인</a>
 <a href="/join">회원가입</a>
 </body>
 </html>

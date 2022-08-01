@@ -22,8 +22,9 @@ public class PrincipalDetailsService implements UserDetailsService {
     // 아래의 함수는 UserDetails를 구현한 PrincipalDetails를 return한다
     // 함수종료시 @AuthenticationPrincipal 어노테이션이 만들어짐
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User userEntity = userRepository.findByUsername(username);
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+//        User userEntity = userRepository.findByUsername(username);
+        User userEntity = userRepository.findByEmail(email);
         if(userEntity != null){
             return new PrincipalDetails(userEntity);
         }

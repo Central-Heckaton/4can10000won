@@ -9,4 +9,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
     // findBy 규칙 -> Username 문법
     // select * from user where username = 1?
     public User findByUsername(String username); // JPA Query methods참고
+    public User findByEmail(String email); // 중복성 체크를 위해 username말고 email을 사용함
 }

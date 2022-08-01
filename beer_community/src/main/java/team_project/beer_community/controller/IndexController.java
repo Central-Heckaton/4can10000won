@@ -12,12 +12,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import team_project.beer_community.config.auth.PrincipalDetails;
 import team_project.beer_community.domain.User;
 import team_project.beer_community.repository.UserRepository;
 
-@Controller // View를 리턴하겠다
-//@RestController // json타입으로 주고받을 때 사용o
+//@Controller // View를 리턴하겠다
+@RestController // json타입으로 주고받을 때 사용o
 public class IndexController {
 
     @Autowired
@@ -64,6 +65,12 @@ public class IndexController {
     public String join_post(User user){
         System.out.println(user);
         System.out.println(user.getUsername()); // Entity에서 @Data로 getter/setter생성했기 때문에 가능
+        User userEntity = userRepository.findByEmail(user.getEmail());
+        // 동일한 이메일로 회원가입할 수 없도록 막는 로직
+        if(userEntity != null){
+            System.out.println("\n** IndexController.join_post/이미 동일한 이메일이 존재합니다! 다른이메일로 회원가입 해주시기 바랍니다 **");
+            return "redirect:/join";
+        }
         String rawPassword = user.getPassword();
         String encPassword = bCryptPasswordEncoder.encode(rawPassword);
         user.setPassword(encPassword); // 일반적인 String 타입의 password는 Security를 통한 회원가입이 되지 않기 때문에 암호화 필요함o
@@ -117,5 +124,37 @@ public class IndexController {
         System.out.println("oauth.getAttributes() = " + oauth.getAttributes());
         // oauth.getAttributes() = {sub=103489475512635244738, name=‍고경환[재학 / 정보통신공학과], given_name=고경환[재학 / 정보통신공학과], family_name=‍, profile=https://plus.google.com/103489475512635244738, picture=https://lh3.googleusercontent.com/a/AItbvmlIUxyycyZvUHNNhzX20-5mvGrmrDbw6G1_Ylqn=s96-c, email=gkw1207@hufs.ac.kr, email_verified=true, locale=ko, hd=hufs.ac.kr}
         return "세션 정보 확인하기";
+    }
+    @GetMapping("/api/hello")
+    public String hello(){
+        return "hello!!";
+    }
+//    @PostMapping("/api/login")
+//    public String apiLogin(){
+//        return "hello!!";
+//    }
+    @PostMapping("/api/join")
+    public String apiJoin_post(User user){
+        System.out.println(user);
+        System.out.println(user.getUsername()); // Entity에서 @Data로 getter/setter생성했기 때문에 가능
+        User userEntity = userRepository.findByEmail(user.getEmail());
+        // 동일한 이메일로 회원가입할 수 없도록 막는 로직
+        if(userEntity != null){
+            System.out.println("\n** IndexController.join_post/이미 동일한 이메일이 존재합니다! 다른이메일로 회원가입 해주시기 바랍니다 **");
+            return "redirect:/join";
+        }
+        String rawPassword = user.getPassword();
+        String encPassword = bCryptPasswordEncoder.encode(rawPassword);
+        user.setPassword(encPassword); // 일반적인 String 타입의 password는 Security를 통한 회원가입이 되지 않기 때문에 암호화 필요함o
+        user.setRole("ROLE_USER");
+        userRepository.save(user);
+        return "redirect:/login"; //  "/login" url로 redirect 시킴
+    }
+    @GetMapping("/api/user")
+    public @ResponseBody String apiUser(@AuthenticationPrincipal PrincipalDetails principalDetails){
+        System.out.println("principalDetails = " + principalDetails); // 소셜로그인 or 일반로그인을 해도 출력됨.
+        // 일반로그인시: principalDetails = PrincipalDetails(user=User(id=3, username=ko2), attributes=null)
+        // 소셜로그인시: principalDetails = PrincipalDetails(user=User(id=4, username=고경환), attributes={sub=110000687855487904168, name=고경환, given_name=경환, family_name=고, picture=https://lh3.googleusercontent.com/a/AItbvmn09O3fy0FHLytziFKv3a3iNGsTAnjy0AiPuDaX=s96-c, email={이메일}, email_verified=true, locale=ko})
+        return "user";
     }
 }
