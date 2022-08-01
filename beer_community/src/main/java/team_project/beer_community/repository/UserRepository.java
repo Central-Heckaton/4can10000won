@@ -6,4 +6,7 @@ import team_project.beer_community.domain.User;
 // @Repository라는 Annotation이 업ㅅ어도 IoC됨.
 //          이유는 JpaRepositry를 상속했기 때문
 public interface UserRepository extends JpaRepository<User, Long> {
+    // findBy 규칙 -> Username 문법
+    // select * from user where username = 1?
+    public User findByUsername(String username); // JPA Query methods참고
 }
