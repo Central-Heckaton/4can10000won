@@ -33,7 +33,9 @@ public class User extends BaseTimeEntity{
     private String imageUrl;
 
     // 로그인-회원가입 진행을 위해 추가한 필드
-    private String role; // ROLE_USER, ROLE_ADMIN
+    @Enumerated(EnumType.STRING)
+    private Role role; // ROLE_USER, ROLE_ADMIN
+
     private String provider; // google, naver
     private String providerId; // 각 사이트에서 사용자별로 부여된 고유id
 
@@ -45,7 +47,7 @@ public class User extends BaseTimeEntity{
 
     //회원가입시 사용되는 생성자
     @Builder
-    public User(Long id, String email, String password, String username, LocalDate birthday, String imageUrl, String role, String provider, String providerId) {
+    public User(Long id, String email, String password, String username, LocalDate birthday, String imageUrl, Role role, String provider, String providerId) {
         this.id = id;
         this.email = email;
         this.password = password;
