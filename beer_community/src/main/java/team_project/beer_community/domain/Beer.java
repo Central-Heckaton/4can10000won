@@ -31,6 +31,9 @@ public class Beer extends BaseTimeEntity {
     private String beerName;
 
     @NotNull
+    private float alcoholDegree;
+
+    @NotNull
     private int price;
 
 //    @NotNull
@@ -38,17 +41,19 @@ public class Beer extends BaseTimeEntity {
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    private BEER_TYPE beer_type;
+    private BEER_TYPE beerType;
 
 //    @NotNull
-    private float total_point;
+    private float totalPoint = calTotalPoint();
 
-    private String image_url;
+    private String imageUrl;
 
-    public Beer(String beerName, int price, BEER_TYPE beer_type) {
+    public Beer(String beerName, float alcoholDegree, int price, String information, BEER_TYPE beerType) {
         this.beerName = beerName;
+        this.alcoholDegree = alcoholDegree;
         this.price = price;
-        this.beer_type = beer_type;
+        this.information = information;
+        this.beerType = beerType;
     }
 
     public Beer(String beerName) {
@@ -66,8 +71,18 @@ public class Beer extends BaseTimeEntity {
         comment.setBeer(this);
     }
 
+    //==연관관계 편의 메소드==//
     public void addTasteEntity(TasteEntity tasteEntity){
         tastes.add(tasteEntity);
         tasteEntity.setBeer(this);
+    }
+
+    //==total_point 계산==//
+    public float calTotalPoint(){
+        float sum = 0;
+        for (Comment comment : comments) {
+           sum = sum + comment.getPoint();
+        }
+        return sum / comments.size();
     }
 }

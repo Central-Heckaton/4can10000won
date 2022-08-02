@@ -30,10 +30,8 @@ public class Comment extends BaseTimeEntity{
     @NotNull
     private float point;
 
-    public Comment(String content, User user, Beer beer, float point) {
+    public Comment(String content, float point) {
         this.content = content;
-        this.user = user;
-        this.beer = beer;
         this.point = point;
     }
 }

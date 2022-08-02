@@ -20,10 +20,4 @@ public class LikeBeer {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "beer_id")
     private Beer beer;
-
-    public LikeBeer(Long id, User user, Beer beer) {
-        this.id = id;
-        this.user = user;
-        this.beer = beer;
-    }
 }

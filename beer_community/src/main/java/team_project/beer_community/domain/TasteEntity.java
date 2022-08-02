@@ -21,11 +21,11 @@ public class TasteEntity {  //Beer가 여러 개의 taste를 가질 수 있도�
     @Enumerated(EnumType.STRING)
     private Taste taste;
 
-    public TasteEntity(Taste taste) {
-        this.taste = taste;
-    }
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "beer_id")
     private Beer beer;
+
+    public TasteEntity(Taste taste) {
+        this.taste = taste;
+    }
 }
