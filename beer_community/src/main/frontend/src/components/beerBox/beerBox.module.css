@@ -1,0 +1,39 @@
+.box {
+    width: 300px;
+    height: 130px;
+    border: 2px solid #9AD8AE;
+    border-radius: 5px;
+    display: flex;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 0.5rem;
+}
+
+.img {
+    width: 50%;
+}
+
+.text {
+    width: 70%;
+    text-align: left;
+    margin: 1rem 0.5rem;
+}
+
+.name {
+    font-weight: 700;
+}
+
+.rate {
+    margin: 0.5rem 0;
+}
+
+.star {
+    width: 0.9rem;
+}
+
+.description {
+    font-size: var(--font-small);
+    line-height: 1rem;
+}

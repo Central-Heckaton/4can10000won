@@ -1,0 +1,21 @@
+.main {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: rows;
+  
+  height: 4rem;
+  width: 100%;
+
+  @media screen and (max-width: 500px) {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+
+  }
+}
+
+.back {
+  margin-left: 1.5rem;
+  margin-top: 1.5rem;
+}
+

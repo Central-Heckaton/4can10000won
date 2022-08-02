@@ -1,0 +1,29 @@
+.main {
+  border-top: 1px solid var(--input-color);
+  background-color: var(--background-color);
+  height: 5rem;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  text-align: center;
+  justify-content: space-around;
+}
+
+.small {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+}
+.smallImg {
+  color: var(--button-color);
+}
+.text {
+  margin-top: 8px;
+  color: #797878;
+  font-weight: 100;
+  font-size: 10px;
+}
