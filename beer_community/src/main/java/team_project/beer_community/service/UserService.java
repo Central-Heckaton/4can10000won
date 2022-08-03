@@ -18,12 +18,12 @@ import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)  //readOnly를 전체 적용 시켜놓고 write 하는 경우에만 @Transactional을 붙여준다.
-@RequiredArgsConstructor
+@RequiredArgsConstructor // @Autowired
 public class UserService {
     private final UserRepository userRepository;
     private final LikeBeerRepository likeBeerRepository;
     private final BeerRepository beerRepository;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+//    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Transactional
     public Long join(User user){
@@ -62,12 +62,12 @@ public class UserService {
         findUser.setEmail(email);
     }
 
-    @Transactional
-    public void updatePassword(Long id, String rawPassword){
-        User findUser = userRepository.findById(id).orElseThrow(NullPointerException::new);
-        String password = bCryptPasswordEncoder.encode(rawPassword);
-        findUser.setPassword(password);
-    }
+//    @Transactional
+//    public void updatePassword(Long id, String rawPassword){
+//        User findUser = userRepository.findById(id).orElseThrow(NullPointerException::new);
+//        String password = bCryptPasswordEncoder.encode(rawPassword);
+//        findUser.setPassword(password);
+//    }
 
     @Transactional
     public void addLikeBeer(Long userid, LikeBeer likeBeer){

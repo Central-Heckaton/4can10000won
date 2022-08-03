@@ -11,6 +11,7 @@ import team_project.beer_community.config.auth.PrincipalDetails;
 import team_project.beer_community.config.oauth.provider.GoogleUserInfo;
 import team_project.beer_community.config.oauth.provider.NaverUserInfo;
 import team_project.beer_community.config.oauth.provider.OAuth2UserInfo;
+import team_project.beer_community.domain.Role;
 import team_project.beer_community.domain.User;
 import team_project.beer_community.repository.UserRepository;
 
@@ -60,7 +61,7 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
         String username = oAuth2UserInfo.getUsername();
         String password = bCryptPasswordEncoder.encode("password") ; // 소셜로그인이기 때문에 굳이 저장안해도되지만 임의로 생성해서 저장함
         String email = oAuth2UserInfo.getEmail();
-        String role = "ROLE_USER";
+        Role role = Role.ROLE_USER;
         System.out.println("PrincipalOauth@UserService.java/username = " + username);
         System.out.println("PrincipalOauth@UserService.java/getAttributes() = " + oAuth2User.getAttributes());
 //        User userEntity = userRepository.findByUsername(username); // **username이외의 필드로 중복성검사 체크 필요!**

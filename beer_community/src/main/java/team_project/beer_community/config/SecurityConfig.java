@@ -38,14 +38,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin()
                 .loginPage("/login")
-                .usernameParameter("email") // ** username이 아니라 email으로 param을 받고싶을때 사용o **
+                .usernameParameter("email") // ** username이 아니라 email으로 param을 받음 **
                 .loginProcessingUrl("/login") // login주소가 호출되면 Spring Security가 낚아채서 대신 로그인 진행
-                .defaultSuccessUrl("/")
+                .defaultSuccessUrl("http://localhost:3000/user-info")
+                .failureForwardUrl("http://localhost:3000/")
                 .and()
                 .oauth2Login()
                 .loginPage("/login")
+                .defaultSuccessUrl("http://localhost:3000/user-info")
                 .userInfoEndpoint()
                 .userService(principalOauth2UserService); // 구글소셜로그인 성공 후 코드를 받는게 아니라 AccessToken+사용자프로필정보 바로 함께받는다(편리함)
-
     }
 }

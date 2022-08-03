@@ -1,6 +1,9 @@
 package team_project.beer_community.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -9,13 +12,18 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import team_project.beer_community.config.auth.PrincipalDetails;
+import team_project.beer_community.domain.Beer;
+import team_project.beer_community.domain.Role;
 import team_project.beer_community.domain.User;
+import team_project.beer_community.repository.BeerRepository;
 import team_project.beer_community.repository.UserRepository;
+
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.sql.Array;
+import java.util.*;
 
 //@Controller // View를 리턴하겠다
 @RestController // json타입으로 주고받을 때 사용o
@@ -23,7 +31,8 @@ public class IndexController {
 
     @Autowired
     private UserRepository userRepository; // 사용자 정보 저장하기위해 사용
-
+    @Autowired
+    private BeerRepository beerRepository;
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder; // password 암호화할 때 사용
 
@@ -74,7 +83,7 @@ public class IndexController {
         String rawPassword = user.getPassword();
         String encPassword = bCryptPasswordEncoder.encode(rawPassword);
         user.setPassword(encPassword); // 일반적인 String 타입의 password는 Security를 통한 회원가입이 되지 않기 때문에 암호화 필요함o
-        user.setRole("ROLE_USER");
+        user.setRole(Role.ROLE_USER);
         userRepository.save(user);
         return "redirect:/login"; //  "/login" url로 redirect 시킴
     }
@@ -134,27 +143,71 @@ public class IndexController {
 //        return "hello!!";
 //    }
     @PostMapping("/api/join")
-    public String apiJoin_post(User user){
+    public ResponseEntity<Object> apiJoin_post(User user) throws URISyntaxException {
         System.out.println(user);
         System.out.println(user.getUsername()); // Entity에서 @Data로 getter/setter생성했기 때문에 가능
-        User userEntity = userRepository.findByEmail(user.getEmail());
         // 동일한 이메일로 회원가입할 수 없도록 막는 로직
-        if(userEntity != null){
-            System.out.println("\n** IndexController.join_post/이미 동일한 이메일이 존재합니다! 다른이메일로 회원가입 해주시기 바랍니다 **");
-            return "redirect:/join";
-        }
         String rawPassword = user.getPassword();
         String encPassword = bCryptPasswordEncoder.encode(rawPassword);
         user.setPassword(encPassword); // 일반적인 String 타입의 password는 Security를 통한 회원가입이 되지 않기 때문에 암호화 필요함o
-        user.setRole("ROLE_USER");
+        user.setRole(Role.ROLE_USER);
         userRepository.save(user);
-        return "redirect:/login"; //  "/login" url로 redirect 시킴
+        System.out.println("IndexController.apiJoin_post/Success Join User : " + user);
+        URI redirectUri = new URI("http://localhost:3000/");
+        HttpHeaders headers = new HttpHeaders();
+        headers.setLocation(redirectUri);
+        System.out.println("HttpHeaders = " + headers);
+        return new ResponseEntity<>(headers, HttpStatus.CREATED); // 201
+
+    }
+    @GetMapping("/api/join")
+    public List<String> apiJoin_get(){
+        List<User> userList = userRepository.findAll();
+        System.out.println("userList = " + userList);
+        List<String> list = new ArrayList<>();
+        System.out.println("Before list = " + list); // []
+        for (User user1 : userList) {
+            System.out.println("user1 = " + user1);
+            list.add(user1.getEmail());
+        }
+        // 동일한 이메일로 회원가입할 수 없도록 막는 로직
+        System.out.println("After list = " + list); // [ko1@naver.com, ko1@naver.com, ko2@naver.com]
+        return list;
+
+    }
+    @GetMapping("/test/join")
+    public List<String> testJoin_get(){
+        List<User> userList = userRepository.findAll();
+        System.out.println("userList = " + userList);
+        List<String> list = new ArrayList<>();
+        System.out.println("Before list = " + list); // []
+        for (User user1 : userList) {
+            System.out.println("user1 = " + user1);
+            list.add(user1.getEmail());
+        }
+        // 동일한 이메일로 회원가입할 수 없도록 막는 로직
+        System.out.println("After list = " + list); // [ko1@naver.com, ko1@naver.com, ko2@naver.com]
+        return list;
+
     }
     @GetMapping("/api/user")
-    public @ResponseBody String apiUser(@AuthenticationPrincipal PrincipalDetails principalDetails){
+    public Map<String, Object> apiUser(@AuthenticationPrincipal PrincipalDetails principalDetails){
         System.out.println("principalDetails = " + principalDetails); // 소셜로그인 or 일반로그인을 해도 출력됨.
         // 일반로그인시: principalDetails = PrincipalDetails(user=User(id=3, username=ko2), attributes=null)
         // 소셜로그인시: principalDetails = PrincipalDetails(user=User(id=4, username=고경환), attributes={sub=110000687855487904168, name=고경환, given_name=경환, family_name=고, picture=https://lh3.googleusercontent.com/a/AItbvmn09O3fy0FHLytziFKv3a3iNGsTAnjy0AiPuDaX=s96-c, email={이메일}, email_verified=true, locale=ko})
-        return "user";
+        User user = principalDetails.getUser();
+        String username = user.getUsername();
+        String email = user.getEmail();
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("username", username);
+        map.put("email", email);
+        System.out.println("map = " + map); // map = {email=ko2@naver.com, username=ko2}
+        return map;
+    }
+    @GetMapping("/api/beer/{id}")
+    public Beer detailBeer(@PathVariable Long id){
+//        Beer beer = beerRepository.findById(id);
+        Beer beer = null;
+        return beer;
     }
 }
