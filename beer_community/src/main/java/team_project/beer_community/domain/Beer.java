@@ -80,9 +80,14 @@ public class Beer extends BaseTimeEntity {
     //==total_point 계산==//
     public float calTotalPoint(){
         float sum = 0;
-        for (Comment comment : comments) {
-           sum = sum + comment.getPoint();
+        try{
+            int size = comments.size();
+            for (Comment comment : comments) {
+                sum = sum + comment.getPoint();
+            }
+            return sum / size;
+        } catch (NullPointerException exception){
+            return 0;
         }
-        return sum / comments.size();
     }
 }

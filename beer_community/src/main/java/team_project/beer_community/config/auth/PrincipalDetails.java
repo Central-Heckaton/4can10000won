@@ -36,6 +36,10 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
         this.attributes = attributes;
     }
 
+    public String getEmail(){
+        return (String) attributes.get("email");
+    }
+
     @Override
     public String getName() {
         return (String) attributes.get("name"); // name키에 저장된 값은 google에서 해당 유저의 성명에 해당함(given_name은 이름, family_name은 성)
@@ -53,7 +57,7 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
         collect.add(new GrantedAuthority() {
             @Override
             public String getAuthority() {
-                return user.getRole();
+                return user.getRole().toString();
             }
         });
         return collect;
