@@ -31,4 +31,13 @@ public class BeerApiController {
                 .collect(Collectors.toList());
         return new WrapperClass(beerDetailDtos);
     }
+
+    @GetMapping("/rec")
+    public WrapperClass beerRec(){
+        List<Beer> beers = beerService.findBeers();
+        List<BeerDetailDto> beerDetailDtos = beers.stream()
+                .map(b -> new BeerDetailDto(b, beerService.findAllTaste(b.getId())))
+                .collect(Collectors.toList());
+        return new WrapperClass(beerDetailDtos);
+    }
 }
