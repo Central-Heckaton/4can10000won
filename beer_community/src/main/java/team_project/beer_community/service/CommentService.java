@@ -1,6 +1,7 @@
 package team_project.beer_community.service;
 
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import team_project.beer_community.domain.Comment;
@@ -10,15 +11,20 @@ import java.util.List;
 
 @Service
 @Transactional(readOnly = true)
-@NoArgsConstructor
+@RequiredArgsConstructor
 public class CommentService {
-    private CommentRepository commentRepository;
+    private final CommentRepository commentRepository;
 
     /**
      *
      */
+    @Transactional
     public Long join(Comment comment){
         commentRepository.save(comment);
+        List<Comment> result = commentRepository.findAll();
+        for (Comment comment1 : result) {
+            System.out.println("comment1 = " + comment1);
+        }
         return comment.getId();
     }
 
@@ -30,11 +36,13 @@ public class CommentService {
         return commentRepository.findAll();
     }
 
+    @Transactional
     public void updatePoint(Long id, int point){
         Comment findComment = commentRepository.findById(id).orElseThrow(NullPointerException::new);
         findComment.setPoint(point);
     }
 
+    @Transactional
     public void updateContent(Long id, String content){
         Comment findComment = commentRepository.findById(id).orElseThrow(NullPointerException::new);
         findComment.setContent(content);

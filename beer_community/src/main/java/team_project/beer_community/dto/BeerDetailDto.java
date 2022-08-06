@@ -11,9 +11,9 @@ public class BeerDetailDto {
     private Long id;
     private String imageUrl;
     private String beerName;
-    private float totalPoint;
+    private double totalPoint;
     private String information;
-    private float alcoholDegree;
+    private double alcoholDegree;
     private List<Taste> tastes;
 
     public BeerDetailDto(Beer beer, List<Taste> tastes) {

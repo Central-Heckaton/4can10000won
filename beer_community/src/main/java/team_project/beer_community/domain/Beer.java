@@ -1,11 +1,11 @@
 package team_project.beer_community.domain;
 
-import com.fasterxml.jackson.databind.ser.Serializers;
-import com.sun.istack.NotNull;
+
 import lombok.*;
+import net.minidev.json.JSONUtil;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,14 +15,14 @@ import java.util.List;
 @ToString(of = {"id", "beerName"})
 @Getter @Setter
 public class Beer extends BaseTimeEntity {
-    @Id @GeneratedValue
+    @Id @GeneratedValue()
     private Long id;
 
-    @OneToMany(mappedBy = "beer", cascade = CascadeType.ALL)
-    private List<LikeBeer> likeBeers;
+    @OneToMany(mappedBy = "beer")
+    private List<LikeBeer> likeBeers = new ArrayList<>();
 
-    @OneToMany(mappedBy = "beer", cascade = CascadeType.ALL)
-    private List<Comment> comments;
+    @OneToMany(mappedBy = "beer")
+    private List<Comment> comments = new ArrayList<>();
 
     @OneToMany(mappedBy = "beer", cascade = CascadeType.ALL)
     private List<TasteEntity> tastes = new ArrayList<>();
@@ -31,33 +31,28 @@ public class Beer extends BaseTimeEntity {
     private String beerName;
 
     @NotNull
-    private float alcoholDegree;
+    private double alcoholDegree;
 
     @NotNull
     private int price;
 
-//    @NotNull
+    @NotNull
     private String information;
 
     @NotNull
     @Enumerated(EnumType.STRING)
     private BEER_TYPE beerType;
 
-//    @NotNull
-    private float totalPoint = calTotalPoint();
+    private double totalPoint = 0;
 
     private String imageUrl;
 
-    public Beer(String beerName, float alcoholDegree, int price, String information, BEER_TYPE beerType) {
+    public Beer(String beerName, double alcoholDegree, int price, String information, BEER_TYPE beerType) {
         this.beerName = beerName;
         this.alcoholDegree = alcoholDegree;
         this.price = price;
         this.information = information;
         this.beerType = beerType;
-    }
-
-    public Beer(String beerName) {
-        this.beerName = beerName;
     }
 
     //==연관관계 편의 메소드==//
@@ -69,25 +64,12 @@ public class Beer extends BaseTimeEntity {
     public void addComment(Comment comment){
         comments.add(comment);
         comment.setBeer(this);
+        System.out.println("comment.getBeer()" + comment.getBeer());
     }
 
     //==연관관계 편의 메소드==//
     public void addTasteEntity(TasteEntity tasteEntity){
         tastes.add(tasteEntity);
         tasteEntity.setBeer(this);
-    }
-
-    //==total_point 계산==//
-    public float calTotalPoint(){
-        float sum = 0;
-        try{
-            int size = comments.size();
-            for (Comment comment : comments) {
-                sum = sum + comment.getPoint();
-            }
-            return sum / size;
-        } catch (NullPointerException exception){
-            return 0;
-        }
     }
 }

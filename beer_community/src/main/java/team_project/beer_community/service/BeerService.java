@@ -19,7 +19,6 @@ import java.util.List;
 public class BeerService {
     private final BeerRepository beerRepository;
     private final TasteEntityRepository tasteEntityRepository;
-    private final LikeBeerRepository likeBeerRepository;
     private final CommentRepository commentRepository;
 
     @Transactional
@@ -75,8 +74,8 @@ public class BeerService {
     public void addComment(Long id, Comment comment){
         Beer findBeer = beerRepository.findById(id).orElseThrow(NullPointerException::new);
         findBeer.addComment(comment);
-        User findUser = comment.getUser();
-        findUser.addComment(comment);
+        findBeer.setTotalPoint(calTotalPoint(findBeer));
+        comment.getUser().addComment(comment);
     }
 
     @Transactional
@@ -85,5 +84,19 @@ public class BeerService {
         findBeer.getComments().remove(comment);
         comment.getUser().getComments().remove(comment);
         commentRepository.delete(comment);
+    }
+
+    @Transactional
+    public double calTotalPoint(Beer beer){
+        double sum = 0;
+        try{
+            List<Comment> comments = beer.getComments();
+            for (Comment comment : comments) {
+                sum = sum + comment.getPoint();
+            }
+            return sum / comments.size();
+        } catch (Exception exception){
+            return 0;
+        }
     }
 }

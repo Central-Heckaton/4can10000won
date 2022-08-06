@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Getter @Setter
 public class LikeBeer {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue()
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -20,4 +20,8 @@ public class LikeBeer {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "beer_id")
     private Beer beer;
+
+    public LikeBeer(Beer beer) {
+        this.beer = beer;
+    }
 }
