@@ -1,5 +1,6 @@
 package team_project.beer_community.service;
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -77,10 +78,16 @@ public class UserService {
     }
 
     @Transactional
-    public void deleteLikeBeer(Long userid, LikeBeer likeBeer){
+    public void deleteLikeBeer(Long userid, Long beerId){
         User findUser = userRepository.findById(userid).orElseThrow(NullPointerException::new);
-        findUser.getLikeBeers().remove(likeBeer);  //User에서 likeBeer 삭제
-        likeBeer.getBeer().getLikeBeers().remove(likeBeer);  //Beer에서 likeBeer 삭제
-        likeBeerRepository.delete(likeBeer);
+        List<LikeBeer> likeBeers = findUser.getLikeBeers();
+        for (LikeBeer likeBeer : likeBeers) {
+            if (likeBeer.getBeer().getId() == beerId){
+                findUser.getLikeBeers().remove(likeBeer); //User에서 likeBeer 삭제
+                likeBeer.getBeer().getLikeBeers().remove(likeBeer); //Beer에서 likeBeer 삭제
+                likeBeerRepository.delete(likeBeer);  //LikeBeer table에서 likeBeer 삭제
+                break;
+            }
+        }
     }
 }

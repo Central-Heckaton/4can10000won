@@ -17,7 +17,7 @@ public class BeerDetailDto {
     private List<Taste> tastes;
 
     public BeerDetailDto(Beer beer, List<Taste> tastes) {
-        this.id = id;
+        this.id = beer.getId();
         this.imageUrl = beer.getImageUrl();
         this.beerName = beer.getBeerName();
         this.totalPoint = beer.getTotalPoint();

@@ -3,6 +3,8 @@ package team_project.beer_community.domain;
 
 import lombok.*;
 import net.minidev.json.JSONUtil;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -43,7 +45,7 @@ public class Beer extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private BEER_TYPE beerType;
 
-    private double totalPoint = 0;
+    private double totalPoint;
 
     private String imageUrl;
 
