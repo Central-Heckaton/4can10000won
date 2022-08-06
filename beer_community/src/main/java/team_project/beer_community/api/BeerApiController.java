@@ -52,7 +52,8 @@ public class BeerApiController {
             User user = userService.findOne(userId);
             Beer beer = beerService.findOne(beerId);
             //이미 좋아요 해놓은 맥주를 다시 좋아요 하는 경우
-            for (LikeBeer likeBeer : user.getLikeBeers()) {
+            List<LikeBeer> likeBeers = likeBeerService.findAllWithBeer(userId); //fetch join 적용
+            for (LikeBeer likeBeer : likeBeers) {
                 if(likeBeer.getBeer().getId() == beerId){
                     return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
                 }
@@ -63,7 +64,7 @@ public class BeerApiController {
             likeBeerService.join(likeBeer);
         }
         else{
-            List<LikeBeer> likeBeers = likeBeerService.findAll();
+            List<LikeBeer> likeBeers = likeBeerService.findAllWithBeer(); //fetch join 적용
             int flag = 0;
             for (LikeBeer likeBeer : likeBeers) {
                 if(likeBeer.getBeer().getId() == beerId) {
