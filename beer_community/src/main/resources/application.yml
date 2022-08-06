@@ -14,7 +14,7 @@ spring:
       hibernate:
         show_sql: false
         format_sql: true
-#        default_batch_fetch_size: 100
+        default_batch_fetch_size: 100
     database: mysql
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
 

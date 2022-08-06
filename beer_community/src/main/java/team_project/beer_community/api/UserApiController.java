@@ -8,6 +8,8 @@ import team_project.beer_community.domain.Beer;
 import team_project.beer_community.domain.LikeBeer;
 import team_project.beer_community.domain.User;
 import team_project.beer_community.dto.BeerDto;
+import team_project.beer_community.repository.LikeBeerRepository;
+import team_project.beer_community.service.LikeBeerService;
 import team_project.beer_community.service.UserService;
 
 import java.util.ArrayList;
@@ -17,16 +19,15 @@ import java.util.stream.Collectors;
 @RestController
 @RequiredArgsConstructor
 public class UserApiController {
-    private final UserService userService;
+    private final LikeBeerService likeBeerService;
 
     @GetMapping("/api/likebeers/{id}")
     public WrapperClass showLikeBeers(@PathVariable("id") Long userid){
-        //배치 전략 사용
-        List<LikeBeer> likeBeers = userService.findLikeBeers(userid);
+        //fetch join 사용
+        List<LikeBeer> likeBeers = likeBeerService.findAllWithBeer(userid);
         List<Beer> beers = new ArrayList<>();
-        System.out.println("=====================");
         for (LikeBeer likeBeer : likeBeers) {
-            beers.add(likeBeer.getBeer());  //beer만 불러오면 되기 때문에 별도의 fetch join이 필요 없다
+            beers.add(likeBeer.getBeer());
             System.out.println("likeBeer.getBeer() = " + likeBeer.getBeer());
         }
         List<BeerDto> beerDtos = beers.stream().map(b -> new BeerDto(b)).collect(Collectors.toList());

@@ -2,6 +2,7 @@ package team_project.beer_community.service;
 
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.annotations.BatchSize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -23,7 +24,7 @@ import java.util.Optional;
 public class UserService {
     private final UserRepository userRepository;
     private final LikeBeerRepository likeBeerRepository;
-    private final BeerRepository beerRepository;
+    private final LikeBeerService likeBeerService;
 //    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Transactional
@@ -74,13 +75,13 @@ public class UserService {
     public void addLikeBeer(Long userid, LikeBeer likeBeer){
         User findUser = userRepository.findById(userid).orElseThrow(NullPointerException::new);
         findUser.addLikeBeer(likeBeer);  //User에 likeBeer 추가
-        likeBeer.getBeer().addLikeBeer(likeBeer);   //Beer에 likeBeer 추가
+        likeBeer.getBeer().addLikeBeer(likeBeer);  //Beer에 likeBeer 추가
     }
 
     @Transactional
     public void deleteLikeBeer(Long userid, Long beerId){
         User findUser = userRepository.findById(userid).orElseThrow(NullPointerException::new);
-        List<LikeBeer> likeBeers = findUser.getLikeBeers();
+        List<LikeBeer> likeBeers = likeBeerService.findAllWithBeer(userid); //fetch join 사용
         for (LikeBeer likeBeer : likeBeers) {
             if (likeBeer.getBeer().getId() == beerId){
                 findUser.getLikeBeers().remove(likeBeer); //User에서 likeBeer 삭제
