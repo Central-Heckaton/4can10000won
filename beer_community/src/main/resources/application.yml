@@ -2,7 +2,7 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/beer_community?useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC
     username: root
-    password: 1234
+    password: seojo1919@
     driver-class-name: com.mysql.cj.jdbc.Driver
   main:
     allow-circular-references: true
@@ -12,7 +12,7 @@ spring:
       ddl-auto: create
     properties:
       hibernate:
-        show_sql: true
+        show_sql: false
         format_sql: true
         default_batch_fetch_size: 100
     database: mysql

@@ -1,9 +1,9 @@
 package team_project.beer_community.domain;
 
-import com.sun.istack.NotNull;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +15,7 @@ import java.util.List;
 @Table(name = "user")
 public class User extends BaseTimeEntity{
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue()
     private Long id;
 
     @NotNull
@@ -27,8 +27,8 @@ public class User extends BaseTimeEntity{
     @NotNull
     private String username;
 
-//    @NotNull
-    private LocalDate birthday;
+    @NotNull
+    private String birthday;
 
     private String imageUrl;
 
@@ -39,15 +39,15 @@ public class User extends BaseTimeEntity{
     private String provider; // google, naver
     private String providerId; // 각 사이트에서 사용자별로 부여된 고유id
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL) // User가 삭제되면 User가 작성한 댓글들도 다 삭제됨
+    @OneToMany(mappedBy = "user") // User가 삭제되면 User가 작성한 댓글들도 다 삭제됨
     private List<Comment> comments = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user")
     private List<LikeBeer> likeBeers = new ArrayList<>();
 
     //회원가입시 사용되는 생성자
     @Builder
-    public User(Long id, String email, String password, String username, LocalDate birthday, String imageUrl, Role role, String provider, String providerId) {
+    public User(Long id, String email, String password, String username, String birthday, String imageUrl, Role role, String provider, String providerId) {
         this.id = id;
         this.email = email;
         this.password = password;
@@ -59,10 +59,11 @@ public class User extends BaseTimeEntity{
         this.providerId = providerId;
     }
 
-    public User(String email, String password, String username) {
+    public User(String email, String password, String username, String birthday) {
         this.email = email;
         this.password = password;
         this.username = username;
+        this.birthday = birthday;
     }
 
     //==연관관계 편의 메소드==//

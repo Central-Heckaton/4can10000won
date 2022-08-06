@@ -72,16 +72,15 @@ public class UserService {
     @Transactional
     public void addLikeBeer(Long userid, LikeBeer likeBeer){
         User findUser = userRepository.findById(userid).orElseThrow(NullPointerException::new);
-        findUser.addLikeBeer(likeBeer);
-        Beer findBeer = likeBeer.getBeer();
-        findBeer.addLikeBeer(likeBeer);
+        findUser.addLikeBeer(likeBeer);  //User에 likeBeer 추가
+        likeBeer.getBeer().addLikeBeer(likeBeer);   //Beer에 likeBeer 추가
     }
 
     @Transactional
     public void deleteLikeBeer(Long userid, LikeBeer likeBeer){
         User findUser = userRepository.findById(userid).orElseThrow(NullPointerException::new);
-        findUser.getLikeBeers().remove(likeBeer);
-        likeBeer.getBeer().getLikeBeers().remove(likeBeer);
+        findUser.getLikeBeers().remove(likeBeer);  //User에서 likeBeer 삭제
+        likeBeer.getBeer().getLikeBeers().remove(likeBeer);  //Beer에서 likeBeer 삭제
         likeBeerRepository.delete(likeBeer);
     }
 }

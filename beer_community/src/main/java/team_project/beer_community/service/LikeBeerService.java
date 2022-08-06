@@ -1,6 +1,7 @@
 package team_project.beer_community.service;
 
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import team_project.beer_community.domain.LikeBeer;
@@ -10,10 +11,12 @@ import java.util.List;
 
 @Service
 @Transactional(readOnly = true)
-@NoArgsConstructor
+@RequiredArgsConstructor
+//@NoArgsConstructor  //final을 사용한 필드가 있을 경우 이 어노테이션을 사용할 수 없다.
 public class LikeBeerService {
-    private LikeBeerRepository likeBeerRepository;
+    private final LikeBeerRepository likeBeerRepository;
 
+    @Transactional
     public Long join(LikeBeer likeBeer){
         likeBeerRepository.save(likeBeer);
         return likeBeer.getId();

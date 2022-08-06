@@ -12,8 +12,9 @@ import java.util.List;
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class TasteEntityService {
-    private TasteEntityRepository tasteEntityRepository;
+    private final TasteEntityRepository tasteEntityRepository;
 
+    @Transactional
     public Long join(TasteEntity tasteEntity){
         tasteEntityRepository.save(tasteEntity);
         return tasteEntity.getId();

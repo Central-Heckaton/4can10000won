@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
+import team_project.beer_community.domain.BEER_TYPE;
 import team_project.beer_community.domain.Beer;
 import team_project.beer_community.domain.Taste;
 import team_project.beer_community.domain.TasteEntity;
@@ -23,7 +24,7 @@ class BeerRepositoryTest {
     @Rollback(value = false)
     public void TasteEntityTest() throws Exception {
         //given
-        Beer beer = new Beer("하이네켄");
+        Beer beer = new Beer("heineken", 4.5, 4000, "하이네켄입니다.", BEER_TYPE.LARGER);
         TasteEntity tasteEntity1 = new TasteEntity(Taste.SOUR);
         TasteEntity tasteEntity2 = new TasteEntity(Taste.SWEET);
         tasteEntityRepository.save(tasteEntity1);

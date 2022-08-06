@@ -8,7 +8,7 @@ public class BeerDto {
     private Long id;
     private String imageUrl;
     private String beerName;
-    private float totalPoint;
+    private double totalPoint;
     private String information;
 
     public BeerDto(Beer beer) {
