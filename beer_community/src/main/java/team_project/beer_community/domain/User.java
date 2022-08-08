@@ -59,11 +59,13 @@ public class User extends BaseTimeEntity{
         this.providerId = providerId;
     }
 
-    public User(String email, String password, String username, String birthday) {
+    public User(String email, String password, String username, String birthday, String imageUrl, Role role) {
         this.email = email;
         this.password = password;
         this.username = username;
         this.birthday = birthday;
+        this.imageUrl = imageUrl;
+        this.role = role;
     }
 
     //==연관관계 편의 메소드==//

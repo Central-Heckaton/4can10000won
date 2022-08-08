@@ -1,0 +1,8 @@
+.mainBox {
+  display: flex;
+  flex-direction: column;
+  width: 20rem;
+  border: 2px solid var(--background-color);
+  z-index: -1;
+  padding-bottom: 5rem;
+}

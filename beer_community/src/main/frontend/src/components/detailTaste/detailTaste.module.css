@@ -1,0 +1,37 @@
+.container {
+    text-align: center;
+    line-height: 2rem;
+}
+
+.titleBox {
+    display: flex;
+}
+
+.title {
+    color: darkgray;
+    margin-right: 5px;
+}
+
+.tag1, .tag2 {
+    height: 20px;
+    background-color: #FDC74B;
+    color: white;
+    font-size: 11px;
+    border-radius: 10px;
+    padding: 0 12px;
+    margin-top: 5px;
+}
+
+.tag1 {
+    margin-right: 3px;
+    margin-left: 3px;
+}
+
+.totalBox {
+    display: flex;
+    justify-content: space-around;
+}
+
+.total, .rateNum {
+    font-size: 14px;
+}

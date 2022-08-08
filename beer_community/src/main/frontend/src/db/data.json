@@ -1,0 +1,95 @@
+{
+  "beer_list": [
+    {
+      "id": "1",
+      "image_url": "/img/example.png",
+      "beer_name": "곰표밀맥주",
+      "total_point": 4.5,
+      "information": "좋은맥주입니다."
+    },
+    {
+      "id": "2",
+      "image_url": null,
+      "beer_name": "필스너우르켈",
+      "total_point": 4.0,
+      "information": "너무 맛있는 맥주입니다."
+    },
+    {
+      "id": "3",
+      "image_url": null,
+      "beer_name": "필스너우르켈dsdd",
+      "total_point": 5.0,
+      "information": "너무 맛있는 맥주입니다.dfsdf"
+    },
+    {
+      "id": "4",
+      "image_url": null,
+      "beer_name": "안녕하세요",
+      "total_point": 3.0,
+      "information": "좋아요 좋아요"
+    },
+    {
+      "id": "5",
+      "image_url": "/img/example.png",
+      "beer_name": "안녕하세요",
+      "total_point": 1.0,
+      "information": "별로별로"
+    },
+    {
+      "id": "6",
+      "image_url": "/img/example.png",
+      "beer_name": "안녕하세요",
+      "total_point": 3.0,
+      "information": "별로별ㅇㅇㅇㅇ로"
+    },
+    {
+      "id": "7",
+      "image_url": "/img/example.png",
+      "beer_name": "안녕하세요",
+      "total_point": 2.0,
+      "information": "별로별ㅃㅃㅃㅂ로"
+    },
+    {
+      "id": "8",
+      "image_url": "/img/example.png",
+      "beer_name": "안녕하세요",
+      "total_point": 2.0,
+      "information": "별로별ㅃㅃㅃㅂ로"
+    },
+    {
+      "id": "9",
+      "image_url": "/img/example.png",
+      "beer_name": "안녕하세요",
+      "total_point": 2.0,
+      "information": "별로별ㅃㅃㅃㅂ로"
+    },
+    {
+      "id": "10",
+      "image_url": "/img/example.png",
+      "beer_name": "안녕하세요",
+      "total_point": 2.0,
+      "information": "별로별ㅃㅃㅃㅂ로"
+    },
+    {
+      "id": "11",
+      "image_url": "/img/example.png",
+      "beer_name": "안녕하세요",
+      "total_point": 2.0,
+      "information": "별로별ㅃㅃㅃㅂ로"
+    },
+    {
+      "id": "12",
+      "image_url": "/img/example.png",
+      "beer_name": "안녕하세요",
+      "total_point": 2.0,
+      "information": "별로별ㅃㅃㅃㅂ로"
+    },
+    {
+      "id": "13",
+      "image_url": "/img/example.png",
+      "beer_name": "안녕하세요",
+      "total_point": 2.0,
+      "information": "별로별ㅃㅃㅃㅂ로"
+    }
+  ]
+}

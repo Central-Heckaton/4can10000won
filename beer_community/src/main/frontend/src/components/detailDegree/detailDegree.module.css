@@ -1,0 +1,12 @@
+.container {
+    text-align: center;
+    line-height: 2rem;
+}
+
+.title {
+    color: darkgray;
+}
+
+.degree {
+    font-weight: 700;
+}

@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.cors.CorsConfiguration;
 import team_project.beer_community.config.oauth.PrincipalOauth2UserService;
 // 소셜로그인 후처리 절치
 // 1. 코드받기(인증) 2.AccessToken(권한) 3. 사용자프로필 정보가져옴 4-1.그 정보를 토대로 회원가입을 자동으로 진행시키기도 함
@@ -37,15 +38,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().permitAll()
                 .and()
                 .formLogin()
-                .loginPage("/login")
+                .loginPage("/api/login")
                 .usernameParameter("email") // ** username이 아니라 email으로 param을 받음 **
-                .loginProcessingUrl("/login") // login주소가 호출되면 Spring Security가 낚아채서 대신 로그인 진행
-                .defaultSuccessUrl("http://localhost:3000/user-info")
+                .loginProcessingUrl("/api/login") // login주소가 호출되면 Spring Security가 낚아채서 대신 로그인 진행
+                .defaultSuccessUrl("http://localhost:3000/search")
                 .failureForwardUrl("http://localhost:3000/")
                 .and()
                 .oauth2Login()
-                .loginPage("/login")
-                .defaultSuccessUrl("http://localhost:3000/user-info")
+                .loginPage("/api/login")
+                .defaultSuccessUrl("http://localhost:3000/search")
                 .userInfoEndpoint()
                 .userService(principalOauth2UserService); // 구글소셜로그인 성공 후 코드를 받는게 아니라 AccessToken+사용자프로필정보 바로 함께받는다(편리함)
     }

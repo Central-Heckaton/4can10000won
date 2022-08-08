@@ -51,6 +51,7 @@
   border: none;
   border-bottom: 1px solid var(--input-color);
   margin-bottom: 1.8rem;
+  margin-top: 5px;
 }
 .passwordInput {
   outline: none;
@@ -115,7 +116,44 @@
   border: none;
   background-repeat: no-repeat;
 }
-.main{
+.main {
   background-color: white;
- 
 }
+.emailCheck {
+  border-radius: 5px;
+}
+.emailCheckDiv {
+  display: flex;
+  justify-content: space-between;
+}
+.birthBox {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  margin-bottom: 1.8rem;
+}
+.birthBoxInput {
+  outline: none;
+  border: none;
+  width: 60px;
+  padding: 5px 0px;
+  border-bottom: 1px solid var(--input-color);
+}
+
+button {
+  color: black;
+}
+select {
+  color: black;
+}
+select option[value=""][disabled] {
+    display: none;
+}
+
+.ymd {
+  margin-top: 5px;
+  border: none;
+  border-bottom: 1px solid var(--input-color);
+  width: 100%;
+}
+
