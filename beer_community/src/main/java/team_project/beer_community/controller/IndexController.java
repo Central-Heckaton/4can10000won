@@ -13,9 +13,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
+import team_project.beer_community.api.WrapperClass;
 import team_project.beer_community.config.auth.PrincipalDetails;
+import team_project.beer_community.domain.BEER_TYPE;
 import team_project.beer_community.domain.Beer;
 import team_project.beer_community.domain.Role;
 import team_project.beer_community.domain.User;
@@ -103,4 +106,33 @@ public class IndexController {
         return map;
     }
 
+    @RequestMapping(method = RequestMethod.POST, path="/filter")
+    public WrapperClass filter(@RequestBody HashMap<String, List<String>> beerTypeListData){
+        HttpHeaders headers = new HttpHeaders();
+        List<String> beerTypeList = beerTypeListData.get("beerTypeList");
+        System.out.println("beerTypeList = " + beerTypeList);
+        List<Beer> finalBeerList = new ArrayList<>();
+        List<Beer> beerList = beerRepository.findAll();
+        List< BEER_TYPE> beerTypes = new ArrayList<>(); // 맥주 타입들만 뽑아서 정리
+        if(beerList.size() >= 1) {System.out.println("beerList[0].getBeerType = " + beerList.get(0).getBeerType().toString());}
+        if(beerTypeList.size() >= 1) {System.out.println("beerTypeList[0].getBeerType = " + beerTypeList.get(0));}
+        System.out.println("beerTypeList[0].equals(beerList[0].getBeerType) = " + beerTypeList.get(0).equals(beerList.get(0).getBeerType().toString()));
+        if(beerTypeList.size() == 0) { return new WrapperClass(beerList); }
+        for (Beer beer : beerList) {
+            for (String beerType : beerTypeList) {
+                if(beer.getBeerType().toString().equals(beerType)){
+                    finalBeerList.add(beer); break;
+                }
+            }
+        }
+        return new WrapperClass(finalBeerList);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, path="/search")
+    public WrapperClass search(){
+        HttpHeaders headers = new HttpHeaders();
+        List<Beer> beerList = beerRepository.findAll();
+        System.out.println("beerList = " + beerList);
+        return new WrapperClass(beerList);
+    }
 }
