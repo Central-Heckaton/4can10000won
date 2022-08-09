@@ -1,13 +1,11 @@
 package team_project.beer_community.dto;
 
-import lombok.Data;
 import team_project.beer_community.domain.Beer;
 import team_project.beer_community.domain.Taste;
 
 import java.util.List;
 
-@Data
-public class BeerDetailDto {
+public class BeerRecDto {
     private Long id;
     private String imageUrl;
     private String beerName;
@@ -16,9 +14,7 @@ public class BeerDetailDto {
     private double alcoholDegree;
     private List<Taste> tastes;
 
-    private Boolean is_liked;
-
-    public BeerDetailDto(Beer beer, List<Taste> tastes, Boolean is_liked) {
+    public BeerRecDto(Beer beer, List<Taste> tastes) {
         this.id = beer.getId();
         this.imageUrl = beer.getImageUrl();
         this.beerName = beer.getBeerName();
@@ -26,8 +22,5 @@ public class BeerDetailDto {
         this.information = beer.getInformation();
         this.alcoholDegree = beer.getAlcoholDegree();
         this.tastes = tastes;
-        this.is_liked = is_liked;
     }
 }
-
-

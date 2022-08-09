@@ -1,6 +1,8 @@
 package team_project.beer_community.config.oauth;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -18,11 +20,10 @@ import team_project.beer_community.repository.UserRepository;
 import java.util.Map;
 
 @Service
+@RequiredArgsConstructor
 public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
-    @Autowired
-    private UserRepository userRepository;
-//    @Autowired
-//    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final UserRepository userRepository;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     // 함수종료시 @AuthenticationPrincipal 어노테이션이 만들어짐
     @Override // 구글소셜로그인 후 구글로 부터 받은 userRequest 데이터에 대한 후처리되는 함수
@@ -59,14 +60,14 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
         String provider = oAuth2UserInfo.getProvider(); // google
         String providerId = oAuth2UserInfo.getProviderId(); // sub키에 저장된 값은 google에서 사용자에게 부여한 pk이다
         String username = oAuth2UserInfo.getUsername();
-//        String password = bCryptPasswordEncoder.encode("password") ; // 소셜로그인이기 때문에 굳이 저장안해도되지만 임의로 생성해서 저장함
-        String password = "password";
+        String password = bCryptPasswordEncoder.encode("password") ; // 소셜로그인이기 때문에 굳이 저장안해도되지만 임의로 생성해서 저장함
+//        String password = "password";
         String email = oAuth2UserInfo.getEmail();
         Role role = Role.ROLE_USER;
         System.out.println("PrincipalOauth@UserService.java/username = " + username);
         System.out.println("PrincipalOauth@UserService.java/getAttributes() = " + oAuth2User.getAttributes());
 //        User userEntity = userRepository.findByUsername(username); // **username이외의 필드로 중복성검사 체크 필요!**
-        User userEntity = userRepository.findByEmail(email); // 이메일로 회원조회
+        User userEntity = userRepository.findByEmail(email);
         System.out.println("userEntity = " + userEntity);
         if(userEntity == null){
             // User에 생성자를 통해 새로운 User를 생성시킴(회원가입)

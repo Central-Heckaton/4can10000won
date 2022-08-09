@@ -4,6 +4,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import team_project.beer_community.domain.LikeBeer;
 import team_project.beer_community.domain.User;
+
+import java.util.Optional;
+
 // CRUD 함수를 JpaRepository가 들고 있음.
 // @Repository라는 Annotation이 없어도 IoC됨.
 //          이유는 JpaRepositry를 상속했기 때문
