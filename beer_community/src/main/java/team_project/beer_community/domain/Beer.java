@@ -35,7 +35,8 @@ public class Beer extends BaseTimeEntity {
     @NotNull
     private double alcoholDegree;
 
-    @NotNull
+
+    @Column(columnDefinition = "integer default 2500")
     private int price;
 
     @NotNull
