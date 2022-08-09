@@ -68,7 +68,7 @@
   align-items: center;
   width: 20rem;
   height: 70vh;
-  border: 2px solid var(--button-color);
+  border: 2px solid var(--background-color);
   position: absolute;
   top: 52%;
   left: 50%;
@@ -121,12 +121,11 @@
   font-size: 18px;
   margin-bottom: 50px;
 }
-.nicknameInput{
-text-align: center;
-border: none;
-width: 100px;
+.nicknameInput {
+  text-align: center;
+  border: none;
+  width: 100px;
 }
-.nicknameInput:focus{
-
-outline-color: var(--button-color);
+.nicknameInput:focus {
+  outline-color: var(--button-color);
 }

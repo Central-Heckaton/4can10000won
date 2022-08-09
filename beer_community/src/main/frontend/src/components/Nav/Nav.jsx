@@ -15,9 +15,6 @@ const Nav = (props) => {
             }}
           />
         </div>
-        {/* <div className={styles.menuBar}>
-          <FontAwesomeIcon icon={faBars} />
-        </div> */}
       </div>
     </>
   );

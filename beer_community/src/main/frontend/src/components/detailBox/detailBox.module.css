@@ -1,0 +1,26 @@
+.container {
+    display: flex;
+    justify-content: center;
+}
+
+.box {
+    width: 300px;
+    height: 400px;
+    border: 2px solid #9AD8AE;
+    overflow: scroll;
+}
+
+.box::-webkit-scrollbar {
+    width: 5px;
+}
+
+.box::-webkit-scrollbar-thumb {
+    background-color: #9AD8AE;
+}
+
+.text {
+    line-height: 1.5rem;
+    padding: 30px;
+    font-size: 14px;
+}
+

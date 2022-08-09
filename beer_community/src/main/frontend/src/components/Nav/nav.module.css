@@ -1,21 +1,14 @@
 .main {
-  display: flex;
-  justify-content: space-between;
-  flex-direction: rows;
-  
+  position: fixed;
+  top: 0;
+  left: 0;
   height: 4rem;
   width: 100%;
-
-  @media screen and (max-width: 500px) {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-
-  }
+  background-color: white;
+  z-index: 1;
 }
 
 .back {
-  margin-left: 1.5rem;
-  margin-top: 1.5rem;
+  margin-left: 20px;
+  margin-top: 20px;
 }
-

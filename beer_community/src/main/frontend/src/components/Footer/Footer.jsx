@@ -14,7 +14,7 @@ const Footer = () => {
         <FontAwesomeIcon
           className={styles.smallImg}
           icon={faMagnifyingGlass}
-          size="2x"
+          size="1x"
         ></FontAwesomeIcon>
         <div className={styles.text}>SEARCH</div>
       </Link>
@@ -22,7 +22,7 @@ const Footer = () => {
         <FontAwesomeIcon
           className={styles.smallImg}
           icon={faHeart}
-          size="2x"
+          size="1x"
         ></FontAwesomeIcon>
         <div className={styles.text}>LIKE</div>
       </Link>
@@ -30,7 +30,7 @@ const Footer = () => {
         <FontAwesomeIcon
           className={styles.smallImg}
           icon={faUser}
-          size="2x"
+          size="1x"
         ></FontAwesomeIcon>
         <div className={styles.text}>PROFILE</div>
       </Link>
@@ -38,7 +38,7 @@ const Footer = () => {
         <FontAwesomeIcon
           className={styles.smallImg}
           icon={faEllipsis}
-          size="2x"
+          size="1x"
         ></FontAwesomeIcon>
         <div className={styles.text}>MENU</div>
       </Link>

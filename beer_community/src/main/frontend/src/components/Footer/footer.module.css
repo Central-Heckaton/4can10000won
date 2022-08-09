@@ -1,8 +1,8 @@
 .main {
   border-top: 1px solid var(--input-color);
   background-color: var(--background-color);
-  height: 5rem;
-  position: absolute;
+  height: 4.5rem;
+  position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
@@ -20,6 +20,8 @@
 }
 .smallImg {
   color: var(--button-color);
+  width: 20px;
+  height: 20px;
 }
 .text {
   margin-top: 8px;

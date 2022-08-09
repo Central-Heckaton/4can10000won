@@ -7,7 +7,9 @@ ${reset}
 
         font-family: 'Noto Sans CJK KR';
         font-style: normal;
-        font-weight: 500;
+        font-weight: 500; 
+        display: flex;
+        justify-content: center;
     }
     :root{ //색, 폰트 설정, radius 설정
         --button-color:#AAE8BE;
