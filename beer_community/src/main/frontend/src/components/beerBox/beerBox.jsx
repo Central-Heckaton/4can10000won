@@ -1,4 +1,5 @@
 import React from 'react';
+import ViewStar from '../ViewStar/ViewStar';
 import styles from './beerBox.module.css'
 
 const BeerBox = (props) => {
@@ -7,16 +8,10 @@ const BeerBox = (props) => {
             <img className={styles.img} src={props.image} alt="" />
             <div className={styles.text}>
                 <h1 className={styles.name}>{props.title}</h1>
-                <div className={styles.rate}>
-                    <img className={styles.star} src="/img/star.png" alt="" />
-                    <img className={styles.star} src="/img/star.png" alt="" />
-                    <img className={styles.star} src="/img/star.png" alt="" />
-                    <img className={styles.star} src="/img/star.png" alt="" />
-                    <img className={styles.star} src="/img/star.png" alt="" />
-                </div>
-                <p className={styles.description}>
+                <ViewStar point={props.total_point}/>
+                <div className={styles.description}>
                     {props.description}
-                </p>
+                </div>
             </div>
         </div>
     );
