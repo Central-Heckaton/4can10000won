@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React, { useState ,useRef, useEffect} from "react";
 import styles from "./loginBox.module.css";
 import axios from 'axios';
 
 const LoginBox = () => {
+
   const [loginState, setLoginState] = useState(true);
   const [emailList, setEmailList] = useState([]);
   const [message, setMessage] = useState('');
-  const [checkEmailDuplicate, setCheckEmailDuplicate] = useState(false);
+  const [checkDuplicate, setCheckDuplicate] = useState(); // 초기값을 안 줌으로써 checkDuplicate
   // -- 회원가입시 사용할 데이터 --
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
@@ -17,15 +18,26 @@ const LoginBox = () => {
   const [day, setDay] = useState("");
   const [birthday, setBirthday] = useState("");
 
-
+  const emailMessage = useRef();
   // ---------
   const onClickLoginButton = (e) => {
     e.preventDefault();
     setLoginState(true);
   };
+  function changeMessageColor(checkDuplicate){
+    if(checkDuplicate === true){
+         emailMessage.current.style = "color:blue;";
+    }
+    else if(checkDuplicate === false){
+         emailMessage.current.style = "color:red;";
+    }
+    return;
+  }
   const onClickCheckDuplicate = async (e) => {
     e.preventDefault();
-    const request_data = {'email': email};
+
+    const request_data = {'email': email}; // type of -> Object
+    if(email.length == 0){alert('이메일을 입력해주시기 바랍니다.'); setCheckDuplicate(false); return;}
     try{
         let response = await axios({
                 method: 'post',
@@ -34,28 +46,31 @@ const LoginBox = () => {
                 data: JSON.stringify(request_data)
             });
             if(response.status >= 200 && response.status < 300){
+                setCheckDuplicate(true);
                 setMessage("사용가능한 이메일입니다!");
-                setCheckEmailDuplicate(true);
+
             }
             else{
+                setCheckDuplicate(false);
                 setMessage("이미 존재하는 이메일입니다!");
                 setEmail("");
             }
      } catch (err) {
         if(err.response.status === 409){ // CONFLICT
+            setCheckDuplicate(false);
             setMessage("이미 존재하는 이메일입니다!");
             setEmail("");
         }
         else {
-        console.log('onClickCheckDuplicate/err', err);
+            console.log('onClickCheckDuplicate/err', err);
         }
      };
-
     };
   const onClickSignUpButton = (e) => {
     e.preventDefault();
     setLoginState(false);
   }
+
   const handleJoinSubmit = async (e) => {
     e.preventDefault();
     if(password !== confirmedPassword){
@@ -63,7 +78,7 @@ const LoginBox = () => {
         setPassword(""); setConfirmedPassword("");
         return;
     }
-    if( !checkEmailDuplicate ){
+    if( !checkDuplicate ){
         alert('이메일 중복검사를 해주시기 바랍니다');
         return;
     }
@@ -73,7 +88,7 @@ const LoginBox = () => {
     const dayDiff = now_year - year;
     if(dayDiff < 20){
         alert("미성년자는 회원가입이 불가능합니다.")
-        setYear(""); setMonth(""); setDay("")
+        setYear(""); setMonth(""); setDay(""); return;
     }
     setBirthday(year+'-'+month+'-'+day);
     const request_data = {'email': email, 'username': username, 'password': password, 'birthday': birthday};
@@ -105,15 +120,15 @@ const LoginBox = () => {
         }
     }
   };
-  const onClickAdult = (e) => {
-    setBirthday(year+'-'+month+'-'+day);
-    const request_data = {'email': email, 'username': username, 'password': password, 'birthday': birthday};
-    const now = new Date();
-    const now_year = now.getFullYear();
-    const yearDiff = now_year - year;
-    console.log(yearDiff);
+  // checkDuplicate 값이 변경될때 마다 useEffect 실행됨
+  useEffect(() => {
+    try{
+        changeMessageColor(checkDuplicate);
+    } catch (err) {
+        console.log(err);
+    }
     return;
-  };
+   }, [checkDuplicate]);
 
   return (
     <div className={styles.main}>
@@ -180,9 +195,9 @@ const LoginBox = () => {
                 <label className={styles.label}>이메일</label>
                 <button className={styles.emailCheck} onClick={onClickCheckDuplicate} >중복검사</button>
               </div>
-              <input type="email" className={styles.loginInput} name="email" value={email}
+              <input type="email" className={styles.emailInput} name="email" value={email}
               onChange={(e) => setEmail(e.target.value)}/>
-              <label className={styles.label} styles="color: red;">{message}</label><br/><br/>
+              <label className={styles.dupEmail} ref={emailMessage}>{message}</label><br/><br/>
               <label className={styles.label}>닉네임</label>
               <input
                 type="text"

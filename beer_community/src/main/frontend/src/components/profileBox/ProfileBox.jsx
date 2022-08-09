@@ -1,10 +1,12 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import styles from "./profileBox.module.css";
+import axios from 'axios';
+
 const ProfileBox = () => {
   const [image, setImage] = useState(
     "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
   );
-  const [nickname, setNickname] = useState("닉네임");
+  const [username, setUsername] = useState("");
   const fileInput = useRef(null);
   const onChangeImg = (e) => {
     if (e.target.files[0]) {
@@ -29,12 +31,39 @@ const ProfileBox = () => {
     };
     reader.readAsDataURL(e.target.files[0]);
   };
-  const onSubmit = ()=>{
-  
+  const handleEditSubmit = async (e) => {
+    e.preventDefault();
+    const request_data = {'username': username, 'imageUrl': image};
+    try{
+        let response = await axios({
+            method: 'post',
+            url: '/api/update-user-info',
+            headers: {'Content-Type': "application/json"},
+            data: JSON.stringify(request_data)
+        });
+        if(response.status >= 200 && response.status<300){
+            alert("정보 수정이 완료되었습니다.");
+            return;
+        }
+        else{
+            alert("정보 수정에 실패했습니다.");
+            return;
+        }
+    } catch (err) {
+        console.log("handleEditSubmit/err: ", err);
+    };
+    return;
   }
+  useEffect(() => {
+    axios.get('/api/user')
+    .then((response) => {
+        console.log('response.data: ', response.data);
+        setUsername(response.data['username'])
+    })
+  }, []);
   return (
     <>
-      <form onSubmit={onSubmit}>
+      <form onSubmit={handleEditSubmit}>
         <div className={styles.mainBox}>
           <div
             className={styles.circle}
@@ -55,12 +84,13 @@ const ProfileBox = () => {
               ref={fileInput}
             />
           </div>
-          <div className={styles.nickname}>
+          <div className={styles.username}>
             <label>
               <input
                 type="text"
-                className={styles.nicknameInput}
-                placeholder={nickname}
+                className={styles.usernameInput}
+                value = {username}
+                onChange = {(e) => setUsername(e.target.value) }
                 maxLength="8"
               />
 
@@ -71,24 +101,9 @@ const ProfileBox = () => {
               />
             </label>
           </div>
-
-          <div className={styles.passwordBox}>
-            <label className={styles.label}>비밀번호</label>
-            <input
-              type="password"
-              className={styles.passwordInput}
-              name="password"
-            />
-            <label className={styles.label}>비밀번호 확인</label>
-            <input
-              type="password"
-              className={styles.passwordInput}
-              name="passwordCheck"
-            />
             <button className={styles.submitButton} type="submit">
               수정하기
             </button>
-          </div>
         </div>
       </form>
     </>

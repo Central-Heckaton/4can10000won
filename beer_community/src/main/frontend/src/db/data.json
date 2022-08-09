@@ -2,38 +2,38 @@
   "beer_list": [
     {
       "id": "1",
-      "image_url": "/img/example.png",
-      "beer_name": "곰표밀맥주",
-      "total_point": 4.5,
-      "information": "좋은맥주입니다."
+      "image_url": "https://res.cloudinary.com/ratebeer/image/upload/d_beer_img_default.png,f_auto/beer_473",
+      "beer_name": "버드와이저",
+      "total_point": 1.76,
+      "information": "1876년부터 양조되고 판매된 버드와이저는 70개국 이상에 유통되고 있습니다."
     },
     {
       "id": "2",
-      "image_url": null,
-      "beer_name": "필스너우르켈",
-      "total_point": 4.0,
-      "information": "너무 맛있는 맥주입니다."
+      "image_url": "https://res.cloudinary.com/ratebeer/image/upload/d_beer_img_default.png,f_auto/beer_1267",
+      "beer_name": "기네스 드래프트",
+      "total_point": 2.48,
+      "information": "100% 몰트 리얼 맥주. 오리지널 그래비티. 풍부하고 부드러운."
     },
     {
       "id": "3",
-      "image_url": null,
-      "beer_name": "필스너우르켈dsdd",
-      "total_point": 5.0,
-      "information": "너무 맛있는 맥주입니다.dfsdf"
+      "image_url": "https://res.cloudinary.com/ratebeer/image/upload/d_beer_img_default.png,f_auto/beer_730",
+      "beer_name": "칭다오",
+      "total_point": 2.18,
+      "information": "칭다오 맥주는 기분 좋은 향과 균형 잡힌 맛이 특징입니다. 그것은 높은 몰티 향과 잘 홉된 특성을 가지고 있습니다."
     },
     {
       "id": "4",
-      "image_url": null,
-      "beer_name": "안녕하세요",
-      "total_point": 3.0,
-      "information": "좋아요 좋아요"
+      "image_url": "https://res.cloudinary.com/ratebeer/image/upload/d_beer_img_default.png,f_auto/beer_37",
+      "beer_name": "하이네켄",
+      "total_point": 2.38,
+      "information": "100% 보리 맥아, 엄선된 홉 및 순수한 물이 이 양조주에 탁월한 선명도를 제공합니다."
     },
     {
       "id": "5",
-      "image_url": "/img/example.png",
-      "beer_name": "안녕하세요",
-      "total_point": 1.0,
-      "information": "별로별로"
+      "image_url": "https://res.cloudinary.com/ratebeer/image/upload/d_beer_img_default.png,f_auto/beer_268",
+      "beer_name": "기린 이치방",
+      "total_point": 2.38,
+      "information": "전 세계 여러 지역(영국, 미국, 독일 등)에서 다양한 레시피와 abv로 허가를 받아 양조했습니다."
     },
     {
       "id": "6",
