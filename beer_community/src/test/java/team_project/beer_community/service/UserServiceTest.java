@@ -31,10 +31,10 @@ class UserServiceTest {
 //    @Rollback(value = false) //db에 반영
     public void 등록및조회() throws Exception {
         //given
-        User userA = new User("lio8625@naver.com", "seojo1919@", "서지오", "1998-03-11");
+        User userA = new User("seojio8625@naver.com", "seojo1919@", "서지오", "1998-03-11", null, Role.ROLE_USER);
         userService.join(userA);
 
-        Beer beerA = new Beer("heineken", 4.5, 4000, "하이네켄입니다.", BEER_TYPE.LARGER);
+        Beer beerA = new Beer("heineken", 4.5, 4000, "하이네켄입니다.", BEER_TYPE.Lager);
         beerService.join(beerA);
         
         Comment commentA = new Comment(userA, "맛있어요", 1);
@@ -76,10 +76,10 @@ class UserServiceTest {
     @Test
 //    @Rollback(value = false)
     public void 등록및삭제() throws Exception {
-        User userA = new User("lio8625@naver.com", "seojo1919@", "서지오", "1998-03-11");
+        User userA = new User("seojio8625@naver.com", "seojo1919@", "서지오", "1998-03-11", null, Role.ROLE_USER);
         userService.join(userA);
 
-        Beer beerA = new Beer("heineken", 4.5, 4000, "하이네켄입니다.", BEER_TYPE.LARGER);
+        Beer beerA = new Beer("heineken", 4.5, 4000, "하이네켄입니다.", BEER_TYPE.Lager);
         beerService.join(beerA);
 
         Comment commentA = new Comment(userA, "맛있어요", 1);
@@ -120,13 +120,13 @@ class UserServiceTest {
     @Test
     @Rollback(value = false) //db에 반영
     public void 유저등록() throws Exception {
-        User userA = new User("lio8625@naver.com", "seojo1919@", "서지오", "1998-03-11");
+        User userA = new User("seojio8625@naver.com", "seojo1919@", "서지오", "1998-03-11", null, Role.ROLE_USER);
         userService.join(userA);
 
-        Beer beerA = new Beer("heineken", 4.5, 4000, "하이네켄입니다.", BEER_TYPE.LARGER);
+        Beer beerA = new Beer("heineken", 4.5, 4000, "하이네켄입니다.", BEER_TYPE.Lager);
         beerService.join(beerA);
 
-        Beer beerB = new Beer("stella", 3.0, 2000, "스텔라입니다.", BEER_TYPE.LARGER);
+        Beer beerB = new Beer("stella", 3.0, 2000, "스텔라입니다.", BEER_TYPE.Lager);
         beerService.join(beerB);
 
         Comment commentA = new Comment(userA, "맛있어요", 1);

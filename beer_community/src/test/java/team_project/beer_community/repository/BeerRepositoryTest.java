@@ -24,7 +24,7 @@ class BeerRepositoryTest {
     @Rollback(value = false)
     public void TasteEntityTest() throws Exception {
         //given
-        Beer beer = new Beer("heineken", 4.5, 4000, "하이네켄입니다.", BEER_TYPE.LARGER);
+        Beer beer = new Beer("heineken", 4.5, 4000, "하이네켄입니다.", BEER_TYPE.Lager);
         TasteEntity tasteEntity1 = new TasteEntity(Taste.SOUR);
         TasteEntity tasteEntity2 = new TasteEntity(Taste.SWEET);
         tasteEntityRepository.save(tasteEntity1);
