@@ -14,7 +14,7 @@
 }
 
 .img {
-    width: 50px;
+    width: 33%;
 }
 
 .text {
@@ -37,5 +37,6 @@
 
 .description {
     font-size: var(--font-small);
+    margin-top: 1.8rem;
     line-height: 1rem;
 }

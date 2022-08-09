@@ -1,0 +1,20 @@
+.mainBox {
+  position: relative;
+  margin: 0.5rem 0;
+  width: 5rem;
+}
+.fakeStar {
+  position: absolute;
+  width: 100%;
+  overflow: hidden;
+  color: #cdcdcd;
+}
+.realStar {
+  overflow: hidden;
+  white-space: nowrap;
+  position: absolute;
+}
+
+.star {
+  width: 1rem;
+}
