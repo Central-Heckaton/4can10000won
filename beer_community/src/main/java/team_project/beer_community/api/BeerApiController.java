@@ -5,8 +5,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.parameters.P;
+
 import org.springframework.web.bind.annotation.*;
 import team_project.beer_community.config.auth.PrincipalDetails;
+
 import team_project.beer_community.domain.BEER_TYPE;
 import team_project.beer_community.domain.Beer;
 import team_project.beer_community.domain.LikeBeer;

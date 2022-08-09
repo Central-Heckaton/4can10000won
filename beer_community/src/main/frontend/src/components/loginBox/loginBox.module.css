@@ -43,7 +43,15 @@
   margin-bottom: 2rem;
   font-size: 15px;
 }
-
+.emailInput {
+  outline: none;
+  padding: 5px 0px;
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid var(--input-color);
+  margin-bottom: 1rem;
+  margin-top: 5px;
+}
 .loginInput {
   outline: none;
   padding: 5px 0px;
@@ -147,7 +155,7 @@ select {
   color: black;
 }
 select option[value=""][disabled] {
-    display: none;
+  display: none;
 }
 
 .ymd {
@@ -157,3 +165,6 @@ select option[value=""][disabled] {
   width: 100%;
 }
 
+.dupEmail {
+  font-size: 12px;
+}
