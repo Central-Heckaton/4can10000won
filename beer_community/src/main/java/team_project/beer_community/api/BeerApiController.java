@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.parameters.P;
 
 import org.springframework.web.bind.annotation.*;
 import team_project.beer_community.config.auth.PrincipalDetails;
@@ -35,8 +34,10 @@ public class BeerApiController {
 
     @GetMapping("/api/search")
     public WrapperClass search(){
+        System.out.println("BeerApiController.search");
         List<Beer> beers = beerService.findBeers();
         List<BeerDto> beerDtos = beers.stream().map(b -> new BeerDto(b)).collect(Collectors.toList());
+        System.out.println("/api/search/beerDtos = " + beerDtos);
         return new WrapperClass(beerDtos);
     }
 
