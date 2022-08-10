@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import team_project.beer_community.config.auth.PrincipalDetails;
 import team_project.beer_community.domain.*;
 import team_project.beer_community.dto.BeerDto;
+import team_project.beer_community.dto.UserInfoDto;
 import team_project.beer_community.dto.UserJoinDto;
 import team_project.beer_community.repository.BeerRepository;
 import team_project.beer_community.repository.UserRepository;
@@ -86,7 +87,7 @@ public class UserApiController {
                     userJoinDto.getBirthday(),
                     userJoinDto.getImageUrl(),
                     Role.ROLE_USER);
-            userService.join(user); // ** service계층을 통해 DB접근하도록 수정 해야됨 **
+            userService.join(user);
             return new ResponseEntity<>(null, headers, HttpStatus.CREATED); // 201
         } catch (Exception exception) {
             return new ResponseEntity<>(null, headers, HttpStatus.BAD_REQUEST); // 400
@@ -106,5 +107,22 @@ public class UserApiController {
         map.put("email", email);
         System.out.println("map = " + map); // map = {email=ko2@naver.com, username=ko2}
         return map;
+    }
+
+    @PostMapping("/api/update-user-info")// {"username": username, "image_url": image_url}
+    public ResponseEntity<Void> updateUserInfo(@AuthenticationPrincipal PrincipalDetails principalDetails, @RequestBody UserInfoDto userInfoDto){
+        HttpHeaders headers = new HttpHeaders();
+        HttpStatus status = HttpStatus.OK;
+        try{
+            User principalDetailsUser = principalDetails.getUser();
+            userService.updateName(principalDetailsUser.getId(), userInfoDto.getUsername()); // DB에 사용자이름 변경사항 반영
+            principalDetailsUser.setUsername(userInfoDto.getUsername()); // 세션에도 변경사항 반영해줘야됨
+            status = HttpStatus.ACCEPTED;
+
+        } catch (Exception exception) {
+            System.out.println("updateUserInfo/exception = " + exception);
+            status = HttpStatus.BAD_REQUEST;
+        }
+        return new ResponseEntity<>(null, headers, status);
     }
 }
