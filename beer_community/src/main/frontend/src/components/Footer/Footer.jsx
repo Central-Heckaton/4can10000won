@@ -10,7 +10,7 @@ import { faHeart, faUser } from "@fortawesome/free-regular-svg-icons";
 const Footer = () => {
   return (
     <footer className={styles.main}>
-      <Link to="/" className={styles.small}>
+      <Link to="/search" className={styles.small}>
         <FontAwesomeIcon
           className={styles.smallImg}
           icon={faMagnifyingGlass}
@@ -18,7 +18,7 @@ const Footer = () => {
         ></FontAwesomeIcon>
         <div className={styles.text}>SEARCH</div>
       </Link>
-      <Link to="/" className={styles.small}>
+      <Link to="/like" className={styles.small}>
         <FontAwesomeIcon
           className={styles.smallImg}
           icon={faHeart}
