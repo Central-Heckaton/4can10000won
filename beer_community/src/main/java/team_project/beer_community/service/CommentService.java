@@ -47,4 +47,8 @@ public class CommentService {
         Comment findComment = commentRepository.findById(id).orElseThrow(NullPointerException::new);
         findComment.setContent(content);
     }
+
+    public List<Comment> findAllWithUser(Long beerId) {
+        return commentRepository.findCommentWithUser(beerId);
+    }
 }
