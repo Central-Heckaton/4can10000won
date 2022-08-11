@@ -1,0 +1,59 @@
+.mainBox {
+  width: 300px;
+  height: 600px;
+  border: 2px solid var(--button-color);
+  margin-top: 5rem;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.title {
+  font-size: var(--font-large);
+  color: #6eac82;
+  margin-top: 65px;
+}
+.img {
+  width: 150px;
+  height: 150px;
+  margin-top: 2.5rem;
+}
+.name {
+  margin-top: 50px;
+  font-size: var(--font-large);
+  margin-bottom: 40px;
+}
+.description {
+  font-size: var(--font-medium);
+  width: 10rem;
+  font-weight: 100;
+}
+.button {
+  background-color: var(--button-color);
+  width: 15rem;
+  height: 30px;
+  mix-blend-mode: normal;
+  border-radius: 16px;
+  margin-top: 2rem;
+}
+
+.detail {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.taste {
+
+}
+.degree {
+  text-align: center;
+  line-height: 1rem;
+}
+
+.text {
+  color: darkgray;
+}
+.degreeNum {
+  font-weight: 700;
+}
