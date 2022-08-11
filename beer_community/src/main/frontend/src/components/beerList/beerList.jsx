@@ -8,9 +8,11 @@ const BeerList = (props) => {
         props.data.map((i) => (
         <BeerBox
           key={i.id}
+          id={i.id}
           image={i.imageUrl}
           title={i.beerName}
           description={i.information}
+          total_point={i.total_point}
         />
       ))
       : null}

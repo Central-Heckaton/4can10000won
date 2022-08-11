@@ -27,4 +27,12 @@ ${reset}
         border: none;
         outline: none;
     }
+    a:link { 
+        text-decoration: none;
+    }
+ 
+    a:visited { 
+        text-decoration: none;
+        color: black;
+    }
 `;
