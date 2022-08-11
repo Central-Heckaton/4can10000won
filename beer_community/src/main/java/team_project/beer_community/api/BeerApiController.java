@@ -41,6 +41,7 @@ public class BeerApiController {
         return new WrapperClass(beerDtos);
     }
 
+    //데이터를 수정하는게 아니므로 getmapping으로 바꿔야 하지 않나..?
     @PostMapping("/api/filter")
     public WrapperClass filter(@RequestBody HashMap<String, List<String>> beerTypeListData){
         List<String> beerTypeList = beerTypeListData.get("beerTypeList");
@@ -100,9 +101,10 @@ public class BeerApiController {
         return new WrapperClass(new BeerDetailDto(beer, beerService.findAllTaste(beerId), Boolean.FALSE));
     }
 
-    @GetMapping("/api/beer-like/{beerid}/{state}")
+    //LikeBeer table을 수정하므로 PostMapping 사용
+    @PostMapping("/api/beer-like/{beerId}/{state}")
     public ResponseEntity<Void> changeLikeState(
-            @PathVariable("beerid") Long beerId,
+            @PathVariable("beerId") Long beerId,
             @PathVariable("state") int state,
             @AuthenticationPrincipal PrincipalDetails principalDetails){
         User user = principalDetails.getUser();
