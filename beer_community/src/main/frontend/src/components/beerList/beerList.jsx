@@ -11,6 +11,7 @@ const BeerList = (props) => {
           image={i.image_url}
           title={i.beer_name}
           description={i.information}
+          total_point={i.total_point}
         />
       ))}
     </div>
