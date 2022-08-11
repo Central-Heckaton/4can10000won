@@ -12,7 +12,7 @@ const BeerList = (props) => {
           image={i.imageUrl}
           title={i.beerName}
           description={i.information}
-          total_point={i.total_point}
+          total_point={i.totalPoint}
         />
       ))
       : null}
