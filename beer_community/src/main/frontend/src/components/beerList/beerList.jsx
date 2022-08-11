@@ -7,6 +7,7 @@ const BeerList = (props) => {
       {props.data.beer_list.map((i) => (
         <BeerBox
           key={i.id}
+          id={i.id}
           image={i.image_url}
           title={i.beer_name}
           description={i.information}
