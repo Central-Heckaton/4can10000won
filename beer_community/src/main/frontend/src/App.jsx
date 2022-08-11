@@ -9,6 +9,7 @@ import Search from "./pages/Search";
 import Rate from "./pages/Rate";
 import Detail from "./pages/Detail";
 import UserInfo from "./pages/UserInfo";
+import Review from "./pages/Review";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         <Route path="/rate" element={<Rate />} />
         <Route path="/detail" element={<Detail />} />
         <Route path="/user-info" element={<UserInfo />} />
+        <Route path="/review" element={<Review />} />
       </Routes>
     </>
   );
