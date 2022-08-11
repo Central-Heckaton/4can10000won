@@ -9,23 +9,26 @@ import Search from "./pages/Search";
 import Rate from "./pages/Rate";
 import Detail from "./pages/Detail";
 import UserInfo from "./pages/UserInfo";
-
+import Review from "./pages/Review";
+import { BrowserRouter } from "react-router-dom";
 function App() {
   return (
     <>
-      <GlobalStyle />
-
-      <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/menu" element={<Menu />} />
-        <Route path="/like" element={<Like />} />
-        <Route path="/random" element={<Random />} />
-        <Route path="/search" element={<Search />} />
-        <Route path="/rate" element={<Rate />} />
-        <Route path="/detail" element={<Detail />} />
-        <Route path="/user-info" element={<UserInfo />} />
-      </Routes>
+      <BrowserRouter>
+        <GlobalStyle />
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/menu" element={<Menu />} />
+          <Route path="/like" element={<Like />} />
+          <Route path="/random" element={<Random />} />
+          <Route path="/search" element={<Search />} />
+          <Route path="/rate" element={<Rate />} />
+          <Route path="/detail" element={<Detail />} />
+          <Route path="/user-info" element={<UserInfo />} />
+          <Route path="/review" element={<Review />} />
+        </Routes>
+      </BrowserRouter>
     </>
   );
 }
