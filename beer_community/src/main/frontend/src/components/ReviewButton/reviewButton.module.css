@@ -1,0 +1,7 @@
+.main {
+  margin-top: 5rem;
+  background-color: var(--button-color);
+  padding: 5px 25px;
+  border-radius: 10px;
+  color: white;
+}

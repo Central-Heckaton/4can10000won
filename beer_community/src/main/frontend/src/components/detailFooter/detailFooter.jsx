@@ -15,14 +15,14 @@ const DetailFooter = () => {
 
     React.useEffect(
         (e) => {
-            if (like == 'false') {
+            if (like === 'false') {
                 let cur = document.getElementById(like);
                 cur.style.display = "none";
                 cur = document.getElementById('true');
                 cur.style.display = "block";
             }
 
-            if (like == 'true') {
+            if (like === 'true') {
                 let cur = document.getElementById(like);
                 cur.style.display = "none";
                 cur = document.getElementById('false');
