@@ -4,11 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import team_project.beer_community.domain.BEER_TYPE;
 import team_project.beer_community.domain.Beer;
 import team_project.beer_community.service.BeerService;
 
+@EnableJpaAuditing //@CreatedDate와 같은 어노테이션 작동 가능하게 함
 @SpringBootApplication
 public class BeerCommunityApplication {
 
