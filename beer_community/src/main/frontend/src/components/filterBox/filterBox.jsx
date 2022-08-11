@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 import styles from './filterBox.module.css';
 import { useState } from 'react';
+import axios from 'axios';
 
 const FilterBox = () => {
     const [changeColor, setChangeColor] = useState(true);
@@ -50,6 +51,17 @@ const FilterBox = () => {
 
     const result = filteredCollected();
     console.log(result);
+    const getBeerList = async (e) => {
+        const request_data = {'beerTypeList': result}; // type of -> Object
+        let response = await axios({
+                method: 'post',
+                url: '/api/filter',
+                headers: {'Content-Type': 'application/json'},
+                data: JSON.stringify(request_data)
+            });
+        console.log('response: ', response);
+    };
+    getBeerList();
 
     return (
         <div className={styles.container}>

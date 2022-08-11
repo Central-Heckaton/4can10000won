@@ -125,4 +125,9 @@ public class UserApiController {
         }
         return new ResponseEntity<>(null, headers, status);
     }
+
+    @GetMapping("/api/test")
+    public String test(){
+        return "test good";
+    }
 }

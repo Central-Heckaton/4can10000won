@@ -44,6 +44,12 @@ dependencies {
 
 }
 
+bootJar {
+	archiveBaseName = '-'
+	archiveFileName = '4can10000wonBE.jar'
+	archiveVersion = '0.0.0'
+}
+
 tasks.named('test') {
 	useJUnitPlatform()
 }
