@@ -1,42 +1,51 @@
 .box {
-    width: 300px;
-    height: 100px;
-    /* height: 130px; */
-    border: 2px solid #9AD8AE;
-    border-radius: 5px;
-    display: flex;
-    /* position: absolute; */
-    /* top: 50%;
+  width: 285px;
+  height: 100px;
+  /* height: 130px; */
+  border: 2px solid #9ad8ae;
+  border-radius: 5px;
+  display: flex;
+  /* position: absolute; */
+  /* top: 50%;
     left: 50%;
     transform: translate(-50%, -50%); */
-    padding: 0.5rem;
-    margin-bottom: 5px;
+  padding: 1rem;
+  margin-bottom: 25px;
 }
 
 .img {
-    width: 15%;
+  width: 15%;
+  margin-right: 1rem;
+  margin-left: 0.5rem;
 }
 
 .text {
-    width: 70%;
-    text-align: left;
-    margin: 0.6rem 0.5rem;
+  width: 70%;
+  text-align: left;
+  margin: 0.6rem 0.5rem;
 }
 
 .name {
-    font-weight: 700;
+  font-weight: 700;
 }
 
 .rate {
-    margin: 0.5rem 0;
+  margin: 0.5rem 0;
 }
 
 .star {
-    width: 0.9rem;
+  width: 0.9rem;
 }
 
 .description {
-    font-size: var(--font-small);
-    margin-top: 1.8rem;
-    line-height: 1rem;
+  width: 200px;
+  font-size: var(--font-small);
+  margin-top: 2rem;
+  line-height: 1rem;
+  overflow: hidden;
+  white-space: normal;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
 }
