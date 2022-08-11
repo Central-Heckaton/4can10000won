@@ -1,27 +1,31 @@
 import React from 'react';
 import styles from './detailFooter.module.css';
+import { useState } from 'react';
 
 const DetailFooter = () => {
     const [like, setLike] = React.useState(null);
+    const [state, setState] = useState('false');
 
     const onLikeClick = (e) => {
+        e.preventDefault();
         setLike(e.target.id);
+        setState(e.target.id); 
         console.log(e.target.id);
     };
 
     React.useEffect(
         (e) => {
-            if (like == 'heartReg') {
+            if (like == 'false') {
                 let cur = document.getElementById(like);
                 cur.style.display = "none";
-                cur = document.getElementById('heartSol');
+                cur = document.getElementById('true');
                 cur.style.display = "block";
             }
 
-            if (like == 'heartSol') {
+            if (like == 'true') {
                 let cur = document.getElementById(like);
                 cur.style.display = "none";
-                cur = document.getElementById('heartReg');
+                cur = document.getElementById('false');
                 cur.style.display = "block";
             }
 
@@ -41,13 +45,13 @@ const DetailFooter = () => {
             <div className={styles.like}>
                 <button className={styles.heart}>
                     <img
-                        id='heartReg'
+                        id='false'
                         className={styles.heartReg} 
                         src="/img/heart-regular.png" 
                         alt=""
                         onClick={onLikeClick} />
                     <img 
-                        id='heartSol'
+                        id='true'
                         className={styles.heartSol} 
                         src="/img/heart-solid.png" 
                         alt=""

@@ -118,7 +118,7 @@ class UserServiceTest {
     }
 
     @Test
-    @Rollback(value = false) //db에 반영
+//    @Rollback(value = false) //db에 반영
     public void 유저등록() throws Exception {
         User userA = new User("seojio8625@naver.com", "seojo1919@", "서지오", "1998-03-11", null, Role.ROLE_USER);
         userService.join(userA);
