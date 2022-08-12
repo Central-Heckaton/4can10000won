@@ -147,4 +147,11 @@ public class BeerApiController {
         BeerRecDto beerRecDto = new BeerRecDto(beer, beerService.findAllTaste(beer.getId()));
         return beerRecDto;
     }
+
+    @GetMapping("/api/beername-search/{beerName}") // @RequestParam으로 <input/>의 name을 써주자
+    public WrapperClass beerSearch(@PathVariable("beerName") String beerName){
+        System.out.println("BeerApiController.beerSearch");
+        List<BeerDto> beerDtoList = beerService.findBeersWithBeerName(beerName);
+        return new WrapperClass(beerDtoList);
+    }
 }

@@ -1,9 +1,11 @@
 spring:
   datasource:
-    url: jdbc:mysql://database-1.cl4il8qu2fl3.us-east-1.rds.amazonaws.com:3306/beer_community?useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC
-    #    url: jdbc:mysql://localhost:3306/beer_community?useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC
-    username: admin
-    password: 9192631770m!
+#    url: jdbc:mysql://database-1.cl4il8qu2fl3.us-east-1.rds.amazonaws.com:3306/beer_community?useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/beer_community?useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC
+#    username: admin
+    username: root
+#    password: 9192631770m!
+    password: 1234
     driver-class-name: com.mysql.cj.jdbc.Driver
   main:
     allow-circular-references: true

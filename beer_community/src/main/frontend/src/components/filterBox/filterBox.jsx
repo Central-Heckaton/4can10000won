@@ -60,6 +60,8 @@ const FilterBox = () => {
                 data: JSON.stringify(request_data)
             });
         console.log('response: ', response);
+        // response.data
+        // [{ }, { }, { } ...] -> props로 전달필요
     };
     getBeerList();
 
