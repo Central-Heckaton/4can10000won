@@ -6,7 +6,7 @@ import FilterBox from "./../components/filterBox/filterBox";
 import Nav from "../components/Nav/Nav";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
-import data from "../db/data.json";
+
 
 const Search = (props) => {
     const [beerData, setBeerData] = useState([]);
