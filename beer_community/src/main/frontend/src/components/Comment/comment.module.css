@@ -1,0 +1,49 @@
+.commentBox {
+  display: flex;
+  height: auto;
+  width: 20rem;
+  margin-bottom: 20px;
+}
+
+.comment {
+  background-color: var(--button-color);
+  border-radius: 15px;
+  width: 20rem;
+  height: auto;
+  display: flex;
+}
+
+.arrow {
+  margin-top: 20px;
+  width: 2rem;
+  height: 2rem;
+  margin-bottom: 15px;
+}
+.profile {
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 15px;
+  margin-right: 20px;
+  margin-left: 20px;
+}
+.profilePhoto {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  margin-bottom: 5px;
+}
+.username {
+  font-size: 10px;
+  font-weight: 100;
+  margin-bottom: 7px;
+}
+.commentText {
+  font-weight: 100;
+  margin-top: 15px;
+  margin-right: 25px;
+  margin-bottom: 15px;
+}
