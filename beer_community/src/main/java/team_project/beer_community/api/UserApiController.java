@@ -11,10 +11,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.core.user.OAuth2User;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import team_project.beer_community.config.auth.PrincipalDetails;
 import team_project.beer_community.domain.*;
 import team_project.beer_community.dto.BeerDto;
+import team_project.beer_community.dto.EmailDto;
 import team_project.beer_community.dto.UserInfoDto;
 import team_project.beer_community.dto.UserJoinDto;
 import team_project.beer_community.repository.BeerRepository;
@@ -23,6 +25,7 @@ import team_project.beer_community.service.BeerService;
 import team_project.beer_community.service.LikeBeerService;
 import team_project.beer_community.service.UserService;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -52,11 +55,27 @@ public class UserApiController {
     }
 
     @PostMapping("/api/check-email-duplicate")
-    public ResponseEntity<Void> checkEmailDuplicate(@RequestBody HashMap<String, String> emailData){
+    public ResponseEntity<Map<String, String>> checkEmailDuplicate(@Valid @RequestBody EmailDto emailDto, Errors errors){
         HttpHeaders headers = new HttpHeaders();
+        Map<String, String> httpBody = new HashMap<>();
+        System.out.println("========emailDto=========");
+        System.out.println(emailDto.toString());
+        System.out.println("========Errors===========");
+        System.out.println(errors);
+        if (errors.hasErrors()){
+            System.out.println("===========error 존재============");
+            Map<String, String> validatorResult = userService.validateHandling(errors);
+            String errorMessage = "";
+            for (String key : validatorResult.keySet()) {
+                errorMessage = validatorResult.get(key);
+            }
+            httpBody.put("error", errorMessage);
+            System.out.println("============errorMessage : " + errorMessage + "===========");
+            return new ResponseEntity<Map<String, String>>(httpBody, headers, HttpStatus.BAD_REQUEST); // 400
+        }
         try{
             System.out.println("IndexController.checkEmailDuplicate");
-            String email = emailData.get("email");
+            String email = emailDto.getEmail();
             List<User> userList = userService.findUsers();
             HttpStatus status = HttpStatus.ACCEPTED; // 202
             for (User user : userList) {
@@ -65,17 +84,27 @@ public class UserApiController {
                     break;
                 }
             }
-            return new ResponseEntity<>(null, headers, status);
+            return new ResponseEntity<>(httpBody, headers, status);
         } catch (Exception exception){
             System.out.println("apiLogin/exception = " + exception);
-            return new ResponseEntity<>(null, headers, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(httpBody, headers, HttpStatus.BAD_REQUEST);
         }
 
     }
 
     @PostMapping("/api/join")
-    public ResponseEntity<Void> join(@RequestBody UserJoinDto userJoinDto) throws URISyntaxException {
+    public ResponseEntity<Map<String, String>> join(@RequestBody @Valid UserJoinDto userJoinDto, Errors errors) throws URISyntaxException {
         HttpHeaders headers = new HttpHeaders();
+        Map<String, String> httpBody = new HashMap<>();
+        if (errors.hasErrors()){
+            Map<String, String> validatorResult = userService.validateHandling(errors);
+            String errorMessage = "";
+            for (String key : validatorResult.keySet()) {
+                errorMessage = validatorResult.get(key);
+            }
+            httpBody.put("error", errorMessage);
+            return new ResponseEntity<Map<String, String>>(httpBody, headers, HttpStatus.BAD_REQUEST); // 400
+        }
         try{
             String rawPassword = userJoinDto.getPassword();
             String encPassword = bCryptPasswordEncoder.encode(rawPassword);

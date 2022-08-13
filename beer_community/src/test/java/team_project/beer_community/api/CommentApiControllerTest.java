@@ -10,6 +10,8 @@ import team_project.beer_community.service.BeerService;
 import team_project.beer_community.service.CommentService;
 import team_project.beer_community.service.UserService;
 
+import javax.persistence.EntityManager;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -21,6 +23,9 @@ class CommentApiControllerTest {
     UserService userService;
     @Autowired
     CommentService commentService;
+
+    @Autowired
+    EntityManager em;
 
     @Test
     @Rollback(value = false)
@@ -37,8 +42,13 @@ class CommentApiControllerTest {
         Comment commentA = new Comment(userA, "맛있어요", 4.5);
         commentService.join(commentA);
 
-        Comment commentB = new Comment(userB, "노맛...", 1);
+        System.out.println("========================");
+        System.out.println(commentA.getId());
+
+        Comment commentB = new Comment(userB, "노맛...", 1, commentA.getId());
         commentService.join(commentB);
+
+        System.out.println("commentB.getParentId() = " + commentB.getParentId());
 
         beerService.addComment(beerA.getId(), commentA);
         beerService.addComment(beerA.getId(), commentB);
