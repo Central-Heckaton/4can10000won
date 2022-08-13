@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import team_project.beer_community.domain.*;
+import team_project.beer_community.dto.BeerDto;
 import team_project.beer_community.repository.BeerRepository;
 import team_project.beer_community.repository.CommentRepository;
 import team_project.beer_community.repository.LikeBeerRepository;
@@ -98,5 +99,19 @@ public class BeerService {
         } catch (Exception exception){
             return 0;
         }
+    }
+    @Transactional
+    public List<BeerDto> findBeersWithBeerName(String beerName){
+        List<Beer> beerList = beerRepository.findByBeerNameContaining(beerName);
+        List<BeerDto> beerDtoList = new ArrayList<>();
+
+        if(beerList.isEmpty()) return beerDtoList;
+        for (Beer beer : beerList) {
+            beerDtoList.add(this.converEntityToDto(beer));
+        }
+        return beerDtoList;
+    }
+    private BeerDto converEntityToDto(Beer beer){
+        return new BeerDto(beer);
     }
 }
