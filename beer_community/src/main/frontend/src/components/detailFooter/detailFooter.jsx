@@ -45,13 +45,13 @@ const DetailFooter = () => {
             <div className={styles.like}>
                 <button className={styles.heart}>
                     <img
-                        id='false'
+                        id='true'
                         className={styles.heartReg} 
                         src="/img/heart-regular.png" 
                         alt=""
                         onClick={onLikeClick} />
                     <img 
-                        id='true'
+                        id='false'
                         className={styles.heartSol} 
                         src="/img/heart-solid.png" 
                         alt=""
