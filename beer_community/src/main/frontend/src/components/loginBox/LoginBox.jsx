@@ -51,7 +51,7 @@ const LoginBox = () => {
   }
   const onClickCheckDuplicate = async (e) => {
     e.preventDefault();
-
+    console.log("Clicked")
     const request_data = { email: email }; // type of -> Object
     if (email.length === 0) {
       alert("이메일을 입력해주시기 바랍니다.");
@@ -74,7 +74,13 @@ const LoginBox = () => {
         setEmail("");
       }
     } catch (err) {
-      if (err.response.status === 409) {
+      console.log("err.response.data[\"error\"] : ", err.response.data["error"])
+      if (err.response.status === 400){  //이메일 중복검사 시 양식이 올바르지 않은 경우
+        setCheckDuplicate(false);
+        setMessage(err.response.data["error"]);
+        setEmail("")
+      }
+      else if (err.response.status === 409) {
         // CONFLICT
         setCheckDuplicate(false);
         setMessage("이미 존재하는 이메일입니다!");
@@ -134,7 +140,13 @@ const LoginBox = () => {
       }
     } catch (err) {
       if (err.response.status >= 400) {
-        alert("회원가입에 실패했습니다.");
+        console.log("err/message : " + err.response.data["error"])
+        if(err.response.data["error"] != ""){  //이메일 형식에 맞지 않을 경우
+          alert(err.response.data["error"])
+        }
+        else{
+          alert("회원 가입에 실패했습니다.")
+        }
         resetInput();
       } else {
         console.log("handleJoinSubmit/err: ", err);

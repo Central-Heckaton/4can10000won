@@ -30,6 +30,8 @@ public class Comment extends BaseTimeEntity{
     @NotNull
     private double point;
 
+    private Long parentId = 0L;
+
 
     //사용자를 생성자에서 받아야만 comment가 생성할 수 있도록 한다.
     public Comment(User user, String content, double point) {
@@ -37,4 +39,17 @@ public class Comment extends BaseTimeEntity{
         this.user = user;
         this.point = point;
     }
+
+    public Comment(User user, String content) {
+        this.content = content;
+        this.user = user;
+    }
+    public Comment(User user, String content, double point, Long parentId) {
+        this.content = content;
+        this.user = user;
+        this.point = point;
+        this.parentId = parentId;
+    }
+
+
 }

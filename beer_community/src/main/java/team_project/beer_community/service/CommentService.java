@@ -1,6 +1,5 @@
 package team_project.beer_community.service;
 
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -50,5 +49,9 @@ public class CommentService {
 
     public List<Comment> findAllWithUser(Long beerId) {
         return commentRepository.findCommentWithUser(beerId);
+    }
+
+    public List<Comment> findAllRecomments(Long parentCommentId) {
+        return commentRepository.findRecommentsWithParentId(parentCommentId);
     }
 }

@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.Errors;
+import org.springframework.validation.FieldError;
 import team_project.beer_community.domain.Beer;
 import team_project.beer_community.domain.Comment;
 import team_project.beer_community.domain.LikeBeer;
@@ -15,7 +17,9 @@ import team_project.beer_community.repository.BeerRepository;
 import team_project.beer_community.repository.LikeBeerRepository;
 import team_project.beer_community.repository.UserRepository;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -90,5 +94,15 @@ public class UserService {
                 break;
             }
         }
+    }
+
+    public Map<String, String> validateHandling(Errors errors) {
+        Map<String, String> validateResult = new HashMap<>();
+
+        for (FieldError fieldError : errors.getFieldErrors()) {
+            String validKeyName = String.format("valid_%s", fieldError.getField());
+            validateResult.put(validKeyName, fieldError.getDefaultMessage());
+        }
+        return validateResult;
     }
 }
