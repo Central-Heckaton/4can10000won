@@ -90,16 +90,21 @@ public class BeerService {
     @Transactional
     public double calTotalPoint(Beer beer){
         double sum = 0;
+        int count = 0;
         try{
             List<Comment> comments = beer.getComments();
             for (Comment comment : comments) {
-                sum = sum + comment.getPoint();
+                if(comment.getParentId() == 0L){ //부모 커멘트인 경우에만 총점 계산 시 고려
+                    sum = sum + comment.getPoint();
+                    count++;
+                }
             }
-            return sum / comments.size();
+            return sum / count;
         } catch (Exception exception){
             return 0;
         }
     }
+
     @Transactional
     public List<BeerDto> findBeersWithBeerName(String beerName){
         List<Beer> beerList = beerRepository.findByBeerNameContaining(beerName);

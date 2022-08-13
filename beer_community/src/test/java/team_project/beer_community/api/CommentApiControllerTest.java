@@ -1,5 +1,6 @@
 package team_project.beer_community.api;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,6 +13,7 @@ import team_project.beer_community.service.UserService;
 
 import javax.persistence.EntityManager;
 
+import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -42,15 +44,18 @@ class CommentApiControllerTest {
         Comment commentA = new Comment(userA, "맛있어요", 4.5);
         commentService.join(commentA);
 
-        System.out.println("========================");
-        System.out.println(commentA.getId());
-
-        Comment commentB = new Comment(userB, "노맛...", 1, commentA.getId());
+        Comment commentB = new Comment(userA, "맛있어요", 3.5);
         commentService.join(commentB);
 
-        System.out.println("commentB.getParentId() = " + commentB.getParentId());
+        Comment commentC = new Comment(userB, "노맛...", commentA.getId());
+        commentService.join(commentC);
+
 
         beerService.addComment(beerA.getId(), commentA);
         beerService.addComment(beerA.getId(), commentB);
+        beerService.addComment(beerA.getId(), commentC);
+
+        assertThat(commentC.getParentId()).isEqualTo(commentA.getId());
+        assertThat(beerA.getTotalPoint()).isEqualTo(4);
     }
 }

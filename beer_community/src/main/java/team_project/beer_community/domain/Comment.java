@@ -27,8 +27,7 @@ public class Comment extends BaseTimeEntity{
     @JoinColumn(name = "beer_id")
     private Beer beer;
 
-    @NotNull
-    private double point;
+    private double point = 0;
 
     private Long parentId = 0L;
 
@@ -44,10 +43,9 @@ public class Comment extends BaseTimeEntity{
         this.content = content;
         this.user = user;
     }
-    public Comment(User user, String content, double point, Long parentId) {
+    public Comment(User user, String content, Long parentId) {
         this.content = content;
         this.user = user;
-        this.point = point;
         this.parentId = parentId;
     }
 
