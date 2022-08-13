@@ -38,14 +38,15 @@ public class CommentApiController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-//    @PostMapping("/api/write-recomment")
-//    public ResponseEntity<Void> writeReComment(
-//            @RequestBody @Valid WriteReCommentDto writeReCommentDto,
-//            @AuthenticationPrincipal PrincipalDetails principalDetails){
-//        User user = principalDetails.getUser();
-//        Comment comment = new Comment(user, writeReCommentDto.getContent());
-//
-//    }
+    @PostMapping("/api/write-recomment") //대댓글에도 맥주와 매핑 시킨 경우
+    public ResponseEntity<Void> writeReComment(
+            @RequestBody @Valid WriteReCommentDto writeReCommentDto,
+            @AuthenticationPrincipal PrincipalDetails principalDetails){
+        User user = principalDetails.getUser();
+        Comment comment = new Comment(user, writeReCommentDto.getContent());
+        beerService.addComment(writeReCommentDto.getBeerId(), comment);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
 //    //성능 최적화 전
 //    @GetMapping("/api/comments/{beerId}")

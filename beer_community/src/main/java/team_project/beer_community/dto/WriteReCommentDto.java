@@ -11,6 +11,8 @@ public class WriteReCommentDto {
     @NotNull
     private Long parentId;
 
+    private Long beerId;
+
     public WriteReCommentDto(String content, Long parentId) {
         this.content = content;
         this.parentId = parentId;
