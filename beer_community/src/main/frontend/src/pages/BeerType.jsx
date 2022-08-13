@@ -1,13 +1,11 @@
 import React from 'react';
-import DetailBox from '../components/detailBox/detailBox';
-import FilterBox from '../components/filterBox/filterBox';
 import Footer from './../components/Footer/Footer';
+import BeerTypeFilter from './../components/beerTypeFilter/beerTypeFilter';
 
 const BeerType = (props) => {
     return (
         <div>
-            <FilterBox />
-            <DetailBox />
+            <BeerTypeFilter />
             <Footer />
         </div>
     );
