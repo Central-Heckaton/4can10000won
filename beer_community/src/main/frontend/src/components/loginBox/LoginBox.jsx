@@ -141,7 +141,7 @@ const LoginBox = () => {
     } catch (err) {
       if (err.response.status >= 400) {
         console.log("err/message : " + err.response.data["error"])
-        if(err.response.data["error"] != ""){  //이메일 형식에 맞지 않을 경우
+        if(err.response.data["error"] !== ""){  //이메일 형식에 맞지 않을 경우
           alert(err.response.data["error"])
         }
         else{

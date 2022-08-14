@@ -4,8 +4,8 @@ import styles from './detailImgs.module.css'
 const DetailImgs = (props) => {
     return (
         <div className={styles.container}>
-            <h1 className={styles.name}>곰표 밀맥주</h1>
-            <img className={styles.img} src="/img/example.png" alt="" />
+            <h1 className={styles.name}>{props.beerName}</h1>
+            <img className={styles.img} src={props.imageUrl} alt="beerImg" />
             <div className={styles.circle}></div>
         </div>
     );
