@@ -41,10 +41,11 @@ public class UserApiController {
     private final UserService userService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder; // password 암호화할 때 사용
 
-    @GetMapping("/api/likebeers/{id}")
-    public WrapperClass showLikeBeers(@PathVariable("id") Long userid){
+    @GetMapping("/api/likebeers")
+    public WrapperClass showLikeBeers(@AuthenticationPrincipal PrincipalDetails principalDetails){
         //fetch join 사용
-        List<LikeBeer> likeBeers = likeBeerService.findAllWithBeer(userid);
+        User user = principalDetails.getUser();
+        List<LikeBeer> likeBeers = likeBeerService.findAllWithBeer(user.getId());
         List<Beer> beers = new ArrayList<>();
         for (LikeBeer likeBeer : likeBeers) {
             beers.add(likeBeer.getBeer());
@@ -58,23 +59,16 @@ public class UserApiController {
     public ResponseEntity<Map<String, String>> checkEmailDuplicate(@Valid @RequestBody EmailDto emailDto, Errors errors){
         HttpHeaders headers = new HttpHeaders();
         Map<String, String> httpBody = new HashMap<>();
-        System.out.println("========emailDto=========");
-        System.out.println(emailDto.toString());
-        System.out.println("========Errors===========");
-        System.out.println(errors);
         if (errors.hasErrors()){
-            System.out.println("===========error 존재============");
             Map<String, String> validatorResult = userService.validateHandling(errors);
             String errorMessage = "";
             for (String key : validatorResult.keySet()) {
                 errorMessage = validatorResult.get(key);
             }
             httpBody.put("error", errorMessage);
-            System.out.println("============errorMessage : " + errorMessage + "===========");
             return new ResponseEntity<Map<String, String>>(httpBody, headers, HttpStatus.BAD_REQUEST); // 400
         }
         try{
-            System.out.println("IndexController.checkEmailDuplicate");
             String email = emailDto.getEmail();
             List<User> userList = userService.findUsers();
             HttpStatus status = HttpStatus.ACCEPTED; // 202

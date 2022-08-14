@@ -14,7 +14,6 @@ import team_project.beer_community.dto.WriteCommentDto;
 import team_project.beer_community.dto.WriteReCommentDto;
 import team_project.beer_community.service.BeerService;
 import team_project.beer_community.service.CommentService;
-import team_project.beer_community.service.UserService;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -25,27 +24,38 @@ import java.util.stream.Collectors;
 public class CommentApiController {
     private final BeerService beerService;
     private final CommentService commentService;
-    private final UserService userService;
 
-    //beerId가 잘못들어오는 경우는 없으므로 무조건 OK return
     @PostMapping("/api/comments/write-comment")
     public ResponseEntity<Void> writeComment(
             @RequestBody @Valid WriteCommentDto writeCommentDto,
             @AuthenticationPrincipal PrincipalDetails principalDetails) {
-        User user = principalDetails.getUser();
-        Comment comment = new Comment(user, writeCommentDto.getContent(), writeCommentDto.getPoint());
-        beerService.addComment(writeCommentDto.getBeerId(), comment); //이 안에서 beer-comment/user-comment 모두 매핑
-        return new ResponseEntity<>(HttpStatus.OK);
+        try{
+            User user = principalDetails.getUser();
+            Comment comment = new Comment(user, writeCommentDto.getContent(), writeCommentDto.getPoint());
+            commentService.join(comment);
+            beerService.addComment(writeCommentDto.getBeerId(), comment); //이 안에서 beer-comment/user-comment 모두 매핑
+            return new ResponseEntity<>(HttpStatus.CREATED); // 201
+        } catch (Exception exception){
+            System.out.println("writeComment/exception = " + exception);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
     }
 
-    @PostMapping("/api/write-recomment") //대댓글에도 맥주와 매핑 시킨 경우
+    @PostMapping("/api/comments/write-recomment") //대댓글에도 맥주와 매핑 시킨 경우
     public ResponseEntity<Void> writeReComment(
             @RequestBody @Valid WriteReCommentDto writeReCommentDto,
             @AuthenticationPrincipal PrincipalDetails principalDetails){
         User user = principalDetails.getUser();
-        Comment comment = new Comment(user, writeReCommentDto.getContent());
-        beerService.addComment(writeReCommentDto.getBeerId(), comment);
-        return new ResponseEntity<>(HttpStatus.OK);
+        if(writeReCommentDto.getParentId() != null) {
+            Comment comment = new Comment(user, writeReCommentDto.getContent(), writeReCommentDto.getParentId()); // 대댓글일 경우 parentId 필요
+            commentService.join(comment);
+            beerService.addComment(writeReCommentDto.getBeerId(), comment);
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        }
+        else{
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
 //    //성능 최적화 전
@@ -62,7 +72,7 @@ public class CommentApiController {
 //        return new WrapperClass(commentDtos);
 //    }
 
-    @GetMapping("/api/comments/{beerId}")
+    @GetMapping("/api/comments/{beerId}") // 맥주상세보기 들어갔을때 댓글들 랜더링
     public WrapperClass showComments(
             @PathVariable("beerId") Long beerId){
         //fetch join 사용, comment와 user를 한번에 조회
@@ -73,7 +83,7 @@ public class CommentApiController {
         return new WrapperClass(commentDtos);
     }
 
-    @GetMapping("/api/recomment/{commentId}")  //drop down 눌렀을 경우
+    @GetMapping("/api/recomments/{commentId}")  //drop down 눌렀을 경우
     public WrapperClass showReComments(
             @PathVariable("commentId") Long parentCommentId){
         List<Comment> recomments = commentService.findAllRecomments(parentCommentId);

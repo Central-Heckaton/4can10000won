@@ -1,6 +1,7 @@
 package team_project.beer_community.api;
 
 import lombok.RequiredArgsConstructor;
+import org.hibernate.Hibernate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -15,6 +16,7 @@ import team_project.beer_community.domain.User;
 import team_project.beer_community.dto.BeerDetailDto;
 import team_project.beer_community.dto.BeerDto;
 import team_project.beer_community.dto.BeerRecDto;
+import team_project.beer_community.dto.LikeBeerDto;
 import team_project.beer_community.service.BeerService;
 import team_project.beer_community.service.LikeBeerService;
 import team_project.beer_community.service.UserService;
@@ -45,13 +47,10 @@ public class BeerApiController {
     @PostMapping("/api/filter")
     public WrapperClass filter(@RequestBody HashMap<String, List<String>> beerTypeListData){
         List<String> beerTypeList = beerTypeListData.get("beerTypeList");
-        System.out.println("beerTypeList = " + beerTypeList);
         List<Beer> finalBeerList = new ArrayList<>();
         List<Beer> beerList = beerService.findBeers();
         List<BEER_TYPE> beerTypes = new ArrayList<>(); // 맥주 타입들만 뽑아서 정리
-        if(beerList.size() >= 1) {System.out.println("beerList[0].getBeerType = " + beerList.get(0).getBeerType().toString());}
-        if(beerTypeList.size() >= 1) {System.out.println("beerTypeList[0].getBeerType = " + beerTypeList.get(0));}
-        System.out.println("beerTypeList[0].equals(beerList[0].getBeerType) = " + beerTypeList.get(0).equals(beerList.get(0).getBeerType().toString()));
+
         if(beerTypeList.size() == 0) {
             List<BeerDto> beerDtos = beerList.stream().map(b -> new BeerDto(b)).collect(Collectors.toList());
             return new WrapperClass(beerDtos);
@@ -69,51 +68,44 @@ public class BeerApiController {
 
     @GetMapping("/api/search/detail/{id}")
     public WrapperClass beerDetail(
-            @PathVariable("id") Long id,
+            @PathVariable("id") Long beerId,
             @AuthenticationPrincipal PrincipalDetails principalDetails)
     {
-        Beer beer = beerService.findOne(id);
+        Beer beer = beerService.findOne(beerId);
         User user = principalDetails.getUser();
         List<LikeBeer> likeBeers = userService.findLikeBeers(user.getId());
         BeerDetailDto beerDetailDto = null;
+        int count = 0;
+        try {
+            count = beer.getComments().size();
+        } catch (Exception exception){
+            System.out.println("BeerApiController.beerDetail/err: " + exception);
+        }
+
         for (LikeBeer likeBeer : likeBeers) {
             if(likeBeer.getBeer() == beer){
-                beerDetailDto = new BeerDetailDto(beer, beerService.findAllTaste(id), Boolean.TRUE);
+                beerDetailDto = new BeerDetailDto(beer, beerService.findAllTaste(beerId), count, Boolean.TRUE);
                 return new WrapperClass(beerDetailDto);
             }
         }
-        beerDetailDto = new BeerDetailDto(beer, beerService.findAllTaste(id), Boolean.FALSE);
+        beerDetailDto = new BeerDetailDto(beer, beerService.findAllTaste(beerId), count,Boolean.FALSE);
         return new WrapperClass(beerDetailDto);
     }
 
-    @GetMapping("/api/search/detail/{userId}/{beerId}")
-    public WrapperClass beerDetail_test(
-            @PathVariable("userId") Long userId,
-            @PathVariable("beerId") Long beerId)
-    {
-        Beer beer = beerService.findOne(beerId);
-        List<LikeBeer> likeBeers = userService.findLikeBeers(userId);
-        for (LikeBeer likeBeer : likeBeers) {
-            if(likeBeer.getBeer() == beer){
-                return new WrapperClass(new BeerDetailDto(beer, beerService.findAllTaste(beerId), Boolean.TRUE));
-            }
-        }
-        return new WrapperClass(new BeerDetailDto(beer, beerService.findAllTaste(beerId), Boolean.FALSE));
-    }
-
     //LikeBeer table을 수정하므로 PostMapping 사용
-    @PostMapping("/api/beer-like/{beerId}/{state}")
+    @PostMapping("/api/like-beer")
     public ResponseEntity<Void> changeLikeState(
-            @PathVariable("beerId") Long beerId,
-            @PathVariable("state") int state,
+            @RequestBody LikeBeerDto likeBeerDto,
             @AuthenticationPrincipal PrincipalDetails principalDetails){
         User user = principalDetails.getUser();
-        if(state == 1){
+        Boolean state = likeBeerDto.getState();
+        Long beerId = likeBeerDto.getBeerId();
+        if(state){ // state == true
             Beer beer = beerService.findOne(beerId);
-            //이미 좋아요 해놓은 맥주를 다시 좋아요 하는 경우
+
             List<LikeBeer> likeBeers = likeBeerService.findAllWithBeer(user.getId()); //fetch join 적용
             for (LikeBeer likeBeer : likeBeers) {
-                if(likeBeer.getBeer().getId() == beerId){
+                if(likeBeer.getBeer().getId() == beerId){ //이미 좋아요 해놓은 맥주를 다시 좋아요 하는 경우
                     return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
                 }
             }
@@ -122,7 +114,7 @@ public class BeerApiController {
             beer.addLikeBeer(likeBeer);
             likeBeerService.join(likeBeer);
         }
-        else{
+        else{ // state == false
             List<LikeBeer> likeBeers = likeBeerService.findAllWithBeer(); //fetch join 적용
             int flag = 0;
             for (LikeBeer likeBeer : likeBeers) {
@@ -132,20 +124,19 @@ public class BeerApiController {
                     break;
                 }
             }
-            //좋아요 하지 않은 맥주를 좋아요 최소할 때
+            //좋아요 하지 않은 맥주를 좋아요 취소할 때
             if(flag == 0) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
     @GetMapping("/api/recommend")
-    public BeerRecDto beerRec(){
+    public WrapperClass beerRec(){
         List<Beer> beers = beerService.findBeers();
         Random random = new Random();
         int value = random.nextInt(beers.size());
         Beer beer = beers.get(value);
         BeerRecDto beerRecDto = new BeerRecDto(beer, beerService.findAllTaste(beer.getId()));
-        return beerRecDto;
+        return new WrapperClass(beerRecDto);
     }
 
     @GetMapping("/api/beername-search/{beerName}") // @RequestParam으로 <input/>의 name을 써주자

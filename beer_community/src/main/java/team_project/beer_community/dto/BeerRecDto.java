@@ -1,10 +1,12 @@
 package team_project.beer_community.dto;
 
+import lombok.Data;
 import team_project.beer_community.domain.Beer;
 import team_project.beer_community.domain.Taste;
 
 import java.util.List;
 
+@Data
 public class BeerRecDto {
     private Long id;
     private String imageUrl;
