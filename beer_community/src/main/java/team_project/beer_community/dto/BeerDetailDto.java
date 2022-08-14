@@ -16,9 +16,11 @@ public class BeerDetailDto {
     private double alcoholDegree;
     private List<Taste> tastes;
 
-    private Boolean is_liked;
+    private Boolean is_liked; // 찜하기 상태 on/off ->  true/false
 
-    public BeerDetailDto(Beer beer, List<Taste> tastes, Boolean is_liked) {
+    private int count; // 전체 리뷰수
+
+    public BeerDetailDto(Beer beer, List<Taste> tastes, int count, Boolean is_liked) {
         this.id = beer.getId();
         this.imageUrl = beer.getImageUrl();
         this.beerName = beer.getBeerName();
@@ -26,6 +28,7 @@ public class BeerDetailDto {
         this.information = beer.getInformation();
         this.alcoholDegree = beer.getAlcoholDegree();
         this.tastes = tastes;
+        this.count = count;
         this.is_liked = is_liked;
     }
 }
