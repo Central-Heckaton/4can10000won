@@ -36,6 +36,7 @@ public class BeerApiController {
 
     @GetMapping("/api/search")
     public WrapperClass search(){
+        System.out.println("========api search called =======");
         System.out.println("BeerApiController.search");
         List<Beer> beers = beerService.findBeers();
         List<BeerDto> beerDtos = beers.stream().map(b -> new BeerDto(b)).collect(Collectors.toList());
@@ -46,6 +47,7 @@ public class BeerApiController {
     //데이터를 수정하는게 아니므로 getmapping으로 바꿔야 하지 않나..?
     @PostMapping("/api/filter")
     public WrapperClass filter(@RequestBody HashMap<String, List<String>> beerTypeListData){
+        System.out.println("========api filter called =======");
         List<String> beerTypeList = beerTypeListData.get("beerTypeList");
         List<Beer> finalBeerList = new ArrayList<>();
         List<Beer> beerList = beerService.findBeers();
