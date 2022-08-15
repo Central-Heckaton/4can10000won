@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import styles from "./loginBox.module.css";
 import axios from "axios";
 
-const LoginBox = () => {
+const LoginRetryBox = () => {
   const [loginState, setLoginState] = useState(true);
   const [message, setMessage] = useState("");
   const [checkDuplicate, setCheckDuplicate] = useState(); // 초기값을 안 줌으로써 checkDuplicate
@@ -93,7 +93,6 @@ const LoginBox = () => {
 
   const handleJoinSubmit = async (e) => {
     e.preventDefault();
-    e.getResponse();
     if (password !== confirmedPassword) {
       alert("비밀번호와 재입력 비밀번호가 일치하지않습니다.");
       setPassword("");
@@ -163,6 +162,7 @@ const LoginBox = () => {
   };
   // checkDuplicate 값이 변경될때 마다 useEffect 실행됨
   useEffect(() => {
+   alert("로그인에 실패하였습니다.");
     try {
       changeMessageColor(checkDuplicate);
     } catch (err) {
@@ -354,4 +354,4 @@ const LoginBox = () => {
   );
 };
 
-export default LoginBox;
+export default LoginRetryBox;

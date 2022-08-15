@@ -1,6 +1,7 @@
 package team_project.beer_community.api;
 
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -25,7 +26,9 @@ import team_project.beer_community.service.BeerService;
 import team_project.beer_community.service.LikeBeerService;
 import team_project.beer_community.service.UserService;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -152,5 +155,14 @@ public class UserApiController {
     @GetMapping("/api/test")
     public String test(){
         return "test good";
+    }
+
+    @PostMapping("/api/login-handle")
+    public void loginHandle(HttpServletResponse response) throws IOException {
+        System.out.println("loginHandle");
+        HttpHeaders headers = new HttpHeaders();
+        String redirect_uri = "http://localhost:3000/login-retry"; // 로그인 재시도
+        response.addHeader("login_result", "fail");
+        response.sendRedirect(redirect_uri);
     }
 }

@@ -48,7 +48,7 @@ dependencies {
 bootJar {
 	archiveBaseName = '-'
 	archiveFileName = '4can10000wonBE.jar'
-	archiveVersion = '0.0.0'
+	archiveVersion = '0.0.1'
 }
 
 tasks.named('test') {
