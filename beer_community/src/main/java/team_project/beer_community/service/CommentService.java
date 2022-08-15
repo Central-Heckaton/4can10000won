@@ -20,10 +20,12 @@ public class CommentService {
     @Transactional
     public Long join(Comment comment){
         commentRepository.save(comment);
-        List<Comment> result = commentRepository.findAll();
-        for (Comment comment1 : result) {
-            System.out.println("comment1 = " + comment1);
-        }
+        return comment.getId();
+    }
+
+    @Transactional
+    public Long delete(Comment comment){
+        commentRepository.delete(comment);
         return comment.getId();
     }
 

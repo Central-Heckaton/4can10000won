@@ -58,19 +58,22 @@ public class CommentApiController {
         }
     }
 
-//    //성능 최적화 전
-//    @GetMapping("/api/comments/{beerId}")
-//    public WrapperClass showComments(
-//            @PathVariable("beerId") Long beerId,
-//            @AuthenticationPrincipal PrincipalDetails principalDetails){
-//        Beer beer = beerService.findOne(beerId);
-//        List<Comment> comments = beer.getComments();
-//        User user = principalDetails.getUser();
-//        List<CommentDto> commentDtos = comments.stream()
-//                .map(c -> new CommentDto(user, c))
-//                .collect(Collectors.toList());
-//        return new WrapperClass(commentDtos);
-//    }
+    @DeleteMapping("/api/comments/delete-comment/{commentId}") //댓글, 대댓글 삭제 기능(부모일 경우 관련 대댓글도 모두 삭제)
+    public ResponseEntity<Void> deleteComment(@PathVariable("commentId") Long commentId){
+        try{
+            Comment comment = commentService.findOne(commentId);
+            if (comment.getParentId() == 0){  //부모 댓글일 경우(대댓글이 존재)
+                List<Comment> reComments = commentService.findAllRecomments(commentId);
+                for (Comment reComment : reComments) {
+                    commentService.delete(reComment);
+                }
+            }
+            commentService.delete(comment); //자식 댓글(대댓글)을 삭제 후 부모 댓글 삭제(순서는 상관없을 거 같긴 함)
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT); //delete 요청일 경우 성공시 204를 return
+        } catch(Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 
     @GetMapping("/api/comments/{beerId}") // 맥주상세보기 들어갔을때 댓글들 랜더링
     public WrapperClass showComments(
@@ -82,6 +85,7 @@ public class CommentApiController {
                 .collect(Collectors.toList());
         return new WrapperClass(commentDtos);
     }
+
 
     @GetMapping("/api/recomments/{commentId}")  //drop down 눌렀을 경우
     public WrapperClass showReComments(
