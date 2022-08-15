@@ -1,59 +1,77 @@
 .mainBox {
   width: 300px;
-  height: 600px;
+  /* height: 600px; */
   border: 2px solid var(--button-color);
   margin-top: 5rem;
+  margin-bottom: 5rem;
   border-radius: 5px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  /* overflow: scroll; */
 }
+
 .title {
   font-size: var(--font-large);
   color: #6eac82;
   margin-top: 65px;
 }
+
 .img {
-  width: 150px;
-  height: 150px;
-  margin-top: 2.5rem;
+  width: 50px;
+  margin: 2.5rem 0;
 }
+
 .name {
-  margin-top: 50px;
-  font-size: var(--font-large);
-  margin-bottom: 40px;
+  margin: 50px 0;
+  font-size: 18px;
 }
+
 .description {
   font-size: var(--font-medium);
-  width: 10rem;
+  width: 13rem;
   font-weight: 100;
+  line-height: 1.3rem;
+  margin-bottom: 50px;
 }
-.button {
+
+.retry {
+  padding: 0;
   background-color: var(--button-color);
-  width: 15rem;
-  height: 30px;
-  mix-blend-mode: normal;
-  border-radius: 16px;
-  margin-top: 2rem;
+  width: 13rem;
+  height: 2rem;
+  border: none;
+  border-radius: 15px;
+  color: black;
+  margin-bottom: 50px;
 }
 
 .detail {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
   width: 100%;
 }
 
-.taste {
-
-}
 .degree {
-  text-align: center;
-  line-height: 1rem;
+  display: flex;
+  font-size: var(--font-small);
+  margin-bottom: 10px;
+}
+
+.taste {
+  height: 20px;
+  background-color: #FDC74B;
+  color: white;
+  font-size: 11px;
+  border-radius: 10px;
+  padding: 0 12px;
+  margin-top: 5px;
+  margin-right: 10px;
 }
 
 .text {
   color: darkgray;
+  margin-right: 10px;
 }
-.degreeNum {
-  font-weight: 700;
-}
+
