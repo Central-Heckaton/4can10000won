@@ -1,45 +1,34 @@
 import React from "react";
 import styles from "./detailFooter.module.css";
 import { useState, useEffect } from "react";
-import { axios } from "axios";
-import { useLocation, Link } from "react-router-dom";
-
+import axios from "axios";
+import { Link } from "react-router-dom";
 
 const DetailFooter = (props) => {
-  const [like, setLike] = useState(null);
-  const location = useLocation();
-  const id = 1;
-//  const id = location.state.id;
-//  console.log("props:", props);
+  const [count, setCount] = useState(0);
+  const [like, setLike] = useState(props.isLiked);
   useEffect(() => {
-    if (like === null) {
-//      setLike(props.isLiked);
-      setLike(false);
-      console.log(like);
-      return;
-    }
+ 
     const putLike = async () => {
-      const request_data = { beerId: id, state: like};
-      console.log('id: ', id, 'like: ', like);
-      try{
-        var url = "/api/like-beer/";
-        console.log('url: ', url);
-        // `/api/beer-like/${id}/${like ? 1 : 0}`
-//        let response = await axios.get(url);
+      const request_data = { beerId: props.id, state: like };
+      try {
         let response = await axios({
-            method: 'post',
-            url: url,
-            headers: {'Content-Type': 'application/json'},
-            data: JSON.stringify(request_data)
-        })
-        console.log('response: ', response);
+          method: "post",
+          url: "/api/like-beer",
+          headers: { "Content-Type": "application/json" },
+          data: JSON.stringify(request_data),
+        });
+        console.log("response: ", response);
+      } catch (err) {
+        console.log("err: ", err);
       }
-      catch (err) {
-        console.log('err: ', err);
-      }
-
     };
-    putLike();
+    if (count > 0) {
+      console.log('like: ',like)
+      putLike();
+    } else if (count === 0) {
+      setCount(1);
+    }
   }, [like]);
 
   return (
@@ -67,7 +56,6 @@ const DetailFooter = (props) => {
             alt="heart"
             onClick={() => {
               setLike(!like);
-              console.log(like);
             }}
           />
         </button>

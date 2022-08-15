@@ -3,10 +3,11 @@ import styles from "./likeBox.module.css";
 import BeerBox from "../beerBox/beerBox";
 
 const LikeBox = (props) => {
+  console.log(props.data);
   return (
-    <>
-      <div className={styles.mainBox}>
-        {props.data.beer_list.map((i) => (
+    <div className={styles.mainBox}>
+      {Array.isArray(props.data) && props.data.length !== 0 ? (
+        props.data.map((i) => (
           <BeerBox
             key={i.id}
             id={i.id}
@@ -15,9 +16,11 @@ const LikeBox = (props) => {
             description={i.information}
             total_point={i.totalPoint}
           />
-        ))}
-      </div>
-    </>
+        ))
+      ) : (
+        <div className={styles.sub}>좋아요 한 맥주가 없어요</div>
+      )}
+    </div>
   );
 };
 

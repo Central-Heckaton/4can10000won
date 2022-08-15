@@ -7,6 +7,7 @@ import BeerList from "../beerList/beerList";
 
 const FilterBox = () => {
   const [beerData, setBeerData] = useState([]);
+  const [beerName, setBeerName] = useState();
   const [changeColor, setChangeColor] = useState(true);
   const [filterState, setFilterState] = useState({
     passingTags: {
@@ -76,8 +77,38 @@ const FilterBox = () => {
     getBeerList();
   }, [filterState]);
 
+  const handleSearchBtnClick = async (e) => {
+    e.preventDefault();
+    // setFilterState({
+    //   passingTags: {
+    //     Lager: false,
+    //     Ale: false,
+    //     IPA: false,
+    //     Stout: false,
+    //   },
+    // });
+    console.log("beerSearch.jsx/clicked!");
+    let url = "/api/beername-search/" + beerName;
+    console.log("url: ", url);
+    let response = await axios.get(url);
+    console.log("response: ", response);
+    setBeerData(response.data.data);
+  };
   return (
     <>
+      <div className={styles.searchContainer}>
+        <input
+          name="beerName"
+          className={styles.input}
+          type="text"
+          value={beerName}
+          onChange={(e) => setBeerName(e.target.value)}
+        />
+        <button className={styles.search} onClick={handleSearchBtnClick}>
+          <img src="/img/search.png" alt="search img" />
+        </button>
+      </div>
+
       <div className={styles.container}>
         <button id="Lager" className={styles.box} onClick={handleFilter}>
           라거

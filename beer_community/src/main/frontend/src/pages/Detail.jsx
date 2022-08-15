@@ -48,7 +48,7 @@ const Detail = (props) => {
           totalPoint={totalPoint}
         />
         <DetailText information={information} />
-        <DetailFooter isLiked={props.isLiked} id={props.id} />
+        <DetailFooter isLiked={isLiked} id={id} />
       </div>
     </>
   );
