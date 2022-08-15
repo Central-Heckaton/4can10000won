@@ -104,7 +104,6 @@ public class BeerApiController {
         Long beerId = likeBeerDto.getBeerId();
         if(state){ // state == true
             Beer beer = beerService.findOne(beerId);
-
             List<LikeBeer> likeBeers = likeBeerService.findAllWithBeer(user.getId()); //fetch join 적용
             for (LikeBeer likeBeer : likeBeers) {
                 if(likeBeer.getBeer().getId() == beerId){ //이미 좋아요 해놓은 맥주를 다시 좋아요 하는 경우
@@ -112,9 +111,10 @@ public class BeerApiController {
                 }
             }
             LikeBeer likeBeer = new LikeBeer(beer);
+            likeBeerService.join(likeBeer);
+            Hibernate.initialize(user.getLikeBeers());
             user.addLikeBeer(likeBeer);
             beer.addLikeBeer(likeBeer);
-            likeBeerService.join(likeBeer);
         }
         else{ // state == false
             List<LikeBeer> likeBeers = likeBeerService.findAllWithBeer(); //fetch join 적용

@@ -171,186 +171,186 @@ const LoginBox = () => {
     return;
   }, [checkDuplicate]);
   return (
-    <div className={styles.main}>
-      <div className={styles.loginBox}>
-        <div className={styles.imgDiv}>
-          <img src="/img/logo.png" alt="네캔만원" className={styles.loginImg} />
+      <div className={styles.main}>
+        <div className={styles.loginBox}>
+          <div className={styles.imgDiv}>
+            <img src="/img/logo.png" alt="네캔만원" className={styles.loginImg} />
+          </div>
+          {loginState === true ? ( // 로그인 화면
+              <>
+                <form
+                    action="/api/login"
+                    method="POST"
+                    onSubmit={() => {
+                      console.log("login");
+                    }}
+                    onKeyDown={onCheckEnter}
+                    name="loginForm"
+                >
+                  <button className={styles.Button} onClick={onClickSignUpButton}>
+                    회원가입
+                  </button>
+                  <button
+                      className={styles.onClickButton}
+                      onClick={(e) => {
+                        e.preventDefault();
+                      }}
+                  >
+                    로그인
+                  </button>
+                  <label className={styles.label}>이메일</label>
+                  <input
+                      type="email"
+                      required
+                      className={styles.loginInput}
+                      name="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                  />
+                  <label className={styles.label}>비밀번호</label>
+                  <input
+                      type="password"
+                      required
+                      className={styles.passwordInput}
+                      name="password"
+                  />
+                  <button className={styles.submitButton} type="submit">
+                    로그인
+                  </button>
+                </form>
+                <div className={styles.loginAnother}>
+                  <div className={styles.loginAnotherLine}></div>
+                  <div className={styles.loginAnotherTitle}>
+                    다른 서비스로 로그인
+                  </div>
+                </div>
+                <div className={styles.loginAnotherButtonBox}>
+                  <a
+                      href="http://localhost:8080/oauth2/authorization/naver"
+                      className={[styles.loginAnotherButton, styles.naver].join(" ")}
+                  > </a>
+                  <a
+                      href="http://localhost:8080/oauth2/authorization/google"
+                      className={[styles.loginAnotherButton, styles.google].join(" ")}
+                  > </a>
+                </div>
+              </>
+          ) : (
+              // 회원가입 화면
+              <>
+                <form onSubmit={handleJoinSubmit}>
+                  <button
+                      className={styles.onClickButton}
+                      onClick={(e) => {
+                        e.preventDefault();
+                      }}
+                  >
+                    회원가입
+                  </button>
+                  <button className={styles.Button} onClick={onClickLoginButton}>
+                    로그인
+                  </button>
+                  <div className={styles.emailCheckDiv}>
+                    <label className={styles.label}>이메일</label>
+                    <button
+                        className={styles.emailCheck}
+                        onClick={onClickCheckDuplicate}
+                    >
+                      중복검사
+                    </button>
+                  </div>
+                  <input
+                      type="email"
+                      className={styles.emailInput}
+                      name="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                  />
+                  <label className={styles.dupEmail} ref={emailMessage}>
+                    {message}
+                  </label>
+                  <br />
+                  <br />
+                  <label className={styles.label}>닉네임</label>
+                  <input
+                      type="text"
+                      className={styles.loginInput}
+                      name="username"
+                      value={username}
+                      onChange={(e) => setUsername(e.target.value)}
+                  />
+                  <label className={styles.label}>생년월일</label>
+                  <div className={styles.birthBox}>
+                    <input
+                        type="number"
+                        className={styles.birthBoxInput}
+                        name="year"
+                        min="1000"
+                        max="9999"
+                        placeholder="년(4자)"
+                        required
+                        value={year}
+                        onChange={(e) => setYear(e.target.value)}
+                    />
+                    <select
+                        className={styles.birthBoxInput}
+                        aria-label="월"
+                        name="month"
+                        required
+                        value={month}
+                        onChange={(e) => setMonth(e.target.value)}
+                    >
+                      <option value="" disabled selected>
+                        월
+                      </option>
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                      <option value="6">6</option>
+                      <option value="7">7</option>
+                      <option value="8">8</option>
+                      <option value="9">9</option>
+                      <option value="10">10</option>
+                      <option value="11">11</option>
+                      <option value="12">12</option>
+                    </select>
+                    <input
+                        type="text"
+                        className={styles.birthBoxInput}
+                        name="day"
+                        maxLength="2"
+                        placeholder="일"
+                        required
+                        value={day}
+                        onChange={(e) => setDay(e.target.value)}
+                    />
+                  </div>
+                  <label className={styles.label}>비밀번호</label>
+                  <input
+                      type="password"
+                      className={styles.loginInput}
+                      name="password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                  />
+                  <label className={styles.label}>비밀번호 확인</label>
+                  <input
+                      type="password"
+                      className={styles.loginInput}
+                      name="passwordCheck"
+                      value={confirmedPassword}
+                      onChange={(e) => setConfirmedPassword(e.target.value)}
+                  />
+                  <button className={styles.submitButton} type="submit">
+                    회원가입
+                  </button>
+                </form>
+              </>
+          )}
         </div>
-        {loginState === true ? ( // 로그인 화면
-          <>
-            <form
-              action="/api/login"
-              method="POST"
-              onSubmit={() => {
-                console.log("login");
-              }}
-              onKeyDown={onCheckEnter}
-              name="loginForm"
-            >
-              <button className={styles.Button} onClick={onClickSignUpButton}>
-                회원가입
-              </button>
-              <button
-                className={styles.onClickButton}
-                onClick={(e) => {
-                  e.preventDefault();
-                }}
-              >
-                로그인
-              </button>
-              <label className={styles.label}>이메일</label>
-              <input
-                type="email"
-                required
-                className={styles.loginInput}
-                name="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              <label className={styles.label}>비밀번호</label>
-              <input
-                type="password"
-                required
-                className={styles.passwordInput}
-                name="password"
-              />
-              <button className={styles.submitButton} type="submit">
-                로그인
-              </button>
-            </form>
-            <div className={styles.loginAnother}>
-              <div className={styles.loginAnotherLine}></div>
-              <div className={styles.loginAnotherTitle}>
-                다른 서비스로 로그인
-              </div>
-            </div>
-            <div className={styles.loginAnotherButtonBox}>
-              <a
-                href="http://localhost:8080/oauth2/authorization/naver"
-                className={[styles.loginAnotherButton, styles.naver].join(" ")}
-              > </a>
-              <a
-                href="http://localhost:8080/oauth2/authorization/google"
-                className={[styles.loginAnotherButton, styles.google].join(" ")}
-              > </a>
-            </div>
-          </>
-        ) : (
-          // 회원가입 화면
-          <>
-            <form onSubmit={handleJoinSubmit}>
-              <button
-                className={styles.onClickButton}
-                onClick={(e) => {
-                  e.preventDefault();
-                }}
-              >
-                회원가입
-              </button>
-              <button className={styles.Button} onClick={onClickLoginButton}>
-                로그인
-              </button>
-              <div className={styles.emailCheckDiv}>
-                <label className={styles.label}>이메일</label>
-                <button
-                  className={styles.emailCheck}
-                  onClick={onClickCheckDuplicate}
-                >
-                  중복검사
-                </button>
-              </div>
-              <input
-                type="email"
-                className={styles.emailInput}
-                name="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              <label className={styles.dupEmail} ref={emailMessage}>
-                {message}
-              </label>
-              <br />
-              <br />
-              <label className={styles.label}>닉네임</label>
-              <input
-                type="text"
-                className={styles.loginInput}
-                name="username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-              />
-              <label className={styles.label}>생년월일</label>
-              <div className={styles.birthBox}>
-                <input
-                  type="number"
-                  className={styles.birthBoxInput}
-                  name="year"
-                  min="1000"
-                  max="9999"
-                  placeholder="년(4자)"
-                  required
-                  value={year}
-                  onChange={(e) => setYear(e.target.value)}
-                />
-                <select
-                  className={styles.birthBoxInput}
-                  aria-label="월"
-                  name="month"
-                  required
-                  value={month}
-                  onChange={(e) => setMonth(e.target.value)}
-                >
-                  <option value="" disabled selected>
-                    월
-                  </option>
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5</option>
-                  <option value="6">6</option>
-                  <option value="7">7</option>
-                  <option value="8">8</option>
-                  <option value="9">9</option>
-                  <option value="10">10</option>
-                  <option value="11">11</option>
-                  <option value="12">12</option>
-                </select>
-                <input
-                  type="text"
-                  className={styles.birthBoxInput}
-                  name="day"
-                  maxLength="2"
-                  placeholder="일"
-                  required
-                  value={day}
-                  onChange={(e) => setDay(e.target.value)}
-                />
-              </div>
-              <label className={styles.label}>비밀번호</label>
-              <input
-                type="password"
-                className={styles.loginInput}
-                name="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              <label className={styles.label}>비밀번호 확인</label>
-              <input
-                type="password"
-                className={styles.loginInput}
-                name="passwordCheck"
-                value={confirmedPassword}
-                onChange={(e) => setConfirmedPassword(e.target.value)}
-              />
-              <button className={styles.submitButton} type="submit">
-                회원가입
-              </button>
-            </form>
-          </>
-        )}
       </div>
-    </div>
   );
 };
 
