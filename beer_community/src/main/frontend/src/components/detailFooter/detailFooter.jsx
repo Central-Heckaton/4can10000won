@@ -49,7 +49,6 @@ const DetailFooter = (props) => {
         <p className={styles.reviewNum}>(800)</p>
       </div>
       <div className={styles.goRate}>
-<<<<<<< Updated upstream
         <Link
           to={"/rate"}
           className={styles.link}
@@ -59,9 +58,6 @@ const DetailFooter = (props) => {
         >
           <button className={styles.button}>나도 평가하기</button>
         </Link>
-=======
-        <button className={styles.button}>나도 평가하기</button>
->>>>>>> Stashed changes
       </div>
       <div className={styles.like}>
         <button className={styles.heart}>

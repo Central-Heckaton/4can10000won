@@ -20,14 +20,14 @@ const Search = (props) => {
     //                {id: 1, imageUrl: 'https://res.cloudinary.com/ratebeer/image/upload/d_beer_img_default.png,f_auto/beer_271470', beerName: '클라우드 오리지널 그래비티', totalPoint: 2.48, information: '100% 몰트 리얼 맥주. 오리지널 그래비티. 풍부하고 부드러운.\n클라우드는 유럽산 홉과 독일산 효모를 사용한 프리미엄 맥주입니다.'}
            setBeerData(response.data.data);
         }
-       getBeerList(); // 함수호출
+       // getBeerList(); // 함수호출
     }, []);
   return (
     <>
       <Nav navigate={navigate} />
       <BeerSearch />
       <FilterBox />
-      <BeerList data={beerData}/>
+      {/*<BeerList data={beerData}/>*/}
       <Footer />
     </>
   );
