@@ -36,8 +36,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/api/login")
                 .usernameParameter("email") // ** username이 아니라 email으로 param을 받음 **
                 .loginProcessingUrl("/api/login") // login주소가 호출되면 Spring Security가 낚아채서 대신 로그인 진행
+                .failureForwardUrl("/api/login-handle")
                 .defaultSuccessUrl("http://localhost:3000/search")
-                .failureForwardUrl("http://localhost:3000/")
                 .and()
                 .oauth2Login()
                 .loginPage("/api/login")

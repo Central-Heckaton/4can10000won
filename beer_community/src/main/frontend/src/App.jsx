@@ -10,6 +10,7 @@ import Rate from "./pages/Rate";
 import Detail from "./pages/Detail";
 import UserInfo from "./pages/UserInfo";
 import Review from "./pages/Review";
+import LoginRetry  from "./pages/LoginRetry";
 import { BrowserRouter } from "react-router-dom";
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <GlobalStyle />
         <Routes>
           <Route path="/" element={<Login />} />
+          <Route path="/login-retry" element={<LoginRetry />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/menu" element={<Menu />} />
           <Route path="/like" element={<Like />} />

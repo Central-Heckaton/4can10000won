@@ -65,11 +65,13 @@ const FilterBox = () => {
       headers: { "Content-Type": "application/json" },
       data: JSON.stringify(request_data),
     });
+
     console.log("response: ", response);
     setBeerData(response.data.data);
+
+    }
     // response.data
     // [{ }, { }, { } ...] -> props로 전달필요
-  };
 
   useEffect(() => {
     console.log("Enter UseEffect");
