@@ -13,7 +13,7 @@ const BeerSearch = (props) => {
         console.log('response: ', response);
     }
     return (
-        <div className={styles.container}>
+        <div className={styles.searchContainer}>
             <input
                 name="beerName"
                 className={styles.input}

@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-import BeerList from "../components/beerList/beerList";
-import BeerSearch from "../components/beerSearch/beerSearch";
 import Footer from "../components/Footer/Footer";
 import FilterBox from "./../components/filterBox/filterBox";
 import Nav from "../components/Nav/Nav";
@@ -25,7 +23,6 @@ const Search = (props) => {
   return (
     <>
       <Nav navigate={navigate} />
-      <BeerSearch />
       <FilterBox />
       {/*<BeerList data={beerData}/>*/}
       <Footer />
