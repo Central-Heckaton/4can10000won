@@ -38,7 +38,6 @@ const FilterBox = () => {
     }
 
     setChangeColor(changeColor);
-    getBeerList();
   };
 
   const filteredCollected = useCallback(() => {
@@ -75,7 +74,7 @@ const FilterBox = () => {
   useEffect(() => {
     console.log("Enter UseEffect");
     getBeerList();
-  }, []);
+  }, [filterState]);
 
   return (
     <>
