@@ -1,26 +1,19 @@
 package team_project.beer_community.service;
 
-import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.annotations.BatchSize;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
-import team_project.beer_community.domain.Beer;
 import team_project.beer_community.domain.Comment;
 import team_project.beer_community.domain.LikeBeer;
 import team_project.beer_community.domain.User;
-import team_project.beer_community.repository.BeerRepository;
 import team_project.beer_community.repository.LikeBeerRepository;
 import team_project.beer_community.repository.UserRepository;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)  //readOnly를 전체 적용 시켜놓고 write 하는 경우에만 @Transactional을 붙여준다.
@@ -104,5 +97,11 @@ public class UserService {
             validateResult.put(validKeyName, fieldError.getDefaultMessage());
         }
         return validateResult;
+    }
+
+    public User getUserWithInitializedLikeBeers(Long userId){
+        User user = userRepository.findById(userId).orElseThrow(NullPointerException::new);
+        user.getLikeBeers().stream().forEach(lb -> lb.getId());
+        return user;
     }
 }

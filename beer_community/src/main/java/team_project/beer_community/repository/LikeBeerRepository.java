@@ -15,4 +15,7 @@ public interface LikeBeerRepository extends JpaRepository<LikeBeer, Long> {
 
     @Query("select lb from LikeBeer lb join fetch lb.beer b")
     List<LikeBeer> findLikeBeerWithBeer();
+
+//    @Query("select lb from LikeBeer lb where lb.user =:user")
+//    List<LikeBeer> findLikeBeerWithUser(User user);
 }

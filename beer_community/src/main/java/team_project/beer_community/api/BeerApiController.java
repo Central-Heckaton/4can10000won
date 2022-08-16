@@ -44,7 +44,6 @@ public class BeerApiController {
         return new WrapperClass(beerDtos);
     }
 
-    //데이터를 수정하는게 아니므로 getmapping으로 바꿔야 하지 않나..?
     @PostMapping("/api/filter")
     public WrapperClass filter(@RequestBody HashMap<String, List<String>> beerTypeListData){
         System.out.println("========api filter called =======");
@@ -99,17 +98,11 @@ public class BeerApiController {
     public ResponseEntity<Void> changeLikeState(
             @RequestBody LikeBeerDto likeBeerDto,
             @AuthenticationPrincipal PrincipalDetails principalDetails){
-        User user = principalDetails.getUser();
+        User user = userService.getUserWithInitializedLikeBeers(principalDetails.getUser().getId());
         Boolean state = likeBeerDto.getState();
         Long beerId = likeBeerDto.getBeerId();
         if(state){ // state == true
             Beer beer = beerService.findOne(beerId);
-            List<LikeBeer> likeBeers = likeBeerService.findAllWithBeer(user.getId()); //fetch join 적용
-            for (LikeBeer likeBeer : likeBeers) {
-                if(likeBeer.getBeer().getId() == beerId){ //이미 좋아요 해놓은 맥주를 다시 좋아요 하는 경우
-                    return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-                }
-            }
             LikeBeer likeBeer = new LikeBeer(beer);
             likeBeerService.join(likeBeer);
             Hibernate.initialize(user.getLikeBeers());
@@ -130,15 +123,6 @@ public class BeerApiController {
             if(flag == 0) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(HttpStatus.OK);
-    }
-    @GetMapping("/api/recommend")
-    public WrapperClass beerRec(){
-        List<Beer> beers = beerService.findBeers();
-        Random random = new Random();
-        int value = random.nextInt(beers.size());
-        Beer beer = beers.get(value);
-        BeerRecDto beerRecDto = new BeerRecDto(beer, beerService.findAllTaste(beer.getId()));
-        return new WrapperClass(beerRecDto);
     }
 
     @GetMapping("/api/beername-search/{beerName}") // @RequestParam으로 <input/>의 name을 써주자

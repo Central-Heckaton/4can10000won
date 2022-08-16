@@ -1,5 +1,6 @@
 package team_project.beer_community.repository;
 
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import team_project.beer_community.domain.LikeBeer;
@@ -15,4 +16,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     // select * from user where username = 1?
     public User findByUsername(String username); // JPA Query methods참고
     public User findByEmail(String email); // 중복성 체크를 위해 username말고 email을 사용함
+
+
+    @EntityGraph(attributePaths = "likebeers")
+    User findDistinctWithLikeBeersBy();
 }
