@@ -1,7 +1,7 @@
 package team_project.beer_community.config.auth;
 
 
-// Security가 "/login" 주소로 요청이 오면 낚아채서 로그인을 진행시킨다
+// Securitnull/login" 주소로 요청이 오면 낚아채서 로그인을 진행시킨다
 // 로그인을 진행이 완료가 되면 Security session을 만들어준다(Security ContextHolder라는 키값에 넣어준다)
 // security가 만드는 session에 들어갈 수 있는 Object가 정해져있다.
 //  => Authentication 타입의 객체(안에 User정보가 있어야됨)
@@ -10,26 +10,36 @@ package team_project.beer_community.config.auth;
 // 이 안에 UserDetails 타입의 객체가 있어서 이 것을 통해 User 객체에 접근할 수 o
 
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.core.user.OAuth2User;
+import org.springframework.transaction.annotation.Transactional;
+import team_project.beer_community.domain.LikeBeer;
 import team_project.beer_community.domain.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import team_project.beer_community.repository.LikeBeerRepository;
+import team_project.beer_community.repository.UserRepository;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 @Data
 public class PrincipalDetails implements UserDetails, OAuth2User {
+
+    @Autowired  //다른 변수를 받는 생성자가 이미 존재하여 @RequiredArgsConstructor가 동작하지 않는다.
+    private LikeBeerRepository likeBeerRepository;
+
     // UserDetails를 구현함으로써 PrincipleDetails는 UserDetails와 같은 타입이됬다.
-
     private User user; // 콤포지션 변수
-
     private Map<String, Object> attributes;
     //일반 로그인할때 사용하는 생성자
     public PrincipalDetails(User user){
         this.user = user;
     }
+
     // 소셜로그인(OAuth2.0사용)할때 사용하는 생성자
     public PrincipalDetails(User user, Map<String, Object> attributes){
         this.user = user;
@@ -39,6 +49,7 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
     public String getEmail(){
         return (String) attributes.get("email");
     }
+
 
     @Override
     public String getName() {
