@@ -10,6 +10,7 @@ const Login = () => {
       
     }, 2000);
 
+
     return () => {
       clearTimeout(timer);
     };

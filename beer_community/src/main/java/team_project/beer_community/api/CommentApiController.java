@@ -14,6 +14,7 @@ import team_project.beer_community.dto.WriteCommentDto;
 import team_project.beer_community.dto.WriteReCommentDto;
 import team_project.beer_community.service.BeerService;
 import team_project.beer_community.service.CommentService;
+import team_project.beer_community.service.UserService;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -24,29 +25,30 @@ import java.util.stream.Collectors;
 public class CommentApiController {
     private final BeerService beerService;
     private final CommentService commentService;
+    private final UserService userService;
 
     @PostMapping("/api/comments/write-comment")
     public ResponseEntity<Void> writeComment(
-            @RequestBody @Valid WriteCommentDto writeCommentDto,
+            @RequestBody WriteCommentDto writeCommentDto,
             @AuthenticationPrincipal PrincipalDetails principalDetails) {
         try{
-            User user = principalDetails.getUser();
+            User user = userService.getUserWithInitializedComments(principalDetails.getUser().getId());
             Comment comment = new Comment(user, writeCommentDto.getContent(), writeCommentDto.getPoint());
             commentService.join(comment);
             beerService.addComment(writeCommentDto.getBeerId(), comment); //이 안에서 beer-comment/user-comment 모두 매핑
+            System.out.println("try/comment = " + comment);
             return new ResponseEntity<>(HttpStatus.CREATED); // 201
         } catch (Exception exception){
             System.out.println("writeComment/exception = " + exception);
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-
     }
 
     @PostMapping("/api/comments/write-recomment") //대댓글에도 맥주와 매핑 시킨 경우
     public ResponseEntity<Void> writeReComment(
             @RequestBody @Valid WriteReCommentDto writeReCommentDto,
             @AuthenticationPrincipal PrincipalDetails principalDetails){
-        User user = principalDetails.getUser();
+        User user = userService.getUserWithInitializedComments(principalDetails.getUser().getId());
         if(writeReCommentDto.getParentId() != null) {
             Comment comment = new Comment(user, writeReCommentDto.getContent(), writeReCommentDto.getParentId()); // 대댓글일 경우 parentId 필요
             commentService.join(comment);
@@ -75,7 +77,7 @@ public class CommentApiController {
         }
     }
 
-    @GetMapping("/api/comments/{beerId}") // 맥주상세보기 들어갔을때 댓글들 랜더링
+    @GetMapping("/api/comments/{beerId}") // 맥주에 해당하는 댓글들 랜더링
     public WrapperClass showComments(
             @PathVariable("beerId") Long beerId){
         //fetch join 사용, comment와 user를 한번에 조회

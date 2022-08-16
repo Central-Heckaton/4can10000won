@@ -104,4 +104,9 @@ public class UserService {
         user.getLikeBeers().stream().forEach(lb -> lb.getId());
         return user;
     }
+    public User getUserWithInitializedComments(Long userId){
+        User user = userRepository.findById(userId).orElseThrow(NullPointerException::new);
+        user.getComments().stream().forEach(c -> c.getId());
+        return user;
+    }
 }
