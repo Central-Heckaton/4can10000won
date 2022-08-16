@@ -93,7 +93,6 @@ const LoginBox = () => {
 
   const handleJoinSubmit = async (e) => {
     e.preventDefault();
-    e.getResponse();
     if (password !== confirmedPassword) {
       alert("비밀번호와 재입력 비밀번호가 일치하지않습니다.");
       setPassword("");

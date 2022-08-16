@@ -4,12 +4,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import team_project.beer_community.domain.User;
 import team_project.beer_community.repository.UserRepository;
 
 // Security에서 loginProcessUrl("/login"); 요청이 오면
 // 자동으로 UserDetailsService 타입으로 IoC되어 있는 loadUserByUsername 함수가 실행됨.
 
+//@Transactional
 @Service // 해당 어노테이션을 통해 PrincipalDetailService 클래스를 IoC에 등록시킴
 public class PrincipalDetailsService implements UserDetailsService {
 
@@ -23,8 +25,9 @@ public class PrincipalDetailsService implements UserDetailsService {
     // 함수종료시 @AuthenticationPrincipal 어노테이션이 만들어짐
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-//        User userEntity = userRepository.findByUsername(username);
         User userEntity = userRepository.findByEmail(email);
+//        세큐리티에서 로그인 시 항상 likebeers 초기화
+//        userEntity.getLikeBeers().stream().forEach(lb -> lb.getBeer());
         if(userEntity != null){
             return new PrincipalDetails(userEntity);
         }
