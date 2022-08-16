@@ -15,6 +15,7 @@ const Detail = (props) => {
   const [alcoholDegree, setAlcoholDegree] = useState("");
   const [isLiked, setIsLiked] = useState("");
   const [taste, setTaste] = useState("");
+  const [reviewCount, setReviewCount] = useState("");
   const location = useLocation();
   const id = location.state.id;
   let navigate = useNavigate();
@@ -34,9 +35,10 @@ const Detail = (props) => {
       setAlcoholDegree(response.data.data.alcoholDegree);
       setIsLiked(response.data.data.is_liked);
       setTaste(response.data.data.taste);
+      setReviewCount(response.data.data.count);
     };
     getDetailBeer();
-  });
+  }, []);
   return (
     <>
       <Nav navigate={navigate} />
@@ -48,7 +50,7 @@ const Detail = (props) => {
           totalPoint={totalPoint}
         />
         <DetailText information={information} />
-        <DetailFooter isLiked={isLiked} id={id} />
+        <DetailFooter isLiked={isLiked} id={id} setIsLiked={setIsLiked} reviewCount={reviewCount}/>
       </div>
     </>
   );
