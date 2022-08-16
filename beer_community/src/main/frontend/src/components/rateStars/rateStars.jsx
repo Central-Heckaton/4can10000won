@@ -2,12 +2,12 @@
 import React from 'react';
 import styles from './rateStars.module.css';
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import  axios  from 'axios';
 
 const RateStars = (props) => {
     const [starClick, setStarClick] = useState(null);
     const [preClicked, setPreClicked] = useState(starClick);
-
+    
     const [beerId, setBeerId] = useState(props.id);
     const [content, setContent] = useState("");
     const [point, setPoint] = useState(0);
@@ -23,23 +23,21 @@ const RateStars = (props) => {
 
     const handleInputClick = async (e) => {
         document.getElementById('input').value = '';
-        const request_data = { beerId: beerId, content: content, point: parseInt(point) };
-        console.log('request_data: ', request_data);
+        const request_data = { beerId: beerId, content: content, point: point };
         try {
             let response = await axios({
                 method: "post",
                 url: "/api/comments/write-comment",
                 headers: { "Content-Type": "application/json" },
-                data: JSON.stringify(request_data)
-            });
-            console.log('response:', response);
+                data: JSON.stringify(request_data),
+            }); 
             if (response.status >= 200 && response.status < 300) {
                 alert("댓글 작성이 완료 되었습니다.");
                 resetInput();
             }
         } catch(err) {
             // alert(err);
-            console.log("error:", err);
+            console.log(err);
             resetInput();
         }
     };
@@ -89,10 +87,10 @@ const RateStars = (props) => {
                 <p className={styles.total}>총점</p>
                 <div className={styles.rate}>
                     {[1, 2, 3, 4, 5].map(el => (
-                        <img
-                            id={el}
+                        <img 
                             key={el}
-                            className={styles.star}
+                            id={el}
+                            className={styles.star} 
                             src="/img/star-regular.png"
                             alt=""
                             onClick={goToFetch} />
@@ -102,15 +100,15 @@ const RateStars = (props) => {
             <div className={styles.footer}>
                 <textarea
                     id="input"
-                    className={styles.input}
-                    type="text"
+                    className={styles.input} 
+                    type="text" 
                     value={content}
                     placeholder="맥주 평가글을 입력해주세요."
                     onChange={(e) => setContent(e.target.value)}
                 />
-                <input
-                    className={styles.register}
-                    type="button"
+                <input 
+                    className={styles.register} 
+                    type="button" 
                     value="등록"
                     onClick={handleInputClick}/>
             </div>

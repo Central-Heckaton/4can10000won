@@ -1,23 +1,23 @@
 .mainLoadingImg {
   width: 12rem;
-  height: 28rem;
-  margin-top: 3.5rem;
 }
 .mainLoadingText {
-  margin-top: 1rem;
+  margin-top: 2rem;
   background-color: rgb(253 215 77);
   color: rgb(48 23 23);
   align-items: center;
   justify-content: center;
   display: flex;
-  width: 15rem;
+  width: 16rem;
   height: 2rem;
   border-radius: 10px;
   font-weight: bold;
+  font-size: 20px;
 }
 
 .main {
   display: flex;
+  justify-content: center;
   align-items: center;
   flex-direction: column;
   width: 100vw;
