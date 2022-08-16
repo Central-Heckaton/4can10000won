@@ -2,17 +2,16 @@
   display: flex;
   justify-content: center;
   text-align: center;
-  margin-top: 40px;
-  margin-bottom: 20px;
+  margin-top: 10px;
+  justify-content: space-between;
 }
 
 .box {
   width: 60px;
   height: 35px;
-  border: 1.5px solid #fdc74b;
+  border: 2px solid #fdc74b;
   border-radius: 5px;
   margin-bottom: 20px;
-  margin-right: 6px;
   color: #fdc74b;
   background-color: transparent;
   font-weight: 700;
@@ -23,10 +22,11 @@
 }
 
 .searchContainer {
-  margin: 30px 0;
+  margin: 20px 0;
   display: flex;
   justify-content: center;
-  padding-top: 4rem;
+  padding-top: 2.5rem;
+  z-index: 3;
 }
 
 .input {

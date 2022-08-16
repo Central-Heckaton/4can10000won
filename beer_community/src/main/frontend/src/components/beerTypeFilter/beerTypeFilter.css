@@ -1,63 +1,64 @@
 .btnContainer {
-        display: flex;
-        justify-content: center;
-        text-align: center;
-        margin-top: 40px;
-        margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  margin-top: 40px;
+  margin-bottom: 20px;
 }
 
 .beerContainer {
-        display: flex;
-        justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 .box {
-        width: 60px;
-        height: 35px;
-        border: 1.5px solid #FDC74B;
-        border-radius: 5px;
-        margin-right: 6px;
-        color: #FDC74B;
-        background-color: transparent;
-        font-weight: 700;
+  width: 60px;
+  height: 35px;
+  border: 1.5px solid #fdc74b;
+  border-radius: 5px;
+  margin-right: 6px;
+  color: #fdc74b;
+  background-color: transparent;
+  font-weight: 700;
+  z-index: 3;
 }
 
 .selected {
-        color: white;
-        background-color: #FDC74B;
+  color: white;
+  background-color: #fdc74b;
 }
 
 .box:nth-child(4) {
-        font-size: 11px;
+  font-size: 11px;
 }
 
 .textBox {
-        width: 300px;
-        height: 400px;
-        border: 2px solid #9AD8AE;
-        overflow: scroll;
+  width: 300px;
+  height: 400px;
+  border: 2px solid #9ad8ae;
+  overflow: scroll;
 }
 
 .textBox::-webkit-scrollbar {
-        width: 5px;
-        overflow-y: hidden;
+  width: 5px;
+  overflow-y: hidden;
 }
 
 .textBox::-webkit-scrollbar-thumb {
-        background-color: #9AD8AE;
+  background-color: #9ad8ae;
 }
 
 .text {
-        line-height: 1.5rem;
-        padding: 30px;
-        font-size: 14px;
+  line-height: 1.5rem;
+  padding: 30px;
+  font-size: 14px;
 }
 
 .src {
-        font-size: 12px;
-        color: gray;
+  font-size: 12px;
+  color: gray;
 }
 
 .invisible {
-        display: none;
+  display: none;
 }

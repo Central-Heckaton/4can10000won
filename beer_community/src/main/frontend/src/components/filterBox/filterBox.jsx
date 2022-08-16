@@ -18,6 +18,16 @@ const FilterBox = () => {
       Stout: false,
     },
   });
+
+  useEffect(() => {
+    console.log("Enter UseEffect");
+    if (flag === 0) {
+      getBeerList();
+    } else if (flag === 1) {
+      getSearch();
+      setFlag(0);
+    }
+  }, [filterState]);
   const handleFilter = (e) => {
     const beerType = e.target.id;
     setFilterState({
@@ -80,16 +90,6 @@ const FilterBox = () => {
       document.getElementById(item).style.backgroundColor = "white";
     }
   };
-
-  useEffect(() => {
-    console.log("Enter UseEffect");
-    if (flag === 0) {
-      getBeerList();
-    } else if (flag === 1) {
-      getSearch();
-      setFlag(0);
-    }
-  }, [filterState]);
 
   const getSearch = async () => {
     console.log("beerSearch.jsx/clicked!");
