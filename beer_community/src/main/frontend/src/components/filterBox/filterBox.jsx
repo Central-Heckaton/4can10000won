@@ -8,7 +8,8 @@ import BeerList from "../beerList/beerList";
 const FilterBox = () => {
   const [beerData, setBeerData] = useState([]);
   const [beerName, setBeerName] = useState();
-  const [changeColor, setChangeColor] = useState(true);
+  const [flag, setFlag] = useState(0);
+
   const [filterState, setFilterState] = useState({
     passingTags: {
       Lager: false,
@@ -37,8 +38,6 @@ const FilterBox = () => {
       cur.style.color = "#FDC74B";
       cur.style.backgroundColor = "white";
     }
-
-    setChangeColor(changeColor);
   };
 
   const filteredCollected = useCallback(() => {
@@ -57,6 +56,7 @@ const FilterBox = () => {
 
   const result = filteredCollected();
   console.log(result);
+
   const getBeerList = async (e) => {
     console.log("GetBeerList Called");
     const request_data = { beerTypeList: result }; // type of -> Object
@@ -69,32 +69,57 @@ const FilterBox = () => {
 
     console.log("response: ", response);
     setBeerData(response.data.data);
+  };
+  // response.data
+  // [{ }, { }, { } ...] -> props로 전달필요
 
+  const resetColor = () => {
+    const reset = filterState.passingTags;
+    for (let item in reset) {
+      document.getElementById(item).style.color = "#FDC74B";
+      document.getElementById(item).style.backgroundColor = "white";
     }
-    // response.data
-    // [{ }, { }, { } ...] -> props로 전달필요
+  };
 
   useEffect(() => {
     console.log("Enter UseEffect");
-    getBeerList();
+    if (flag === 0) {
+      getBeerList();
+    } else if (flag === 1) {
+      getSearch();
+      setFlag(0);
+    }
   }, [filterState]);
 
-  const handleSearchBtnClick = async (e) => {
-    e.preventDefault();
-    // setFilterState({
-    //   passingTags: {
-    //     Lager: false,
-    //     Ale: false,
-    //     IPA: false,
-    //     Stout: false,
-    //   },
-    // });
+  const getSearch = async () => {
     console.log("beerSearch.jsx/clicked!");
     let url = "/api/beername-search/" + beerName;
     console.log("url: ", url);
     let response = await axios.get(url);
     console.log("response: ", response);
     setBeerData(response.data.data);
+  };
+  const resetState = () => {
+    setFilterState({
+      passingTags: {
+        Lager: false,
+        Ale: false,
+        IPA: false,
+        Stout: false,
+      },
+    });
+  };
+  const handleSearchBtnClick = async (e) => {
+    e.preventDefault();
+    console.log("beername: ", beerName);
+    if (beerName === "" || beerName === undefined) {
+      resetColor();
+      resetState();
+    } else {
+      await setFlag(1);
+      resetColor();
+      resetState();
+    }
   };
   return (
     <>
@@ -103,7 +128,7 @@ const FilterBox = () => {
           name="beerName"
           className={styles.input}
           type="text"
-          value={beerName}
+          value={beerName || ""}
           onChange={(e) => setBeerName(e.target.value)}
         />
         <button className={styles.search} onClick={handleSearchBtnClick}>
