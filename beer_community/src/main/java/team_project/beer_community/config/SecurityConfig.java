@@ -38,10 +38,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginProcessingUrl("/api/login") // login주소가 호출되면 Spring Security가 낚아채서 대신 로그인 진행
                 .failureForwardUrl("/api/login-handle")
                 .defaultSuccessUrl("http://localhost:3000/search")
+//                .defaultSuccessUrl("http://54.167.58.203:8080/search")
                 .and()
                 .oauth2Login()
                 .loginPage("/api/login")
                 .defaultSuccessUrl("http://localhost:3000/search")
+//                .defaultSuccessUrl("http://54.167.58.203:8080/search")
                 .userInfoEndpoint()
                 .userService(principalOauth2UserService); // 구글소셜로그인 성공 후 코드를 받는게 아니라 AccessToken+사용자프로필정보 바로 함께받는다(편리함)
     }

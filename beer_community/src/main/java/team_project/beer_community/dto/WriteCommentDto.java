@@ -11,12 +11,12 @@ public class WriteCommentDto {
     @NotNull
     private String content;
     @NotNull
-    private double point;
+    private int point;
 
     @NotNull
     private Long beerId;
 
-    public WriteCommentDto(String content, double point, Long beerId) {
+    public WriteCommentDto(String content, int point, Long beerId) {
         this.content = content;
         this.point = point;
         this.beerId = beerId;

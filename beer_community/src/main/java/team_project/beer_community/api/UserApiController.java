@@ -3,6 +3,7 @@ package team_project.beer_community.api;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,10 +40,11 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
-public class UserApiController {
+public class UserApiController implements ErrorController{
     private final LikeBeerService likeBeerService;
     private final UserService userService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder; // password 암호화할 때 사용
+
 
     @GetMapping("/api/likebeers")
     public WrapperClass showLikeBeers(@AuthenticationPrincipal PrincipalDetails principalDetails){
