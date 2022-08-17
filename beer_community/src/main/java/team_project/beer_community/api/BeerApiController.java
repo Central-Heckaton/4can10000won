@@ -104,10 +104,9 @@ public class BeerApiController {
         if(state){ // state == true
             Beer beer = beerService.findOne(beerId);
             LikeBeer likeBeer = new LikeBeer(beer);
-            likeBeerService.join(likeBeer);
-            Hibernate.initialize(user.getLikeBeers());
             user.addLikeBeer(likeBeer);
             beer.addLikeBeer(likeBeer);
+            likeBeerService.join(likeBeer);
         }
         else{ // state == false
             List<LikeBeer> likeBeers = likeBeerService.findAllWithBeer(); //fetch join 적용
@@ -130,5 +129,15 @@ public class BeerApiController {
         System.out.println("BeerApiController.beerSearch");
         List<BeerDto> beerDtoList = beerService.findBeersWithBeerName(beerName);
         return new WrapperClass(beerDtoList);
+    }
+
+    @GetMapping("/api/recommend")
+    public WrapperClass beerRec(){
+        List<Beer> beers = beerService.findBeers();
+        Random random = new Random();
+        int value = random.nextInt(beers.size());
+        Beer beer = beers.get(value);
+        BeerRecDto beerRecDto = new BeerRecDto(beer, beerService.findAllTaste(beer.getId()));
+        return new WrapperClass(beerRecDto);
     }
 }
