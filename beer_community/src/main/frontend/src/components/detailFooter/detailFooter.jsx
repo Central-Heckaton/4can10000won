@@ -1,26 +1,32 @@
+// detailFooter.jsx
 import React from "react";
 import styles from "./detailFooter.module.css";
 import { useState, useEffect } from "react";
-import axios from "axios";
-import { Link } from "react-router-dom";
+import  axios  from "axios";
+import { useLocation, Link } from "react-router-dom";
 
 const DetailFooter = (props) => {
   const [count, setCount] = useState(0);
   // const [like, setLike] = useState(true);
   // console.log("like:", like);
+  const location = useLocation();
+  const id = 1;
+
   useEffect(() => {
     const putLike = async () => {
-      const request_data = { beerId: props.id, state: props.isLiked };
-      try {
+      const request_data = { beerId: id, state: props.isLiked};
+      console.log('id: ', id, 'like: ', props.isLiked);
+      try{
         let response = await axios({
-          method: "post",
-          url: "/api/like-beer",
-          headers: { "Content-Type": "application/json" },
-          data: JSON.stringify(request_data),
-        });
-        console.log("response: ", response);
-      } catch (err) {
-        console.log("err: ", err);
+            method: 'post',
+            url: "/api/like-beer/",
+            headers: {'Content-Type': 'application/json'},
+            data: JSON.stringify(request_data)
+        })
+        console.log('response: ', response);
+      }
+      catch (err) {
+        console.log('err: ', err);
       }
     };
     if (count > 0) {
@@ -33,12 +39,17 @@ const DetailFooter = (props) => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.goReview}>
-        <Link to={"/review"}>
+      <Link
+        to={"/review"}
+        className={styles.link}
+        state={{
+          id: props.id,
+        }}>
+        <div className={styles.goReview}>
           <p className={styles.title}>리뷰</p>
-          <p className={styles.reviewNum}>{props.reviewCount}</p>
-        </Link>
-      </div>
+          <p className={styles.reviewNum}>(800)</p>
+        </div>
+      </Link>
       <div className={styles.goRate}>
         <Link
           to={"/rate"}
