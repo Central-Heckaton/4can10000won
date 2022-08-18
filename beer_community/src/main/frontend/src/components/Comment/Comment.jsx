@@ -1,6 +1,5 @@
 // comment.jsx
 import React from "react";
-import { Link } from "react-router-dom";
 import styles from "./comment.module.css";
 import axios from 'axios';
 
@@ -34,6 +33,7 @@ const Comment = (props) => {
                   src="/img/trash.png"
                   alt="delete"
                   className={styles.delete}
+
                   onClick={() => {
                       const commentDelete = async () => {
                         console.log("props.id : ", props.id);
@@ -53,7 +53,6 @@ const Comment = (props) => {
                 />
               </div>
             </div>
-
             {props.content}
           </div>
         </div>
