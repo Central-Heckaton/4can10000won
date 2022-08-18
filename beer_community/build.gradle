@@ -52,48 +52,48 @@ dependencies {
 //}
 
 // React + Spring 빌드를 위해 필요한 코드 시작 ~
-def webappDir = "$projectDir/src/main/frontend"
-
-sourceSets {
-	main {
-		resources {
-			srcDirs = ["$webappDir/build", "$projectDir/src/main/resources"]
-		}
-	}
-}
-
-processResources {
-	dependsOn "buildReact"
-}
-
-task buildReact(type: Exec) {
-	dependsOn "installReact"
-	workingDir "$webappDir"
-	inputs.dir "$webappDir"
-	group = BasePlugin.BUILD_GROUP
-	if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
-		commandLine "npm.cmd", "run-script", "build"
-	} else {
-		commandLine "npm", "run-script", "build"
-	}
-}
-
-task installReact(type: Exec) {
-	workingDir "$webappDir"
-	inputs.dir "$webappDir"
-	group = BasePlugin.BUILD_GROUP
-	if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
-		commandLine "npm.cmd", "audit", "fix"
-		commandLine 'npm.cmd', 'install'
-	} else {
-		commandLine "npm", "audit", "fix"
-		commandLine 'npm', 'install'
-	}
-}
-
-
-apply plugin: 'application'
-mainClassName = 'team_project.beer_community.BeerCommunityApplication'
+//def webappDir = "$projectDir/src/main/frontend"
+//
+//sourceSets {
+//	main {
+//		resources {
+//			srcDirs = ["$webappDir/build", "$projectDir/src/main/resources"]
+//		}
+//	}
+//}
+//
+//processResources {
+//	dependsOn "buildReact"
+//}
+//
+//task buildReact(type: Exec) {
+//	dependsOn "installReact"
+//	workingDir "$webappDir"
+//	inputs.dir "$webappDir"
+//	group = BasePlugin.BUILD_GROUP
+//	if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
+//		commandLine "npm.cmd", "run-script", "build"
+//	} else {
+//		commandLine "npm", "run-script", "build"
+//	}
+//}
+//
+//task installReact(type: Exec) {
+//	workingDir "$webappDir"
+//	inputs.dir "$webappDir"
+//	group = BasePlugin.BUILD_GROUP
+//	if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
+//		commandLine "npm.cmd", "audit", "fix"
+//		commandLine 'npm.cmd', 'install'
+//	} else {
+//		commandLine "npm", "audit", "fix"
+//		commandLine 'npm', 'install'
+//	}
+//}
+//
+//
+//apply plugin: 'application'
+//mainClassName = 'team_project.beer_community.BeerCommunityApplication'
 
 // ~ React + Spring 빌드를 위해 필요한 코드 끝
 

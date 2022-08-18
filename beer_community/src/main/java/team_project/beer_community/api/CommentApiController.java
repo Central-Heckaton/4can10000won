@@ -78,24 +78,52 @@ public class CommentApiController {
     }
 
     @GetMapping("/api/comments/{beerId}") // 맥주에 해당하는 댓글들 랜더링
-    public WrapperClass showComments(
-            @PathVariable("beerId") Long beerId){
+    public WrapperClassWithUserId showComments(
+            @PathVariable("beerId") Long beerId,
+            @AuthenticationPrincipal PrincipalDetails principalDetails){
+        //fetch join 사용, comment와 user를 한번에 조회
+        Long userId = principalDetails.getUser().getId();
+        List<Comment> comments = commentService.findAllWithUser(beerId);
+        List<CommentDto> commentDtos = comments.stream()
+                .map(c -> new CommentDto(c.getUser(), c))
+                .collect(Collectors.toList());
+        return new WrapperClassWithUserId<>(userId, commentDtos);
+    }
+
+
+    @GetMapping("/api/recomments/{commentId}")  //drop down 눌렀을 경우
+    public WrapperClassWithUserId showReComments(
+            @PathVariable("commentId") Long parentCommentId,
+            @AuthenticationPrincipal PrincipalDetails principalDetails){
+        Long userId = principalDetails.getUser().getId();
+        List<Comment> recomments = commentService.findAllRecomments(parentCommentId);
+        List<ReCommentDto> reCommentDtos = recomments.stream()
+                .map(r -> new ReCommentDto(r.getUser(), r))
+                .collect(Collectors.toList());
+        return new WrapperClassWithUserId<>(userId, reCommentDtos);
+    }
+
+    @GetMapping("/api/comments/{beerId}/{userId}") // 맥주에 해당하는 댓글들 랜더링
+    public WrapperClassWithUserId showComments_test(
+            @PathVariable("beerId") Long beerId,
+            @PathVariable("userId") Long userId){
         //fetch join 사용, comment와 user를 한번에 조회
         List<Comment> comments = commentService.findAllWithUser(beerId);
         List<CommentDto> commentDtos = comments.stream()
                 .map(c -> new CommentDto(c.getUser(), c))
                 .collect(Collectors.toList());
-        return new WrapperClass(commentDtos);
+        return new WrapperClassWithUserId<>(userId, commentDtos);
     }
 
 
-    @GetMapping("/api/recomments/{commentId}")  //drop down 눌렀을 경우
-    public WrapperClass showReComments(
-            @PathVariable("commentId") Long parentCommentId){
+    @GetMapping("/api/recomments/{commentId}/{userId}")  //drop down 눌렀을 경우
+    public WrapperClassWithUserId showReComments_test(
+            @PathVariable("commentId") Long parentCommentId,
+            @PathVariable("userId") Long userId){
         List<Comment> recomments = commentService.findAllRecomments(parentCommentId);
         List<ReCommentDto> reCommentDtos = recomments.stream()
                 .map(r -> new ReCommentDto(r.getUser(), r))
                 .collect(Collectors.toList());
-        return new WrapperClass(reCommentDtos);
+        return new WrapperClassWithUserId<>(userId, reCommentDtos);
     }
 }
