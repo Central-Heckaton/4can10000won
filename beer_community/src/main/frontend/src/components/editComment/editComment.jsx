@@ -25,21 +25,25 @@ const EditComment = (props) => {
         document.getElementById('input').value = '';
         const request_data = { content: content, point: point };
         try {
+            console.log('request_data: ', request_data);
             let response = await axios({
-                method: "put",
+                method: "post",
                 url: `/api/comments/updated-comment/${props.commentId}`,
                 headers: { "Content-Type": "application/json" },
                 data: JSON.stringify(request_data),
             }); 
             if (response.status >= 200 && response.status < 300) {
                 alert("댓글 수정이 완료 되었습니다.");
+                console.log('response: ', response);
+                console.log('id: props.id -> ', props.id);
                 navigate("/review", { state: {id: props.id} });
             }
         } catch(err) {
             // alert(err);
-            console.log(err);
+            console.log('err: ', err);
             resetInput();
         }
+
     };
 
     const goToFetch = (e) => {
