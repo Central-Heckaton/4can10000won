@@ -18,13 +18,13 @@ const EachReview = (props) => {
     document.getElementById("input").value = "";
     setContent("");
   };
-
+  const getRecomments = async () => {
+    let response = await axios.get(`/api/recomments/${props.parentId}`);
+    setReComments(response.data.data);
+  };
   const handleDropdownClick = (e) => {
     setShowComment(!showComment);
-    const getRecomments = async () => {
-      let response = await axios.get(`/api/recomments/${props.parentId}`);
-      setReComments(response.data.data);
-    };
+    
     getRecomments();
   };
 
@@ -41,10 +41,6 @@ const EachReview = (props) => {
       headers: { "Content-Type": "application/json" },
       data: JSON.stringify(request_data),
     });
-    const getRecomments = async () => {
-      let response = await axios.get(`/api/recomments/${props.parentId}`);
-      setReComments(response.data.data);
-    };
     console.log(response);
     getRecomments();
     resetInput();
@@ -68,7 +64,10 @@ const EachReview = (props) => {
             </div>
             {props.edit && (
               <div className={styles.editDelete}>
-                <Link to={"/editrate"} state={{ commentId: parentId, id: beerId }}>
+                <Link
+                  to={"/editrate"}
+                  state={{ commentId: parentId, id: beerId }}
+                >
                   <img
                     src="/img/pencilEdit.png"
                     alt="edit"
@@ -84,11 +83,11 @@ const EachReview = (props) => {
                       await axios
                         .get(`/api/comments/delete-comment/${parentId}`)
                         .then((response) => {
-                          console.log('delete/response: ', response);
+                          console.log("delete/response: ", response);
                           window.location.reload();
                         })
                         .catch((error) => {
-                          console.log('err: ', error);
+                          console.log("err: ", error);
                         })
                         .then(() => {});
                     };
@@ -125,10 +124,12 @@ const EachReview = (props) => {
             {recomments.map((i) => (
               <Comment
                 key={i.id}
+                delete={i.writerId === props.userId ? true : false}
                 id={i.id}
                 username={i.username}
                 content={i.content}
                 createdDate={i.createdDate}
+                getRecomments={getRecomments}
               />
             ))}
 
