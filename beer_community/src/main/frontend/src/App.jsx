@@ -14,7 +14,6 @@ import LoginRetry from "./pages/LoginRetry";
 import { BrowserRouter } from "react-router-dom";
 import HowToDrink from './pages/HowtoDrink';
 import BeerType from './pages/BeerType';
-import UpdatePage from './pages/EditRate';
 import EditRate from "./pages/EditRate";
 
 function App() {

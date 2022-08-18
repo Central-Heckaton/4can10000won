@@ -4,33 +4,36 @@ import { useState } from "react";
 import Comment from "../Comment/Comment";
 import ViewStar from "../ViewStar/ViewStar";
 import styles from "./eachReview.module.css";
-import axios  from 'axios';
+import axios from "axios";
+import { Link } from "react-router-dom";
 
 const EachReview = (props) => {
   const [showComment, setShowComment] = useState(false);
   const [recomments, setReComments] = useState([]);
-
-  const [beerId, setBeerId] = useState(props.id);
-  const [parentId, setParentId] = useState(props.parentsId);
+  const [beerId, setBeerId] = useState(props.beerId);
+  const [parentId, setParentId] = useState(props.parentId);
   const [content, setContent] = useState("");
-  // console.log(beerId, parentId);
 
   const resetInput = () => {
-    document.getElementById('input').value = '';
+    document.getElementById("input").value = "";
     setContent("");
-  }
+  };
 
   const handleDropdownClick = (e) => {
     setShowComment(!showComment);
-    const getRecomments = async() => {
-      let response = await axios.get(`/api/recomments/${parentId}`);
+    const getRecomments = async () => {
+      let response = await axios.get(`/api/recomments/${props.parentId}`);
       setReComments(response.data.data);
-    }
+    };
     getRecomments();
   };
 
-  const handleReClick = async(e) => {
-    const request_data = { beerId: beerId, parentId: parentId, content: content };
+  const handleReClick = async (e) => {
+    const request_data = {
+      beerId: beerId,
+      parentId: parentId,
+      content: content,
+    };
     console.log(request_data);
     let response = await axios({
       method: "post",
@@ -38,14 +41,14 @@ const EachReview = (props) => {
       headers: { "Content-Type": "application/json" },
       data: JSON.stringify(request_data),
     });
-    const getRecomments = async() => {
-      let response = await axios.get(`/api/recomments/${parentId}`);
+    const getRecomments = async () => {
+      let response = await axios.get(`/api/recomments/${props.parentId}`);
       setReComments(response.data.data);
-    }
+    };
     console.log(response);
     getRecomments();
     resetInput();
-  }
+  };
 
   return (
     <>
@@ -59,11 +62,51 @@ const EachReview = (props) => {
           <div className={styles.username}>{props.username}</div>
         </div>
         <div className={styles.reviewBox}>
-          <ViewStar point={props.point}/>
-          <div className={styles.writeTime}>작성날짜   {props.createdDate} </div>
-          <div className={styles.review}>
-            {props.content}
+          <div className={styles.reviewBoxMenu}>
+            <div className={styles.viewStar}>
+              <ViewStar point={props.point} />
+            </div>
+            {props.edit && (
+              <div className={styles.editDelete}>
+                <Link to={"/editrate"} state={{ commentId: parentId }}>
+                  <img
+                    src="/img/pencilEdit.png"
+                    alt="edit"
+                    className={styles.edit}
+                  />
+                </Link>
+                <img
+                  src="/img/trash.png"
+                  alt="trash"
+                  onClick={() => {
+                    const commentDelete = async () => {
+                      console.log("parentId : ", parentId);
+                      await axios
+                        .delete(`/api/comments/delete-comment/${parentId}`)
+                        .then((response) => {
+                          console.log(response);
+                        })
+                        .catch((error) => {
+                          console.log(error);
+                        })
+                        .then(() => {});
+                    };
+                    commentDelete();
+                    const getReviews = async () => {
+                      let response = await axios.get(
+                        `/api/comments/${props.beerId}`
+                      );
+                      props.setReviews(response.data.data);
+                    };
+                    getReviews();
+                  }}
+                />
+              </div>
+            )}
           </div>
+
+          <div className={styles.writeTime}>작성날짜 {props.createdDate} </div>
+          <div className={styles.review}>{props.content}</div>
         </div>
         <div className={styles.dropdownBox}>
           <img
@@ -79,7 +122,7 @@ const EachReview = (props) => {
         <>
           <div className={styles.dropdownMain}>
             {recomments.map((i) => (
-              <Comment 
+              <Comment
                 key={i.id}
                 id={i.id}
                 username={i.username}
@@ -89,18 +132,18 @@ const EachReview = (props) => {
             ))}
 
             <div className={styles.inputBox}>
-              <input 
+              <input
                 id="input"
-                placeholder="댓글을 입력하세요." 
-                className={styles.input} 
-                type="text" 
-                value={content} 
-                onChange={(e) => setContent(e.target.value)} 
+                placeholder="댓글을 입력하세요."
+                className={styles.input}
+                type="text"
+                value={content}
+                onChange={(e) => setContent(e.target.value)}
               />
-              <button 
-                className={styles.button} 
+              <button
+                className={styles.button}
                 type="submit"
-                onClick={handleReClick}  
+                onClick={handleReClick}
               >
                 <img src="/img/vector.png" alt="button" />
               </button>

@@ -36,10 +36,27 @@
   border-radius: 50%;
   margin-bottom: 5px;
 }
+
+.commentMenu {
+  display: flex;
+  justify-content: space-between;
+}
+.delete {
+  width: 12px;
+  height: 12px;
+  margin-left: 12px;
+  margin-bottom: 6px;
+}
+.edit {
+  width: 12px;
+  height: 12px;
+  margin-bottom: 6px;
+}
+
 .username {
   font-size: 10px;
-  font-weight: 100;
-  margin-bottom: 7px;
+  font-style: normal;
+  font-weight: normal;
 }
 .commentText {
   font-weight: 100;

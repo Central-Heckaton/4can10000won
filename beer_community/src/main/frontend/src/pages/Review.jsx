@@ -9,14 +9,13 @@ import { useLocation } from "react-router-dom";
 const Review = () => {
   let navigate = useNavigate();
   const location = useLocation();
-  const id = location.state.id;
-  console.log(id);
+  const beerId = location.state.id;
 
   return (
     <>
       <Nav navigate={navigate} />
       <ReviewButton />
-      <ReviewBox id={id}/>
+      <ReviewBox beerId={beerId}/>
       
     </>
   );
