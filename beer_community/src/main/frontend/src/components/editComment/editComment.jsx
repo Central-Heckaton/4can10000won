@@ -1,15 +1,13 @@
-// rateStars.jsx
 import React from 'react';
-import styles from './rateStars.module.css';
+import styles from './editComment.module.css';
 import { useState, useEffect } from 'react';
 import  axios  from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-const RateStars = (props) => {
+const EditComment = (props) => {
     const [starClick, setStarClick] = useState(null);
     const [preClicked, setPreClicked] = useState(starClick);
     
-    const [beerId, setBeerId] = useState(props.id);
     const [content, setContent] = useState("");
     const [point, setPoint] = useState(0);
 
@@ -18,7 +16,6 @@ const RateStars = (props) => {
     const resetInput = () => {
         setStarClick(null);
         setPreClicked(starClick);
-        setBeerId(props.id);
         setContent("");
         setPoint(0);
         [1, 2, 3, 4, 5].map(i => {document.getElementById(i).src = "/img/star-regular.png"});
@@ -26,16 +23,16 @@ const RateStars = (props) => {
 
     const handleInputClick = async (e) => {
         document.getElementById('input').value = '';
-        const request_data = { beerId: beerId, content: content, point: point };
+        const request_data = { content: content, point: point };
         try {
             let response = await axios({
                 method: "post",
-                url: "/api/comments/write-comment",
+                url: `/api/comments/update-comment/${props.commentId}`,
                 headers: { "Content-Type": "application/json" },
                 data: JSON.stringify(request_data),
             }); 
             if (response.status >= 200 && response.status < 300) {
-                alert("댓글 작성이 완료 되었습니다.");
+                alert("댓글 수정이 완료 되었습니다.");
                 navigate("/review", { state: {id: props.id} });
             }
         } catch(err) {
@@ -84,7 +81,7 @@ const RateStars = (props) => {
     return (
         <div className={styles.container}>
             <div className={styles.btnContainer}>
-                <button className={styles.button}>리뷰 작성</button>
+                <button className={styles.button}>리뷰 수정</button>
             </div>
             <div className={styles.starContainer}>
                 <p className={styles.total}>총점</p>
@@ -112,11 +109,11 @@ const RateStars = (props) => {
                 <input 
                     className={styles.register} 
                     type="button" 
-                    value="등록"
+                    value="수정"
                     onClick={handleInputClick}/>
             </div>
         </div>
     );
 };
 
-export default RateStars;
+export default EditComment;
