@@ -68,7 +68,10 @@ const EachReview = (props) => {
             </div>
             {props.edit && (
               <div className={styles.editDelete}>
-                <Link to={"/editrate"} state={{ commentId: parentId, id: beerId }}>
+                <Link
+                  to={"/editrate"}
+                  state={{ commentId: parentId, id: beerId }}
+                >
                   <img
                     src="/img/pencilEdit.png"
                     alt="edit"
@@ -84,11 +87,11 @@ const EachReview = (props) => {
                       await axios
                         .get(`/api/comments/delete-comment/${parentId}`)
                         .then((response) => {
-                          console.log('delete/response: ', response);
+                          console.log("delete/response: ", response);
                           window.location.reload();
                         })
                         .catch((error) => {
-                          console.log('err: ', error);
+                          console.log("err: ", error);
                         })
                         .then(() => {});
                     };
@@ -125,6 +128,7 @@ const EachReview = (props) => {
             {recomments.map((i) => (
               <Comment
                 key={i.id}
+                delete={i.writerId === props.userId ? true : false}
                 id={i.id}
                 username={i.username}
                 content={i.content}
