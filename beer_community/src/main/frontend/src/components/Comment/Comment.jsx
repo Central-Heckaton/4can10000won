@@ -1,6 +1,5 @@
 // comment.jsx
 import React from "react";
-import { Link } from "react-router-dom";
 import styles from "./comment.module.css";
 
 const Comment = (props) => {
@@ -27,19 +26,14 @@ const Comment = (props) => {
             <div className={styles.commentMenu}>
               <div className={styles.username}>{props.username}</div>
               <div>
-            
-               
                 <img
                   src="/img/trash.png"
                   alt="delete"
                   className={styles.delete}
-                  onClick={()=>{
-
-                  }}
+                  onClick={() => {}}
                 />
               </div>
             </div>
-
             {props.content}
           </div>
         </div>
