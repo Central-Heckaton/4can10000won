@@ -10,9 +10,9 @@ const MainButtons = (props) => (
     <Link to={"/random"}>
       <button className={styles.button}>맥주 랜덤 추첨 🎰</button>
     </Link>
-
-    <button className={styles.button}>캔맥주 더 맛있게 먹는 법 🍺</button>
-
+    <Link to={"/howtodrink"}>
+      <button className={styles.button}>캔맥주 더 맛있게 먹는 법 🍺</button>
+    </Link>
     <Link to={"/beertype"}>
       <button className={styles.button}>맥주 종류를 잘 모른다면? 🙌</button>
     </Link>
