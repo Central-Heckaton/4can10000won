@@ -28,32 +28,31 @@ const Comment = (props) => {
           <div className={styles.commentText}>
             <div className={styles.commentMenu}>
               <div className={styles.username}>{props.username}</div>
-              {props.delete &&
-              <div>
-                <img
-                  src="/img/trash.png"
-                  alt="delete"
-                  className={styles.delete}
-                  onClick={() => {
-                    const commentDelete = async () => {
-                      console.log("props.id : ", props.id);
-                      await axios
-                        .get(`/api/comments/delete-comment/${props.id}`)
-                        .then((response) => {
-                          console.log("delete/response: ", response);
-                          window.location.reload();
-                        })
-                        .catch((error) => {
-                          console.log("err: ", error);
-                        })
-                        .then(() => {});
-                    };
-                    commentDelete();
-                  }}
+              {props.delete && (
+                <div>
+                  <img
+                    src="/img/trash.png"
+                    alt="delete"
+                    className={styles.delete}
+                    onClick={() => {
+                      const commentDelete = async () => {
+                        console.log("props.id : ", props.id);
+                        await axios
+                          .get(`/api/comments/delete-comment/${props.id}`)
+                          .then((response) => {
+                            console.log("delete/response: ", response);
+                            props.getRecomments();
+                          })
+                          .catch((error) => {
+                            console.log("err: ", error);
+                          })
+                          .then(() => {});
+                      };
+                      commentDelete();
+                    }}
                   />
-                  
-                  </div>
-                  }
+                </div>
+              )}
             </div>
             {props.content}
           </div>

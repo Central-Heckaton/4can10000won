@@ -18,13 +18,13 @@ const EachReview = (props) => {
     document.getElementById("input").value = "";
     setContent("");
   };
-
+  const getRecomments = async () => {
+    let response = await axios.get(`/api/recomments/${props.parentId}`);
+    setReComments(response.data.data);
+  };
   const handleDropdownClick = (e) => {
     setShowComment(!showComment);
-    const getRecomments = async () => {
-      let response = await axios.get(`/api/recomments/${props.parentId}`);
-      setReComments(response.data.data);
-    };
+    
     getRecomments();
   };
 
@@ -41,10 +41,6 @@ const EachReview = (props) => {
       headers: { "Content-Type": "application/json" },
       data: JSON.stringify(request_data),
     });
-    const getRecomments = async () => {
-      let response = await axios.get(`/api/recomments/${props.parentId}`);
-      setReComments(response.data.data);
-    };
     console.log(response);
     getRecomments();
     resetInput();
@@ -133,6 +129,7 @@ const EachReview = (props) => {
                 username={i.username}
                 content={i.content}
                 createdDate={i.createdDate}
+                getRecomments={getRecomments}
               />
             ))}
 
