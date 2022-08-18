@@ -29,6 +29,7 @@ ${reset}
     }
     a:link { 
         text-decoration: none;
+        color: black;
     }
  
     a:visited { 

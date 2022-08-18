@@ -163,7 +163,8 @@ public class UserApiController implements ErrorController{
     public void loginHandle(HttpServletResponse response) throws IOException {
         System.out.println("loginHandle");
         HttpHeaders headers = new HttpHeaders();
-        String redirect_uri = "http://localhost:3000/login-retry"; // 로그인 재시도
+        String redirect_uri = "http://54.167.58.203:8080/login-retry"; // 로그인 재시도
+//        String redirect_uri = "http://localhost:3000/login-retry"; // 로그인 재시도
         response.addHeader("login_result", "fail");
         response.sendRedirect(redirect_uri);
     }
