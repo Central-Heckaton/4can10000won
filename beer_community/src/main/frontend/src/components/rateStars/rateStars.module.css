@@ -1,74 +1,79 @@
 .container {
-    padding: 50px 20px;
+  padding-top: 30px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 5rem;
 }
 
 .btnContainer {
-    text-align: center;
-    margin: 20px 0;
+  text-align: center;
+  margin: 20px 0;
 }
 
 .button {
-    background-color: #9AD8AE;
-    color: white;
-    border-radius: 10px;
-    padding: 5px 25px;
+  background-color: #9ad8ae;
+  color: white;
+  border-radius: 10px;
+  padding: 5px 25px;
 }
 
 .starContainer {
-    display: flex;
-    margin-left: 30px;
-    margin-top: 50px;
-    margin-bottom: 15px;
-    cursor: pointer;
+  display: flex;
+  margin-left: 30px;
+  margin-top: 50px;
+  margin-bottom: 15px;
+  cursor: pointer;
 }
 
 .total {
-    font-size: 14px;
-    font-weight: 700;
-    margin-right: 20px;
+  font-size: 14px;
+  font-weight: 700;
+  margin-right: 20px;
 }
 
 .optContainer {
-    font-size: var(--font-small);
-    color: darkgray;    
-    display: flex;
-    margin-bottom: 30px;
-    margin-left: 30px;
+  font-size: var(--font-small);
+  color: darkgray;
+  display: flex;
+  margin-bottom: 30px;
+  margin-left: 30px;
 }
 
 .opt {
-    margin-right: 20px;
-    font-weight: 700;
+  margin-right: 20px;
+  font-weight: 700;
 }
 
 .footer {
-    text-align: center;
-    display: flex;
-    flex-direction: column;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .input {
-    padding: 20px;
-    width: 260px;
-    height: 350px;
-    border: 2px solid #9AD8AE;
-    margin-bottom: 30px;
+  padding: 20px;
+  width: 260px;
+  height: 350px;
+  border: 2px solid #9ad8ae;
+  margin-bottom: 30px;
 }
 
 .input::placeholder {
-    color: darkgray;
-    font-size: var(--font-small);
+  color: darkgray;
+  font-size: var(--font-small);
 }
 
 .input:focus {
-    outline: none;
+  outline: none;
 }
 
 .register {
-    width: 294px;
-    height: 40px;
-    background-color: #AAE8BE;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+  width: 294px;
+  height: 40px;
+  background-color: #aae8be;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }

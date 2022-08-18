@@ -5,6 +5,7 @@ import Nav from "../components/Nav/Nav";
 import { useNavigate } from "react-router-dom";
 import ReviewBox from "../components/ReviewBox/ReviewBox";
 import { useLocation } from "react-router-dom";
+import Footer from "../components/Footer/Footer";
 
 const Review = () => {
   let navigate = useNavigate();
@@ -15,8 +16,8 @@ const Review = () => {
     <>
       <Nav navigate={navigate} />
       <ReviewButton />
-      <ReviewBox beerId={beerId}/>
-      
+      <ReviewBox beerId={beerId} />
+      <Footer />
     </>
   );
 };
