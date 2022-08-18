@@ -26,8 +26,8 @@ const EditComment = (props) => {
         const request_data = { content: content, point: point };
         try {
             let response = await axios({
-                method: "post",
-                url: `/api/comments/update-comment/${props.commentId}`,
+                method: "put",
+                url: `/api/comments/updated-comment/${props.commentId}`,
                 headers: { "Content-Type": "application/json" },
                 data: JSON.stringify(request_data),
             }); 
