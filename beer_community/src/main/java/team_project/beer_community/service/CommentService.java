@@ -38,7 +38,7 @@ public class CommentService {
     }
 
     @Transactional
-    public void updatePoint(Long id, int point){
+    public void updatePoint(Long id, double point){
         Comment findComment = commentRepository.findById(id).orElseThrow(NullPointerException::new);
         findComment.setPoint(point);
     }

@@ -8,10 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import team_project.beer_community.config.auth.PrincipalDetails;
 import team_project.beer_community.domain.Comment;
 import team_project.beer_community.domain.User;
-import team_project.beer_community.dto.CommentDto;
-import team_project.beer_community.dto.ReCommentDto;
-import team_project.beer_community.dto.WriteCommentDto;
-import team_project.beer_community.dto.WriteReCommentDto;
+import team_project.beer_community.dto.*;
 import team_project.beer_community.service.BeerService;
 import team_project.beer_community.service.CommentService;
 import team_project.beer_community.service.UserService;
@@ -58,6 +55,15 @@ public class CommentApiController {
         else{
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @PutMapping("/api/comments/updated-comment/{commentId}")
+    public ResponseEntity<Void> updateComment(
+            @PathVariable("commentId") Long commentId,
+            @RequestBody UpdateCommentDto updateCommentDto){
+        commentService.updateContent(commentId, updateCommentDto.getContent());
+        commentService.updatePoint(commentId, updateCommentDto.getPoint());
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping("/api/comments/delete-comment/{commentId}") //댓글, 대댓글 삭제 기능(부모일 경우 관련 대댓글도 모두 삭제)
