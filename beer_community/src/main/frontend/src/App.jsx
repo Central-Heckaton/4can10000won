@@ -14,6 +14,9 @@ import LoginRetry from "./pages/LoginRetry";
 import { BrowserRouter } from "react-router-dom";
 import HowToDrink from './pages/HowtoDrink';
 import BeerType from './pages/BeerType';
+import UpdatePage from './pages/EditRate';
+import EditRate from "./pages/EditRate";
+
 function App() {
   return (
     <>
@@ -33,6 +36,7 @@ function App() {
           <Route path="/review" element={<Review />} />
           <Route path="/howtodrink" element={<HowToDrink />} />
           <Route path="/beertype" element={<BeerType/>}/>
+          <Route path="/editRate" element={<EditRate />}/>
         </Routes>
       </BrowserRouter>
     </>
