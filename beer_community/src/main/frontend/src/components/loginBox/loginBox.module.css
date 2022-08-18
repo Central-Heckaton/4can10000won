@@ -110,10 +110,10 @@
   justify-content: space-around;
 }
 .naver {
-  background: url(/public/img/naverLogin.png);
+  background: url(/img/naverLogin.png);
 }
 .google {
-  background: url(/public/img/googleLogin.png);
+  background: url(/img/googleLogin.png);
 }
 .loginAnotherButton {
   border-radius: 50%;

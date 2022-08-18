@@ -6,6 +6,7 @@
   border: 2px solid var(--background-color);
   z-index: -1;
   padding-bottom: 5rem;
+  align-items: center;
 }
 .sub {
   display: flex;
@@ -18,4 +19,19 @@
   padding-bottom: 5rem;
   text-align: center;
   font-size: large;
+}
+.text{
+font-size: 30px;
+margin-bottom: 2rem;
+
+}
+
+
+.button {
+  width: 7rem;
+margin-bottom: 2.5rem;
+  background-color: #9ad8ae;
+  color: white;
+  border-radius: 10px;
+  padding: 5px 25px;
 }
