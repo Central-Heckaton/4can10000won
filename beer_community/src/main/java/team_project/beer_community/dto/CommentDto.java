@@ -7,6 +7,7 @@ import team_project.beer_community.domain.User;
 @Data
 public class CommentDto {
     private Long id;
+    private Long writerId;
     private String username;
     private String userImageUrl;
     private String createdDate;
@@ -15,6 +16,7 @@ public class CommentDto {
 
     public CommentDto(User user, Comment comment) {
         this.id = comment.getId();
+        this.writerId = user.getId();
         this.username = user.getUsername();
         this.userImageUrl = user.getImageUrl();
         this.createdDate = comment.getCreatedDate().toString();
