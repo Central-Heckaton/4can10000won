@@ -109,12 +109,7 @@
   display: flex;
   justify-content: space-around;
 }
-.naver {
-  background: url(/img/naverLogin.png);
-}
-.google {
-  background: url(/img/googleLogin.png);
-}
+
 .loginAnotherButton {
   border-radius: 50%;
   width: 30px;
