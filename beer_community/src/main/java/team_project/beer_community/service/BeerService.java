@@ -11,6 +11,7 @@ import team_project.beer_community.repository.CommentRepository;
 import team_project.beer_community.repository.LikeBeerRepository;
 import team_project.beer_community.repository.TasteEntityRepository;
 
+import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +22,7 @@ public class BeerService {
     private final BeerRepository beerRepository;
     private final TasteEntityRepository tasteEntityRepository;
     private final CommentRepository commentRepository;
+    private final EntityManager em;
 
     @Transactional
     public Long join(Beer beer){
@@ -77,6 +79,7 @@ public class BeerService {
         findBeer.addComment(comment);
         findBeer.setTotalPoint(calTotalPoint(findBeer));
         comment.getUser().addComment(comment);
+        em.flush(); em.clear(); // total_point DB에 반영시키기 위함
     }
 
     @Transactional
@@ -99,7 +102,8 @@ public class BeerService {
                     count++;
                 }
             }
-            return sum / count;
+            double temp = sum / count;
+            return (Math.round( temp * 10 )) / 10.0; // 소수점 첫째짜리까지 반올림해서 나타냄
         } catch (Exception exception){
             return 0;
         }
