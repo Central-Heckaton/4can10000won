@@ -22,12 +22,13 @@ const ReviewBox = (props) => {
             {reviews.map((i)=> (
                 <EachReview 
                     key={i.id}
-                    id={i.id}
+                    parentsId={i.id}
                     username={i.username}
-                    userImageUrl={i.userImageUrl}
+                    userImageUrl={i.userImageUrl ? i.userImageUrl : "/img/default.png"}
                     content={i.content}
                     point={i.point}
                     createdDate={i.createdDate}
+                    id={props.id}
                 />
             ))}
         </div>

@@ -3,6 +3,7 @@ import React from "react";
 import styles from "./comment.module.css";
 
 const Comment = (props) => {
+  console.log(props.userImageUrl);
   return (
     <>
       <div className={styles.commentBox}>
@@ -12,8 +13,7 @@ const Comment = (props) => {
         <div className={styles.comment}>
           <div className={styles.profile}>
             <img
-              src={props.userImageUrl}
-              alt="comment profile"
+              src={props.userImageUrl ? props.userImageUrl : "/img/default.png"}
               className={styles.profilePhoto}
             ></img>
           </div>
