@@ -68,7 +68,7 @@ const EachReview = (props) => {
             </div>
             {props.edit && (
               <div className={styles.editDelete}>
-                <Link to={"/editrate"} state={{ commentId: parentId }}>
+                <Link to={"/editrate"} state={{ commentId: parentId, id: beerId }}>
                   <img
                     src="/img/pencilEdit.png"
                     alt="edit"
@@ -82,12 +82,13 @@ const EachReview = (props) => {
                     const commentDelete = async () => {
                       console.log("parentId : ", parentId);
                       await axios
-                        .delete(`/api/comments/delete-comment/${parentId}`)
+                        .get(`/api/comments/delete-comment/${parentId}`)
                         .then((response) => {
-                          console.log(response);
+                          console.log('delete/response: ', response);
+                          window.location.reload();
                         })
                         .catch((error) => {
-                          console.log(error);
+                          console.log('err: ', error);
                         })
                         .then(() => {});
                     };
