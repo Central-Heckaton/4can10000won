@@ -26,7 +26,11 @@ margin-bottom: 2rem;
 
 }
 
+.loading{
+display: flex;
+justify-content: center;
 
+}
 .button {
   width: 7rem;
 margin-bottom: 2.5rem;

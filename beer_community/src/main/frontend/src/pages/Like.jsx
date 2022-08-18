@@ -6,21 +6,22 @@ import Footer from "../components/Footer/Footer";
 import axios from "axios";
 
 const Like = () => {
+  const [loading, setLoading] = useState(false);
   const getBeerData = async () => {
     const response = await axios.get("/api/likebeers");
-    console.log(response.data);
     setBeerData(response.data.data);
+    setLoading(true);
   };
   useEffect(() => {
     getBeerData();
     console.log(beerData);
-  },[]);
+  }, []);
   const [beerData, setBeerData] = useState([]);
   let navigate = useNavigate();
   return (
     <>
       <Nav navigate={navigate} />
-      <LikeBox data={beerData} />
+      <LikeBox data={beerData} loading={loading} />
 
       <Footer />
     </>
