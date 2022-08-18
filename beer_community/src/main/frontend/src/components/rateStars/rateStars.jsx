@@ -3,6 +3,7 @@ import React from 'react';
 import styles from './rateStars.module.css';
 import { useState, useEffect } from 'react';
 import  axios  from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const RateStars = (props) => {
     const [starClick, setStarClick] = useState(null);
@@ -11,6 +12,8 @@ const RateStars = (props) => {
     const [beerId, setBeerId] = useState(props.id);
     const [content, setContent] = useState("");
     const [point, setPoint] = useState(0);
+
+    let navigate = useNavigate();
 
     const resetInput = () => {
         setStarClick(null);
@@ -33,7 +36,7 @@ const RateStars = (props) => {
             }); 
             if (response.status >= 200 && response.status < 300) {
                 alert("댓글 작성이 완료 되었습니다.");
-                resetInput();
+                navigate("/review", { state: {id: props.id} });
             }
         } catch(err) {
             // alert(err);
