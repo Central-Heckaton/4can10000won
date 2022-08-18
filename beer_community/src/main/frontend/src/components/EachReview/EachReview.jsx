@@ -11,29 +11,40 @@ const EachReview = (props) => {
   const [recomments, setReComments] = useState([]);
 
   const [beerId, setBeerId] = useState(props.id);
-  const [parentId, setParentId] = useState(0);
+  const [parentId, setParentId] = useState(props.parentsId);
   const [content, setContent] = useState("");
+  // console.log(beerId, parentId);
+
+  const resetInput = () => {
+    document.getElementById('input').value = '';
+    setContent("");
+  }
 
   const handleDropdownClick = (e) => {
     setShowComment(!showComment);
     const getRecomments = async() => {
-      let response = await axios.get(`/api/recomments/${props.id}`);
+      let response = await axios.get(`/api/recomments/${parentId}`);
       setReComments(response.data.data);
     }
     getRecomments();
-    console.log('wefjoiw: ', recomments);
   };
 
   const handleReClick = async(e) => {
     const request_data = { beerId: beerId, parentId: parentId, content: content };
+    console.log(request_data);
     let response = await axios({
       method: "post",
       url: "/api/comments/write-recomment",
       headers: { "Content-Type": "application/json" },
       data: JSON.stringify(request_data),
     });
+    const getRecomments = async() => {
+      let response = await axios.get(`/api/recomments/${parentId}`);
+      setReComments(response.data.data);
+    }
     console.log(response);
-    console.log('content', content);
+    getRecomments();
+    resetInput();
   }
 
   return (
@@ -79,6 +90,7 @@ const EachReview = (props) => {
 
             <div className={styles.inputBox}>
               <input 
+                id="input"
                 placeholder="댓글을 입력하세요." 
                 className={styles.input} 
                 type="text" 
