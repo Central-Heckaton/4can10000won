@@ -57,8 +57,17 @@ public class CommentApiController {
         }
     }
 
-    @PutMapping("/api/comments/updated-comment/{commentId}")
+    @PutMapping("/api/comments/updated-comment/{commentId}") // React와 연동안됨(403 Forbidden)
     public ResponseEntity<Void> updateComment(
+            @PathVariable("commentId") Long commentId,
+            @RequestBody UpdateCommentDto updateCommentDto){
+        commentService.updateContent(commentId, updateCommentDto.getContent());
+        commentService.updatePoint(commentId, updateCommentDto.getPoint());
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @PostMapping("/api/comments/updated-comment/{commentId}")
+    public ResponseEntity<Void> updateComment_post(
             @PathVariable("commentId") Long commentId,
             @RequestBody UpdateCommentDto updateCommentDto){
         commentService.updateContent(commentId, updateCommentDto.getContent());
@@ -68,6 +77,23 @@ public class CommentApiController {
 
     @DeleteMapping("/api/comments/delete-comment/{commentId}") //댓글, 대댓글 삭제 기능(부모일 경우 관련 대댓글도 모두 삭제)
     public ResponseEntity<Void> deleteComment(@PathVariable("commentId") Long commentId){
+        try{
+            Comment comment = commentService.findOne(commentId);
+            if (comment.getParentId() == 0){  //부모 댓글일 경우(대댓글이 존재)
+                List<Comment> reComments = commentService.findAllRecomments(commentId);
+                for (Comment reComment : reComments) {
+                    commentService.delete(reComment);
+                }
+            }
+            commentService.delete(comment); //자식 댓글(대댓글)을 삭제 후 부모 댓글 삭제(순서는 상관없을 거 같긴 함)
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT); //delete 요청일 경우 성공시 204를 return
+        } catch(Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/api/comments/delete-comment/{commentId}") //댓글, 대댓글 삭제 기능(부모일 경우 관련 대댓글도 모두 삭제)
+    public ResponseEntity<Void> deleteComment_get(@PathVariable("commentId") Long commentId){
         try{
             Comment comment = commentService.findOne(commentId);
             if (comment.getParentId() == 0){  //부모 댓글일 경우(대댓글이 존재)

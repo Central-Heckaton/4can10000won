@@ -26,7 +26,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private PrincipalOauth2UserService principalOauth2UserService;
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable()
+        http.cors().and().csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/user/**").authenticated()
                 .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
