@@ -16,7 +16,7 @@ const Detail = (props) => {
   const [information, setInformation] = useState("");
   const [alcoholDegree, setAlcoholDegree] = useState("");
   const [isLiked, setIsLiked] = useState("");
-  const [taste, setTaste] = useState("");
+  const [taste, setTaste] = useState([]);
   const [reviewCount, setReviewCount] = useState("");
   const [loading, setLoading] = useState(false);
   const location = useLocation();
@@ -37,7 +37,7 @@ const Detail = (props) => {
       setInformation(response.data.data.information);
       setAlcoholDegree(response.data.data.alcoholDegree);
       setIsLiked(response.data.data.is_liked);
-      setTaste(response.data.data.taste);
+      setTaste(response.data.data.tastes);
       setReviewCount(response.data.data.count);
       setLoading(true);
     };
@@ -51,6 +51,7 @@ const Detail = (props) => {
           <>
             <DetailImgs imageUrl={imageUrl} beerName={beerName} />
             <DetailInfo
+              id={id}
               alcoholDegree={alcoholDegree}
               taste={taste}
               totalPoint={totalPoint}

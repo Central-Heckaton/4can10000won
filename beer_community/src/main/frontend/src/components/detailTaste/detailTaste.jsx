@@ -3,12 +3,53 @@ import styles from "./detailTaste.module.css";
 import ViewStar from "../ViewStar/ViewStar";
 
 const DetailTaste = (props) => {
+  console.log("taste : ", props.taste);
   return (
     <div className={styles.container}>
       <div className={styles.titleBox}>
         <p className={styles.title}>Taste</p>
-        <button className={styles.tag1}>부드러움</button>
-        <button className={styles.tag2}>과일향</button>
+        {Array.isArray(props.taste) &&
+          props.taste.map((i) => {
+            // SWEET, SOUR, BITTER, FLORAL, AROMATIC, FRUITINESS
+            // 달콤함, 새콤함, 씁쓸함, 꽃향기, 고소함, 과일향
+            if (i === "SWEET") {
+              return (
+                <button key={props.id} className={styles.tag1}>
+                  달콤함
+                </button>
+              );
+            } else if (i === "SOUR") {
+              return (
+                <button key={props.id} className={styles.tag1}>
+                  신맛
+                </button>
+              );
+            } else if (i === "BITTER") {
+              return (
+                <button key={props.id} className={styles.tag1}>
+                  씁쓸함
+                </button>
+              );
+            } else if (i === "FLORAL") {
+              return (
+                <button key={props.id} className={styles.tag1}>
+                  꽃향기
+                </button>
+              );
+            } else if (i === "AROMATIC") {
+              return (
+                <button key={props.id} className={styles.tag1}>
+                  고소함
+                </button>
+              );
+            } else if (i === "FRUITINESS") {
+              return (
+                <button key={props.id} className={styles.tag1}>
+                  과일향
+                </button>
+              );
+            }
+          })}
       </div>
       <div className={styles.totalBox}>
         <p className={styles.total}>총점</p>

@@ -7,7 +7,11 @@ const DetailInfo = (props) => {
   return (
     <div className={styles.container}>
       <DetailDegree alcoholDegree={props.alcoholDegree} />
-      <DetailTaste taste={props.taste} totalPoint={props.totalPoint} />
+      <DetailTaste
+        taste={props.taste}
+        totalPoint={props.totalPoint}
+        id={props.id}
+      />
     </div>
   );
 };

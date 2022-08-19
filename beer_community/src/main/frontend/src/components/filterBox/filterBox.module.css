@@ -4,6 +4,7 @@
   justify-content: center;
   align-items: center;
   width: 20rem;
+  z-index: 2;
 }
 
 .container {
@@ -23,6 +24,7 @@
   color: #fdc74b;
   background-color: transparent;
   font-weight: 700;
+  z-index: 2;
 }
 
 .box:nth-child(4) {
