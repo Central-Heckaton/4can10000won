@@ -1,7 +1,7 @@
 package team_project.beer_community.api;
 
 import lombok.RequiredArgsConstructor;
-import org.hibernate.Hibernate;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -9,15 +9,13 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import team_project.beer_community.config.auth.PrincipalDetails;
 
-import team_project.beer_community.domain.BEER_TYPE;
-import team_project.beer_community.domain.Beer;
-import team_project.beer_community.domain.LikeBeer;
-import team_project.beer_community.domain.User;
+import team_project.beer_community.domain.*;
 import team_project.beer_community.dto.BeerDetailDto;
 import team_project.beer_community.dto.BeerDto;
 import team_project.beer_community.dto.BeerRecDto;
 import team_project.beer_community.dto.LikeBeerDto;
 import team_project.beer_community.service.BeerService;
+import team_project.beer_community.service.CommentService;
 import team_project.beer_community.service.LikeBeerService;
 import team_project.beer_community.service.UserService;
 
@@ -33,6 +31,7 @@ public class BeerApiController {
     private final BeerService beerService;
     private final UserService userService;
     private final LikeBeerService likeBeerService;
+    private final CommentService commentService;
 
     @GetMapping("/api/search")
     public WrapperClass search(){
@@ -76,20 +75,34 @@ public class BeerApiController {
         User user = principalDetails.getUser();
         List<LikeBeer> likeBeers = userService.findLikeBeers(user.getId());
         BeerDetailDto beerDetailDto = null;
-        int count = 0;
-        try {
-            count = beer.getComments().size();
-        } catch (Exception exception){
-            System.out.println("BeerApiController.beerDetail/err: " + exception);
-        }
-
+        int parentCount = commentService.findParentCountWithBeerId(beerId);
         for (LikeBeer likeBeer : likeBeers) {
             if(likeBeer.getBeer() == beer){
-                beerDetailDto = new BeerDetailDto(beer, beerService.findAllTaste(beerId), count, Boolean.TRUE);
+                beerDetailDto = new BeerDetailDto(beer, beerService.findAllTaste(beerId), parentCount, Boolean.TRUE);
                 return new WrapperClass(beerDetailDto);
             }
         }
-        beerDetailDto = new BeerDetailDto(beer, beerService.findAllTaste(beerId), count,Boolean.FALSE);
+        beerDetailDto = new BeerDetailDto(beer, beerService.findAllTaste(beerId), parentCount,Boolean.FALSE);
+        return new WrapperClass(beerDetailDto);
+    }
+
+    @GetMapping("/api/search/detail/{beerId}/{userId}")
+    public WrapperClass beerDetail_test(
+            @PathVariable("beerId") Long beerId,
+            @PathVariable("userId") Long userId)
+    {
+        Beer beer = beerService.findOne(beerId);
+        User user = userService.findOne(userId);
+        List<LikeBeer> likeBeers = userService.findLikeBeers(user.getId());
+        BeerDetailDto beerDetailDto = null;
+        int parentCount = commentService.findParentCountWithBeerId(beerId);
+        for (LikeBeer likeBeer : likeBeers) {
+            if(likeBeer.getBeer() == beer){
+                beerDetailDto = new BeerDetailDto(beer, beerService.findAllTaste(beerId), parentCount, Boolean.TRUE);
+                return new WrapperClass(beerDetailDto);
+            }
+        }
+        beerDetailDto = new BeerDetailDto(beer, beerService.findAllTaste(beerId), parentCount,Boolean.FALSE);
         return new WrapperClass(beerDetailDto);
     }
 
