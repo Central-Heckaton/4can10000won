@@ -79,7 +79,6 @@ public class BeerService {
         findBeer.addComment(comment);
         findBeer.setTotalPoint(calTotalPoint(findBeer));
         comment.getUser().addComment(comment);
-        em.flush(); em.clear(); // total_point DB에 반영시키기 위함
     }
 
     @Transactional
