@@ -56,4 +56,8 @@ public class CommentService {
     public List<Comment> findAllRecomments(Long parentCommentId) {
         return commentRepository.findRecommentsWithParentId(parentCommentId);
     }
+
+    public int findRecommentsCount(Long parentCommentId) {
+        return commentRepository.findReCountWithParentId(parentCommentId);
+    }
 }
