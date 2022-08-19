@@ -33,42 +33,42 @@ const RandomBox = (props) => {
         </div>
         <div className={styles.tastes}>
         {Array.isArray(beerData.tastes) &&
-          beerData.tastes.map((i) => {
+          beerData.tastes.map((i,index) => {
             // SWEET, SOUR, BITTER, FLORAL, AROMATIC, FRUITINESS
             // 달콤함, 새콤함, 씁쓸함, 꽃향기, 고소함, 과일향
             if (i === "SWEET") {
               return (
-                <button key={props.id} className={styles.taste}>
+                <button key={index} className={styles.taste}>
                   달콤함
                 </button>
               );
             } else if (i === "SOUR") {
               return (
-                <button key={props.id} className={styles.taste}>
+                <button key={index} className={styles.taste}>
                   신맛
                 </button>
               );
             } else if (i === "BITTER") {
               return (
-                <button key={props.id} className={styles.tag1}>
+                <button key={index} className={styles.taste}>
                   씁쓸함
                 </button>
               );
             } else if (i === "FLORAL") {
               return (
-                <button key={props.id} className={styles.taste}>
+                <button key={index} className={styles.taste}>
                   꽃향기
                 </button>
               );
             } else if (i === "AROMATIC") {
               return (
-                <button key={props.id} className={styles.taste}>
+                <button key={index} className={styles.taste}>
                   고소함
                 </button>
               );
             } else if (i === "FRUITINESS") {
               return (
-                <button key={props.id} className={styles.taste}>
+                <button key={index} className={styles.taste}>
                   과일향
                 </button>
               );

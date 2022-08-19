@@ -51,7 +51,6 @@ const Detail = (props) => {
           <>
             <DetailImgs imageUrl={imageUrl} beerName={beerName} />
             <DetailInfo
-              id={id}
               alcoholDegree={alcoholDegree}
               taste={taste}
               totalPoint={totalPoint}
