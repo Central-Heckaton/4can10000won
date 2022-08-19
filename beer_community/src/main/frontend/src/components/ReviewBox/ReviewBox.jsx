@@ -10,15 +10,16 @@ const ReviewBox = (props) => {
   const [reviews, setReviews] = useState([]);
   const [userId, setUserId] = useState([]);
   const [loading, setLoading] = useState(false);
+
+  const getReviews = async () => {
+    let response = await axios.get(`/api/comments/${props.beerId}`);
+    setReviews(response.data.data);
+    setUserId(response.data.userId);
+    console.log("comment data : ", response.data);
+    console.log("userId:", response.data.userId);
+    setLoading(true);
+  };
   useEffect(() => {
-    const getReviews = async () => {
-      let response = await axios.get(`/api/comments/${props.beerId}`);
-      setReviews(response.data.data);
-      setUserId(response.data.userId);
-      console.log("comment data : ", response.data);
-      console.log("userId:", response.data.userId);
-      setLoading(true);
-    };
     getReviews();
   }, []);
 
@@ -45,6 +46,7 @@ const ReviewBox = (props) => {
               createdDate={i.createdDate}
               beerId={props.beerId}
               reCount={i.reCount}
+              getReviews={getReviews}
             />
           ))}
         </>

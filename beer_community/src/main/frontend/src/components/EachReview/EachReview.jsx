@@ -13,7 +13,7 @@ const EachReview = (props) => {
   const [beerId, setBeerId] = useState(props.beerId);
   const [parentId, setParentId] = useState(props.parentId);
   const [content, setContent] = useState("");
-  
+
   const resetInput = () => {
     document.getElementById("input").value = "";
     setContent("");
@@ -23,8 +23,8 @@ const EachReview = (props) => {
     setReComments(response.data.data);
   };
   const handleDropdownClick = (e) => {
+    props.getReviews();
     setShowComment(!showComment);
-
     getRecomments();
   };
 
@@ -43,6 +43,7 @@ const EachReview = (props) => {
     });
     console.log(response);
     getRecomments();
+    props.getReviews();
     resetInput();
   };
 
@@ -84,7 +85,7 @@ const EachReview = (props) => {
                         .get(`/api/comments/delete-comment/${parentId}`)
                         .then((response) => {
                           console.log("delete/response: ", response);
-                          getRecomments();
+                          props.getReviews();
                         })
                         .catch((error) => {
                           console.log("err: ", error);
@@ -92,13 +93,13 @@ const EachReview = (props) => {
                         .then(() => {});
                     };
                     commentDelete();
-                    const getReviews = async () => {
-                      let response = await axios.get(
-                        `/api/comments/${props.beerId}`
-                      );
-                      props.setReviews(response.data.data);
-                    };
-                    getReviews();
+                    // const getReviews = async () => {
+                    //   let response = await axios.get(
+                    //     `/api/comments/${props.beerId}`
+                    //   );
+                    //   props.setReviews(response.data.data);
+                    // };
+                    props.getReviews();
                   }}
                 />
               </div>
@@ -109,9 +110,7 @@ const EachReview = (props) => {
           <div className={styles.review}>{props.content}</div>
         </div>
         <div className={styles.dropdownBox}>
-          <div className={styles.recommentCount}>
-            ({props.reCount})
-          </div>
+          <div className={styles.recommentCount}>({props.reCount})</div>
           <img
             src="/img/dropbutton.png"
             alt="dropdown"
@@ -133,6 +132,7 @@ const EachReview = (props) => {
                 content={i.content}
                 createdDate={i.createdDate}
                 getRecomments={getRecomments}
+                getReviews={props.getReviews}
               />
             ))}
 
