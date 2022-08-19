@@ -13,7 +13,7 @@ const EachReview = (props) => {
   const [beerId, setBeerId] = useState(props.beerId);
   const [parentId, setParentId] = useState(props.parentId);
   const [content, setContent] = useState("");
-
+  
   const resetInput = () => {
     document.getElementById("input").value = "";
     setContent("");
@@ -109,6 +109,9 @@ const EachReview = (props) => {
           <div className={styles.review}>{props.content}</div>
         </div>
         <div className={styles.dropdownBox}>
+          <div className={styles.recommentCount}>
+            ({props.reCount})
+          </div>
           <img
             src="/img/dropbutton.png"
             alt="dropdown"

@@ -69,7 +69,6 @@ margin-right: 10px;
 margin-bottom: 26px;
 }
 .writeTime {
- 
   font-size: var(--font-small);
   color: rgb(166 165 165);
 }
@@ -80,6 +79,15 @@ margin-bottom: 26px;
   margin-right: 25px;
   margin-left: 15px;
 }
+
+.recommentCount {
+  font-size: var(--font-small);
+  color: lightgray;
+  position: absolute;
+  top: 35px;
+  right: 35px;
+}
+
 .dropdown {
   position: absolute;
   bottom: 1rem;
