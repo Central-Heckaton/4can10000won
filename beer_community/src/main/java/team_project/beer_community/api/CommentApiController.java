@@ -47,7 +47,7 @@ public class CommentApiController {
             @AuthenticationPrincipal PrincipalDetails principalDetails){
         User user = userService.getUserWithInitializedComments(principalDetails.getUser().getId());
         if(writeReCommentDto.getParentId() != null) {
-            Comment comment = new Comment(user, writeReCommentDto.getContent(), writeReCommentDto.getParentId()); // 대댓글일 경우 parentId 필요
+            Comment comment = new Comment(writeReCommentDto.getParentId(), user, writeReCommentDto.getContent()); // 대댓글일 경우 parentId 필요
             commentService.join(comment);
             beerService.addComment(writeReCommentDto.getBeerId(), comment);
             return new ResponseEntity<>(HttpStatus.CREATED);
