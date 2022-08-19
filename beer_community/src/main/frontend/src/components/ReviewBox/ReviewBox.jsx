@@ -44,6 +44,7 @@ const ReviewBox = (props) => {
               point={i.point}
               createdDate={i.createdDate}
               beerId={props.beerId}
+              reCount={i.reCount}
             />
           ))}
         </>
