@@ -24,7 +24,7 @@ const EachReview = (props) => {
   };
   const handleDropdownClick = (e) => {
     setShowComment(!showComment);
-    
+
     getRecomments();
   };
 
@@ -84,7 +84,7 @@ const EachReview = (props) => {
                         .get(`/api/comments/delete-comment/${parentId}`)
                         .then((response) => {
                           console.log("delete/response: ", response);
-                          window.location.reload();
+                          getRecomments();
                         })
                         .catch((error) => {
                           console.log("err: ", error);

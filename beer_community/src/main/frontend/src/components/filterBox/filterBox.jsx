@@ -4,12 +4,13 @@ import { useState } from "react";
 import axios from "axios";
 import BeerList from "../beerList/beerList";
 // import BeerList from "../components/beerList/beerList";
+import RandomLoading from "../randomLoading/RandomLoading";
 
 const FilterBox = () => {
   const [beerData, setBeerData] = useState([]);
   const [beerName, setBeerName] = useState();
   const [flag, setFlag] = useState(0);
-
+  const [loading, setLoading] = useState(false);
   const [filterState, setFilterState] = useState({
     passingTags: {
       Lager: false,
@@ -79,6 +80,7 @@ const FilterBox = () => {
 
     console.log("response: ", response);
     setBeerData(response.data.data);
+    setLoading(true);
   };
   // response.data
   // [{ }, { }, { } ...] -> props로 전달필요
@@ -122,7 +124,7 @@ const FilterBox = () => {
     }
   };
   return (
-    <>
+    <div className={styles.main}>
       <div className={styles.searchContainer}>
         <input
           name="beerName"
@@ -150,8 +152,16 @@ const FilterBox = () => {
           스타우트
         </button>
       </div>
-      <BeerList data={beerData} />
-    </>
+      {loading ? (
+        <>
+          <BeerList data={beerData} />
+        </>
+      ) : (
+        <>
+          <RandomLoading />
+        </>
+      )}
+    </div>
   );
 };
 

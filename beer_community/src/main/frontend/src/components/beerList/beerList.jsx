@@ -1,13 +1,7 @@
-import React, {useState} from "react";
+import React from "react";
 import BeerBox from "../beerBox/beerBox";
 import styles from "./beerList.module.css";
 const BeerList = (props) => {
-    console.log('beerList.jsx');
-   const[clickedId, setClickedId] = useState()
-   const handleDetail = (e) => {
-        setClickedId(e.target.key);
-        console.log('id: ', clickedId);
-   }
   return (
     <div className={styles.mainBox}>
       {Array.isArray(props.data) ?
