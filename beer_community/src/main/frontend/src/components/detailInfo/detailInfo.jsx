@@ -10,7 +10,6 @@ const DetailInfo = (props) => {
       <DetailTaste
         taste={props.taste}
         totalPoint={props.totalPoint}
-        id={props.id}
       />
     </div>
   );

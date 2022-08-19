@@ -9,42 +9,42 @@ const DetailTaste = (props) => {
       <div className={styles.titleBox}>
         <p className={styles.title}>Taste</p>
         {Array.isArray(props.taste) &&
-          props.taste.map((i) => {
+          props.taste.map((i,index) => {
             // SWEET, SOUR, BITTER, FLORAL, AROMATIC, FRUITINESS
             // 달콤함, 새콤함, 씁쓸함, 꽃향기, 고소함, 과일향
             if (i === "SWEET") {
               return (
-                <button key={props.id} className={styles.tag1}>
+                <button key={index} className={styles.tag1}>
                   달콤함
                 </button>
               );
             } else if (i === "SOUR") {
               return (
-                <button key={props.id} className={styles.tag1}>
+                <button key={index} className={styles.tag1}>
                   신맛
                 </button>
               );
             } else if (i === "BITTER") {
               return (
-                <button key={props.id} className={styles.tag1}>
+                <button key={index} className={styles.tag1}>
                   씁쓸함
                 </button>
               );
             } else if (i === "FLORAL") {
               return (
-                <button key={props.id} className={styles.tag1}>
+                <button key={index} className={styles.tag1}>
                   꽃향기
                 </button>
               );
             } else if (i === "AROMATIC") {
               return (
-                <button key={props.id} className={styles.tag1}>
+                <button key={index} className={styles.tag1}>
                   고소함
                 </button>
               );
             } else if (i === "FRUITINESS") {
               return (
-                <button key={props.id} className={styles.tag1}>
+                <button key={index} className={styles.tag1}>
                   과일향
                 </button>
               );
