@@ -14,4 +14,7 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
 
     @Query("select c from Comment c where c.parentId =:parentCommentId")
     List<Comment> findRecommentsWithParentId(@Param("parentCommentId") Long parentCommentId);
+
+    @Query("select count(c) from Comment c where c.parentId =:parentCommentId")
+    int findReCountWithParentId(@Param("parentCommentId") Long parentCommentId);
 }

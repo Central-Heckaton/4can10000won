@@ -117,7 +117,7 @@ public class CommentApiController {
         Long userId = principalDetails.getUser().getId();
         List<Comment> comments = commentService.findAllWithUser(beerId);
         List<CommentDto> commentDtos = comments.stream()
-                .map(c -> new CommentDto(c.getUser(), c))
+                .map(c -> new CommentDto(c.getUser(), c, commentService.findRecommentsCount(c.getId())))
                 .collect(Collectors.toList());
         return new WrapperClassWithUserId<>(userId, commentDtos);
     }
@@ -142,7 +142,7 @@ public class CommentApiController {
         //fetch join 사용, comment와 user를 한번에 조회
         List<Comment> comments = commentService.findAllWithUser(beerId);
         List<CommentDto> commentDtos = comments.stream()
-                .map(c -> new CommentDto(c.getUser(), c))
+                .map(c -> new CommentDto(c.getUser(), c, commentService.findRecommentsCount(c.getId())))
                 .collect(Collectors.toList());
         return new WrapperClassWithUserId<>(userId, commentDtos);
     }

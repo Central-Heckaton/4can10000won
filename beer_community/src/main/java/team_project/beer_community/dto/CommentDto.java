@@ -14,7 +14,9 @@ public class CommentDto {
     private String content;
     private double point;
 
-    public CommentDto(User user, Comment comment) {
+    private int reCount;
+
+    public CommentDto(User user, Comment comment, int reCount) {
         this.id = comment.getId();
         this.writerId = user.getId();
         this.username = user.getUsername();
@@ -22,5 +24,6 @@ public class CommentDto {
         this.createdDate = comment.getCreatedDate().toString();
         this.content = comment.getContent();
         this.point = comment.getPoint();
+        this.reCount = reCount;
     }
 }

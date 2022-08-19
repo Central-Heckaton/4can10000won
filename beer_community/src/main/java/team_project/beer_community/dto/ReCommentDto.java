@@ -12,6 +12,7 @@ public class ReCommentDto {
     private String userImageUrl;
     private String createdDate;
     private String content;
+
     public ReCommentDto(User user, Comment comment) {
         this.id = comment.getId();
         this.writerId = user.getId();
