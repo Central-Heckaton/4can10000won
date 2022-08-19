@@ -152,15 +152,17 @@ const FilterBox = () => {
           스타우트
         </button>
       </div>
-      {loading ? (
-        <>
-          <BeerList data={beerData} />
-        </>
-      ) : (
-        <>
-          <RandomLoading />
-        </>
-      )}
+      <div>
+        {loading ? (
+          <>
+            <BeerList data={beerData} />
+          </>
+        ) : (
+          <>
+            <RandomLoading />
+          </>
+        )}
+      </div>
     </div>
   );
 };
