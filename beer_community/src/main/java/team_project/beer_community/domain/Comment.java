@@ -43,9 +43,10 @@ public class Comment extends BaseTimeEntity{
         this.content = content;
         this.user = user;
     }
-    public Comment(User user, String content, Long parentId) {
+    public Comment(User user, String content, double point, Long parentId) {
         this.content = content;
         this.user = user;
+        this.point = point;
         this.parentId = parentId;
     }
 
