@@ -1,8 +1,16 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 20rem;
+}
+
 .container {
   display: flex;
-  justify-content: center;
   text-align: center;
   margin-top: 10px;
+  width: 20rem;
   justify-content: space-between;
 }
 

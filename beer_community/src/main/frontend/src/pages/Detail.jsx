@@ -6,7 +6,8 @@ import DetailText from "./../components/detailText/detailText";
 import Nav from "../components/Nav/Nav";
 import axios from "axios";
 import { useNavigate, useLocation } from "react-router-dom";
-import Footer from './../components/Footer/Footer';
+import Footer from "./../components/Footer/Footer";
+import RandomLoading from "../components/randomLoading/RandomLoading";
 
 const Detail = (props) => {
   const [imageUrl, setImageUrl] = useState("");
@@ -17,6 +18,7 @@ const Detail = (props) => {
   const [isLiked, setIsLiked] = useState("");
   const [taste, setTaste] = useState("");
   const [reviewCount, setReviewCount] = useState("");
+  const [loading, setLoading] = useState(false);
   const location = useLocation();
   const id = location.state.id;
   let navigate = useNavigate();
@@ -37,6 +39,7 @@ const Detail = (props) => {
       setIsLiked(response.data.data.is_liked);
       setTaste(response.data.data.taste);
       setReviewCount(response.data.data.count);
+      setLoading(true);
     };
     getDetailBeer();
   }, []);
@@ -44,14 +47,25 @@ const Detail = (props) => {
     <>
       <Nav navigate={navigate} />
       <div>
-        <DetailImgs imageUrl={imageUrl} beerName={beerName} />
-        <DetailInfo
-          alcoholDegree={alcoholDegree}
-          taste={taste}
-          totalPoint={totalPoint}
-        />
-        <DetailText information={information} />
-        <DetailFooter isLiked={isLiked} id={id} setIsLiked={setIsLiked} reviewCount={reviewCount}/>
+        {loading ? (
+          <>
+            <DetailImgs imageUrl={imageUrl} beerName={beerName} />
+            <DetailInfo
+              alcoholDegree={alcoholDegree}
+              taste={taste}
+              totalPoint={totalPoint}
+            />
+            <DetailText information={information} />
+            <DetailFooter
+              isLiked={isLiked}
+              id={id}
+              setIsLiked={setIsLiked}
+              reviewCount={reviewCount}
+            />
+          </>
+        ) : (
+          <RandomLoading />
+        )}
         <Footer />
       </div>
     </>
