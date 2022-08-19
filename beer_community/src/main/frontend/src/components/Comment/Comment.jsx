@@ -42,6 +42,7 @@ const Comment = (props) => {
                           .then((response) => {
                             console.log("delete/response: ", response);
                             props.getRecomments();
+                            props.getReviews();
                           })
                           .catch((error) => {
                             console.log("err: ", error);
