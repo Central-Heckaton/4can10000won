@@ -1,6 +1,13 @@
 spring:
   profiles:
-    include: aws
+    include:
+      - aws
+      - credentials
+servlet:
+  multipart:
+    enabled: true
+    max-file-size: 20MB
+    max-request-size: 20MB
 
 logging.level:
   org.hibernate.SQL: debug

@@ -39,9 +39,9 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
 
         OAuth2User oAuth2User = super.loadUser(userRequest);
         System.out.println("oAuth2User.getAttributes() = " + oAuth2User.getAttributes());
-        // {sub=101301106118139334837, name=고경환, given_name=경환, family_name=고, picture=https://lh3.googleusercontent.com/a-/AFdZucqfqgcr-H-cRolGyJETVNk, email=gkw1207@likelion.org, email_verified=true, locale=en, hd=likelion.org}
+        // {sub=101301106118139334837, name=고경환, given_name=경환, family_name=고, picture=https://lh3.googleusercontent.com/a-/AFdZucqfqgcr-H-cRolGyJETVNk, email={이메일}, email_verified=true, locale=en, hd=likelion.org}
         // **회원가입할때 저장될 정보** => username: "google_101301106118139334837", password: "암호화(get in there)", email: "gkw1207@likelion.org", role: "ROLE_USER"
-
+        String birthday = "1998-12-01";
         OAuth2UserInfo oAuth2UserInfo = null;
         if(userRequest.getClientRegistration().getRegistrationId().equals("google")){
             System.out.println("구글 로그인 요청");
@@ -50,9 +50,11 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
         }else if(userRequest.getClientRegistration().getRegistrationId().equals("naver")){
             // oAuth2User.getAttributes() = {resultcode=00, message=success, response={id=gemgDkrwZwCX-gA3TE7mHR0OAW4doONhq7ZUTonE1YU, nickname=고경환, profile_image=https://phinf.pstatic.net/contact/20220316_119/1647425542931YWABt_JPEG/image.jpg, email={이메일}, name=고경환, birthday=12-07, birthyear=1998}}
             // getAttributs()한것에서 key값이 response에 해당하는 value를 param으로 넘겨줘야한다.
+            // birthday=12-07, birthyear=1998
             oAuth2UserInfo = new NaverUserInfo((Map)oAuth2User.getAttributes().get("response"));
             System.out.println("네이버 로그인 요청");
-
+            birthday = oAuth2User.getAttributes().get("birthyear") + "-" + oAuth2User.getAttributes().get("birthday");
+            System.out.println("After/Naver-login/birthday = " + birthday);
         }else{
             System.out.println("\n** 구글과 네이버만 소셜로그인이 가능합니다! **");
         }
@@ -60,8 +62,7 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
         String provider = oAuth2UserInfo.getProvider(); // google
         String providerId = oAuth2UserInfo.getProviderId(); // sub키에 저장된 값은 google에서 사용자에게 부여한 pk이다
         String username = oAuth2UserInfo.getUsername();
-        String password = bCryptPasswordEncoder.encode("password") ; // 소셜로그인이기 때문에 굳이 저장안해도되지만 임의로 생성해서 저장함
-//        String password = "password";
+        String enpassword = bCryptPasswordEncoder.encode("password") ; // 소셜로그인이기 때문에 굳이 저장안해도되지만 임의로 생성해서 저장함
         String email = oAuth2UserInfo.getEmail();
         Role role = Role.ROLE_USER;
         System.out.println("PrincipalOauth@UserService.java/username = " + username);
@@ -69,17 +70,18 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
 //        User userEntity = userRepository.findByUsername(username); // **username이외의 필드로 중복성검사 체크 필요!**
         User userEntity = userRepository.findByEmail(email);
         System.out.println("userEntity = " + userEntity);
+
         if(userEntity == null){
             // User에 생성자를 통해 새로운 User를 생성시킴(회원가입)
             System.out.println("PrincipalOauth2UserService.loadUser/처음 로그인하는군요 회원가입 진행하겠습니다");
             userEntity = User.builder()
                     .username(username)
-                    .password(password)
+                    .password(enpassword)
                     .email(email)
                     .role(role)
                     .provider(provider)
                     .providerId(providerId)
-                    .birthday(null)
+                    .birthday(birthday)
                     .imageUrl(null)
                     .build();
             userRepository.save(userEntity);
