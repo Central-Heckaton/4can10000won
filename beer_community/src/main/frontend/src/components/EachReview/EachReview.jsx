@@ -7,7 +7,7 @@ import styles from "./eachReview.module.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFlag } from "@fortawesome/free-solid-svg-icons";
+import { faFlag } from "@fortawesome/free-regular-svg-icons";
 
 const EachReview = (props) => {
   const [showComment, setShowComment] = useState(false);
@@ -65,54 +65,57 @@ const EachReview = (props) => {
             <div className={styles.viewStar}>
               <ViewStar point={props.point} />
             </div>
-            {props.edit && (
-              <div className={styles.editDelete}>
-                <Link
-                  to={"/editrate"}
-                  state={{ commentId: parentId, id: beerId }}
-                >
+            <div className={styles.reviewBoxButton}>
+              {props.edit && (
+                <div className={styles.editDelete}>
+                  <Link
+                    to={"/editrate"}
+                    state={{ commentId: parentId, id: beerId }}
+                  >
+                    <img
+                      src="/img/pencilEdit.png"
+                      alt="edit"
+                      className={styles.edit}
+                    />
+                  </Link>
                   <img
-                    src="/img/pencilEdit.png"
-                    alt="edit"
+                    src="/img/trash.png"
+                    alt="trash"
                     className={styles.edit}
+                    onClick={() => {
+                      const commentDelete = async () => {
+                        console.log("parentId : ", parentId);
+                        await axios
+                          .get(`/api/comments/delete-comment/${parentId}`)
+                          .then((response) => {
+                            console.log("delete/response: ", response);
+                            props.getReviews();
+                          })
+                          .catch((error) => {
+                            console.log("err: ", error);
+                          })
+                          .then(() => {});
+                      };
+                      commentDelete();
+                      // const getReviews = async () => {
+                      //   let response = await axios.get(
+                      //     `/api/comments/${props.beerId}`
+                      //   );
+                      //   props.setReviews(response.data.data);
+                      // };
+                      props.getReviews();
+                    }}
                   />
-                </Link>
-                <img
-                  src="/img/trash.png"
-                  alt="trash"
-                  onClick={() => {
-                    const commentDelete = async () => {
-                      console.log("parentId : ", parentId);
-                      await axios
-                        .get(`/api/comments/delete-comment/${parentId}`)
-                        .then((response) => {
-                          console.log("delete/response: ", response);
-                          props.getReviews();
-                        })
-                        .catch((error) => {
-                          console.log("err: ", error);
-                        })
-                        .then(() => {});
-                    };
-                    commentDelete();
-                    // const getReviews = async () => {
-                    //   let response = await axios.get(
-                    //     `/api/comments/${props.beerId}`
-                    //   );
-                    //   props.setReviews(response.data.data);
-                    // };
-                    props.getReviews();
-                  }}
-                />
-                <FontAwesomeIcon
-                  icon={faFlag}
-                  size="1x"
-                  onClick={() => {
-                    alert("댓글 신고가 완료 되었습니다.");
-                  }}
-                />
-              </div>
-            )}
+                </div>
+              )}
+              <FontAwesomeIcon
+                icon={faFlag}
+                size="1x"
+                onClick={() => {
+                  alert("댓글 신고가 완료 되었습니다.");
+                }}
+              />
+            </div>
           </div>
 
           <div className={styles.writeTime}>작성날짜 {props.createdDate} </div>
