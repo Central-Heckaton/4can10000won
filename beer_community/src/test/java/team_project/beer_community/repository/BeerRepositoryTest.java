@@ -21,7 +21,7 @@ class BeerRepositoryTest {
 
 
     @Test
-    @Rollback(value = false)
+//    @Rollback(value = false)
     public void TasteEntityTest() throws Exception {
 //        //given
 //        Beer beer = new Beer("heineken", 4.5, 4000, "하이네켄입니다.", BEER_TYPE.Lager);

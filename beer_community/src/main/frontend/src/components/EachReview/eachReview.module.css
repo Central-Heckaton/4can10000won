@@ -51,9 +51,8 @@
   display: flex;
   justify-content: space-between;
 }
-.edit{
-
-margin-right: 10px;
+.edit {
+  margin-right: 10px;
 }
 
 .review {
@@ -62,8 +61,8 @@ margin-right: 10px;
   margin-bottom: 20px;
   font-weight: 100;
 }
-.viewStar{
-margin-bottom: 26px;
+.viewStar {
+  margin-bottom: 26px;
 }
 .writeTime {
   font-size: var(--font-small);
@@ -140,4 +139,9 @@ margin-bottom: 26px;
   height: 40px;
   background-color: var(--button-color);
   margin-left: 10px;
+}
+
+.reviewBoxButton {
+  display: flex;
+  
 }

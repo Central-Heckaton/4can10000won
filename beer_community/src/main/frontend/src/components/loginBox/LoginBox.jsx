@@ -76,10 +76,12 @@ const LoginBox = () => {
       }
     } catch (err) {
       console.log('err.response.data["error"] : ', err.response.data["error"]);
+      console.log('err.response.data.error : ', err.response.data.error);
       if (err.response.status === 400) {
         //이메일 중복검사 시 양식이 올바르지 않은 경우
         setCheckDuplicate(false);
-        setMessage(err.response.data["error"]);
+//        setMessage(err.response.data["error"]);
+        setMessage(err.response.data.error);
         setEmail("");
       } else if (err.response.status === 409) {
         // CONFLICT
@@ -226,7 +228,7 @@ const LoginBox = () => {
             </div>
             <div className={styles.loginAnotherButtonBox}>
               <a
-                href="http://localhost:8080/oauth2/authorization/naver"
+                href="http://4can10000won.shop/oauth2/authorization/naver"
                 className={styles.loginAnotherButton}
               >
                 <img
@@ -236,7 +238,7 @@ const LoginBox = () => {
                 />
               </a>
               <a
-                href="http://localhost:8080/oauth2/authorization/google"
+                href="http://4can10000won.shop/oauth2/authorization/google"
                 className={styles.loginAnotherButton}
               >
                 <img

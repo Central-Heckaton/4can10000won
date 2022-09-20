@@ -38,6 +38,7 @@ function App() {
           <Route path="/howtodrink" element={<HowToDrink />} />
           <Route path="/beertype" element={<BeerType/>}/>
           <Route path="/editRate" element={<EditRate />}/>
+          <Route path="/testFileUpload" element={<testFileUpload />} />
         </Routes>
       </BrowserRouter>
     </>

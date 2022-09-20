@@ -34,45 +34,45 @@ class CommentApiControllerTest {
     EntityManager em;
 
     @Test
-    @Rollback(value = false)
+//    @Rollback(value = false)
     public void CommentApiControllerTest() throws Exception {
-        User userA = new User("seojio8625@naver.com", "seojo1919@", "서지오", "1998-03-11", null, Role.ROLE_USER);
-        userService.join(userA);
-
-        User userB = new User("lio8625@naver.com", "seojo1919@", "리오", "1998-03-11", null, Role.ROLE_USER);
-        userService.join(userB);
-
-        Beer beerA = new Beer("heineken", 4.5, 4000, "하이네켄입니다.", BEER_TYPE.Lager);
-        beerService.join(beerA);
-
-        TasteEntity sweet = new TasteEntity(Taste.SWEET);
-        TasteEntity floral = new TasteEntity(Taste.FLORAL);
-        tasteEntityService.join(sweet);
-        tasteEntityService.join(floral);
-
-        beerService.addTasteEntity(beerA.getId(), sweet);
-        beerService.addTasteEntity(beerA.getId(), floral);
-
-        Comment commentA = new Comment(userA, "맛있어요", 4.5);
-        commentService.join(commentA);
-
-        Comment commentB = new Comment(userA, "맛있어요", 3.5);
-        commentService.join(commentB);
-
-        Comment commentC = new Comment(userB, "노맛...", 2.5, commentA.getId());
-        commentService.join(commentC);
-
-        beerService.addComment(beerA.getId(), commentA);
-        System.out.println("comment A is added");
-        System.out.println("beerA.getId() = " + beerA.getId());
-        beerService.addComment(beerA.getId(), commentB);
-        System.out.println("comment B is added");
-        System.out.println("beerA.getId() = " + beerA.getId());
-        beerService.addComment(beerA.getId(), commentC);
-        System.out.println("comment C is added");
-        System.out.println("beerA.getId() = " + beerA.getId());
-
-        assertThat(commentC.getParentId()).isEqualTo(commentA.getId());
-        assertThat(beerA.getTotalPoint()).isEqualTo(4);
+//        User userA = new User("seojio8625@naver.com", "seojo1919@", "서지오", "1998-03-11", null, Role.ROLE_USER);
+//        userService.join(userA);
+//
+//        User userB = new User("lio8625@naver.com", "seojo1919@", "리오", "1998-03-11", null, Role.ROLE_USER);
+//        userService.join(userB);
+//
+//        Beer beerA = new Beer("heineken", 4.5, 4000, "하이네켄입니다.", BEER_TYPE.Lager);
+//        beerService.join(beerA);
+//
+//        TasteEntity sweet = new TasteEntity(Taste.SWEET);
+//        TasteEntity floral = new TasteEntity(Taste.FLORAL);
+//        tasteEntityService.join(sweet);
+//        tasteEntityService.join(floral);
+//
+//        beerService.addTasteEntity(beerA.getId(), sweet);
+//        beerService.addTasteEntity(beerA.getId(), floral);
+//
+//        Comment commentA = new Comment(userA, "맛있어요", 4.5);
+//        commentService.join(commentA);
+//
+//        Comment commentB = new Comment(userA, "맛있어요", 3.5);
+//        commentService.join(commentB);
+//
+//        Comment commentC = new Comment(userB, "노맛...", 2.5, commentA.getId());
+//        commentService.join(commentC);
+//
+//        beerService.addComment(beerA.getId(), commentA);
+//        System.out.println("comment A is added");
+//        System.out.println("beerA.getId() = " + beerA.getId());
+//        beerService.addComment(beerA.getId(), commentB);
+//        System.out.println("comment B is added");
+//        System.out.println("beerA.getId() = " + beerA.getId());
+//        beerService.addComment(beerA.getId(), commentC);
+//        System.out.println("comment C is added");
+//        System.out.println("beerA.getId() = " + beerA.getId());
+//
+//        assertThat(commentC.getParentId()).isEqualTo(commentA.getId());
+//        assertThat(beerA.getTotalPoint()).isEqualTo(4);
     }
 }

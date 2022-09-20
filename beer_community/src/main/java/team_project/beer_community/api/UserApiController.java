@@ -15,6 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import team_project.beer_community.config.auth.PrincipalDetails;
 import team_project.beer_community.domain.*;
 import team_project.beer_community.dto.BeerDto;
@@ -23,9 +24,7 @@ import team_project.beer_community.dto.UserInfoDto;
 import team_project.beer_community.dto.UserJoinDto;
 import team_project.beer_community.repository.BeerRepository;
 import team_project.beer_community.repository.UserRepository;
-import team_project.beer_community.service.BeerService;
-import team_project.beer_community.service.LikeBeerService;
-import team_project.beer_community.service.UserService;
+import team_project.beer_community.service.*;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -44,20 +43,37 @@ public class UserApiController implements ErrorController{
     private final LikeBeerService likeBeerService;
     private final UserService userService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder; // password 암호화할 때 사용
+    private final S3Uploader s3Uploader;
 
 
     @GetMapping("/api/likebeers")
-    public WrapperClass showLikeBeers(@AuthenticationPrincipal PrincipalDetails principalDetails){
+    public ResponseEntity showLikeBeers(@AuthenticationPrincipal PrincipalDetails principalDetails){
+//    public WrapperClassWithStatus showLikeBeers(@AuthenticationPrincipal PrincipalDetails principalDetails){
         //fetch join 사용
-        User user = principalDetails.getUser();
-        List<LikeBeer> likeBeers = likeBeerService.findAllWithBeer(user.getId());
-        List<Beer> beers = new ArrayList<>();
-        for (LikeBeer likeBeer : likeBeers) {
-            beers.add(likeBeer.getBeer());
-            System.out.println("likeBeer.getBeer() = " + likeBeer.getBeer());
+        Map<String, List<BeerDto>> body = new HashMap<>();
+        HttpHeaders headers = new HttpHeaders();
+        HttpStatus status = HttpStatus.OK;
+        if(principalDetails == null){ // 현재 사용자가 로그인하지 않았다면 403 Error 발생
+            status = HttpStatus.FORBIDDEN; // 403 권한에러
+            return new ResponseEntity(body, headers, status);
         }
-        List<BeerDto> beerDtos = beers.stream().map(b -> new BeerDto(b)).collect(Collectors.toList());
-        return new WrapperClass(beerDtos); //api의 확장이 가능하도록 wrapper 클래스로 감싸서 리스트를 return
+        try {
+            User user = principalDetails.getUser();
+            List<LikeBeer> likeBeers = likeBeerService.findAllWithBeer(user.getId());
+            List<Beer> beers = new ArrayList<>();
+            for (LikeBeer likeBeer : likeBeers) {
+                beers.add(likeBeer.getBeer());
+                System.out.println("likeBeer.getBeer() = " + likeBeer.getBeer());
+            }
+            List<BeerDto> beerDtos = beers.stream().map(b -> new BeerDto(b)).collect(Collectors.toList());
+            body.put("data", beerDtos);
+            return new ResponseEntity(body, headers, status); // 200
+        } catch (Exception exception) {
+            System.out.println("showLikeBeers/exception = " + exception);
+            status = HttpStatus.BAD_REQUEST; // 400
+            return new ResponseEntity(body, headers, status);
+        }
+
     }
 
     @PostMapping("/api/check-email-duplicate")
@@ -163,9 +179,20 @@ public class UserApiController implements ErrorController{
     public void loginHandle(HttpServletResponse response) throws IOException {
         System.out.println("loginHandle");
         HttpHeaders headers = new HttpHeaders();
-        String redirect_uri = "http://54.167.58.203:8080/login-retry"; // 로그인 재시도
-//        String redirect_uri = "http://localhost:3000/login-retry"; // 로그인 재시도
+//        String redirect_uri = "http://54.167.58.203:8080/login-retry"; // 로그인 재시도
+        String redirect_uri = "http://4can10000won.shop/login-retry"; // 로그인 재시도
         response.addHeader("login_result", "fail");
         response.sendRedirect(redirect_uri);
+    }
+    //유저 프로필 업로드
+    @PostMapping("/api/user/{user_id}/imageUrl")
+    public ResponseEntity<?> uploadProfilePhoto(@PathVariable("user_id") Long userId, @RequestParam("profilePhoto") MultipartFile multipartFile) throws IOException {
+        //S3 Bucket 내부에 "/profile"
+        System.out.println("UserApiController.uploadProfilePhoto");
+        System.out.println("userId = " + userId); // 1
+        System.out.println("multipartFile = " + multipartFile); // org.springframework.web.multipart.support.StandardMultipartHttpServletRequest$StandardMultipartFile@606b1f72
+        FileUploadResponse profile = s3Uploader.upload(userId, multipartFile, "profile");
+        System.out.println("uploadProfilePhoto() / profile = " + profile);
+        return ResponseEntity.ok(profile);
     }
 }
