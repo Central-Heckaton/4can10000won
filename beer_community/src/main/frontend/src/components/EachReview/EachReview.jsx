@@ -7,7 +7,7 @@ import styles from "./eachReview.module.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFlag } from "@fortawesome/free-solid-svg-icons";
+import { faBellConcierge } from "@fortawesome/free-solid-svg-icons";
 
 const EachReview = (props) => {
   const [showComment, setShowComment] = useState(false);
@@ -104,9 +104,9 @@ const EachReview = (props) => {
                     props.getReviews();
                   }}
                 />
-                <FontAwesomeIcon
-                  icon={faFlag}
-                  size="1x"
+                <img
+                  src="/img/siren.png"
+                  className={styles.edit}
                   onClick={() => {
                     alert("댓글 신고가 완료 되었습니다.");
                   }}
