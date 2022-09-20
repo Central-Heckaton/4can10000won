@@ -2,7 +2,6 @@
   "name": "4cans10000",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://54.167.58.203:8080",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.1.1",
     "@fortawesome/free-regular-svg-icons": "^6.1.2",
