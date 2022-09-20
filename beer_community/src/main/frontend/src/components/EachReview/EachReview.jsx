@@ -6,6 +6,8 @@ import ViewStar from "../ViewStar/ViewStar";
 import styles from "./eachReview.module.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFlag } from "@fortawesome/free-solid-svg-icons";
 
 const EachReview = (props) => {
   const [showComment, setShowComment] = useState(false);
@@ -100,6 +102,13 @@ const EachReview = (props) => {
                     //   props.setReviews(response.data.data);
                     // };
                     props.getReviews();
+                  }}
+                />
+                <FontAwesomeIcon
+                  icon={faFlag}
+                  size="1x"
+                  onClick={() => {
+                    alert("댓글 신고가 완료 되었습니다.");
                   }}
                 />
               </div>

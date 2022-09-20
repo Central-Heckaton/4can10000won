@@ -15,6 +15,7 @@ import { BrowserRouter } from "react-router-dom";
 import HowToDrink from './pages/HowtoDrink';
 import BeerType from './pages/BeerType';
 import EditRate from "./pages/EditRate";
+import Intro from "./pages/Intro";
 
 function App() {
   return (
@@ -22,7 +23,8 @@ function App() {
       <BrowserRouter>
         <GlobalStyle />
         <Routes>
-          <Route path="/" element={<Login />} />
+          <Route path="/" element={<Intro />}/>
+          <Route path="/login" element={<Login />} />
           <Route path="/login-retry" element={<LoginRetry />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/menu" element={<Menu />} />
