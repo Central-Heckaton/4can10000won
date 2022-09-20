@@ -19,6 +19,7 @@ bin/
 
 ### IntelliJ IDEA ###
 application-aws.yml
+application-credentials.yml
 .idea
 *.iws
 *.iml
