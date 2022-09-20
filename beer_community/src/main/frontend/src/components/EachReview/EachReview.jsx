@@ -66,7 +66,7 @@ const EachReview = (props) => {
               <ViewStar point={props.point} />
             </div>
             <div className={styles.reviewBoxButton}>
-              {props.edit && (
+              {props.edit ? (
                 <div className={styles.editDelete}>
                   <Link
                     to={"/editrate"}
@@ -81,7 +81,6 @@ const EachReview = (props) => {
                   <img
                     src="/img/trash.png"
                     alt="trash"
-                    className={styles.edit}
                     onClick={() => {
                       const commentDelete = async () => {
                         console.log("parentId : ", parentId);
@@ -107,14 +106,17 @@ const EachReview = (props) => {
                     }}
                   />
                 </div>
+              ) : (
+                <>
+                  <FontAwesomeIcon
+                    icon={faFlag}
+                    size="1x"
+                    onClick={() => {
+                      alert("댓글 신고가 완료 되었습니다.");
+                    }}
+                  />
+                </>
               )}
-              <FontAwesomeIcon
-                icon={faFlag}
-                size="1x"
-                onClick={() => {
-                  alert("댓글 신고가 완료 되었습니다.");
-                }}
-              />
             </div>
           </div>
 
