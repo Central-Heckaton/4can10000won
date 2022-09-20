@@ -2,7 +2,8 @@
 import React from "react";
 import styles from "./comment.module.css";
 import axios from "axios";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFlag } from "@fortawesome/free-regular-svg-icons";
 const Comment = (props) => {
   console.log("Comment.jsx/pospt: ", props);
   console.log("pospt.id: ", props.id);
@@ -28,7 +29,7 @@ const Comment = (props) => {
           <div className={styles.commentText}>
             <div className={styles.commentMenu}>
               <div className={styles.username}>{props.username}</div>
-              {props.delete && (
+              {props.delete ? (
                 <div>
                   <img
                     src="/img/trash.png"
@@ -53,6 +54,15 @@ const Comment = (props) => {
                     }}
                   />
                 </div>
+              ) : (
+                <>
+                  <FontAwesomeIcon
+                    icon={faFlag}
+                    onClick={() => {
+                      alert("댓글 신고가 완료 되었습니다.");
+                    }}
+                  />
+                </>
               )}
             </div>
             {props.content}
