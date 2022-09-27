@@ -45,6 +45,9 @@ public class User extends BaseTimeEntity{
     @OneToMany(mappedBy = "user")
     private List<LikeBeer> likeBeers = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user")
+    private List<ReportedComment> reportedComments = new ArrayList<>();
+
     //회원가입시 사용되는 생성자
     @Builder
     public User(Long id, String email, String password, String username, String birthday, String imageUrl, Role role, String provider, String providerId) {
@@ -77,5 +80,10 @@ public class User extends BaseTimeEntity{
     public void addComment(Comment comment){
         comments.add(comment);
         comment.setUser(this);
+    }
+
+    public void addReportedComment(ReportedComment reportedComment){
+        reportedComments.add(reportedComment);
+        reportedComment.setUser(this);
     }
 }
