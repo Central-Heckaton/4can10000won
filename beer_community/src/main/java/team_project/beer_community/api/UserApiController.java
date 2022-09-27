@@ -73,7 +73,6 @@ public class UserApiController implements ErrorController{
             status = HttpStatus.BAD_REQUEST; // 400
             return new ResponseEntity(body, headers, status);
         }
-
     }
 
     @PostMapping("/api/check-email-duplicate")
@@ -124,13 +123,19 @@ public class UserApiController implements ErrorController{
             String rawPassword = userJoinDto.getPassword();
             String encPassword = bCryptPasswordEncoder.encode(rawPassword);
             userJoinDto.setPassword(encPassword); // 일반적인 String 타입의 password는 Security를 통한 회원가입이 되지 않기 때문에 암호화 필요함o
+            Role role;
+            if(userJoinDto.getEmail().matches("admin.*")){ // admin 으로 시작하는 email은 ROLE_ADMIN 권한부여함
+                role = Role.ROLE_ADMIN;
+            } else {
+                role = Role.ROLE_USER;
+            }
             User user = new User(
                     userJoinDto.getEmail(),
                     encPassword,
                     userJoinDto.getUsername(),
                     userJoinDto.getBirthday(),
                     userJoinDto.getImageUrl(),
-                    Role.ROLE_USER);
+                    role);
             userService.join(user);
             return new ResponseEntity<>(null, headers, HttpStatus.CREATED); // 201
         } catch (Exception exception) {
@@ -139,24 +144,39 @@ public class UserApiController implements ErrorController{
     }
 
     @GetMapping("/api/user")
-    public Map<String, Object> userInfo(@AuthenticationPrincipal PrincipalDetails principalDetails){
+//    public Map<String, Object> userInfo(@AuthenticationPrincipal PrincipalDetails principalDetails){
+    public ResponseEntity<Object> userInfo(@AuthenticationPrincipal PrincipalDetails principalDetails){
         System.out.println("principalDetails = " + principalDetails); // 소셜로그인 or 일반로그인을 해도 출력됨.
         // 일반로그인시: principalDetails = PrincipalDetails(user=User(id=3, username=ko2), attributes=null)
         // 소셜로그인시: principalDetails = PrincipalDetails(user=User(id=4, username=고경환), attributes={sub=110000687855487904168, name=고경환, given_name=경환, family_name=고, picture=https://lh3.googleusercontent.com/a/AItbvmn09O3fy0FHLytziFKv3a3iNGsTAnjy0AiPuDaX=s96-c, email={이메일}, email_verified=true, locale=ko})
-        User user = principalDetails.getUser();
-        String username = user.getUsername();
-        String email = user.getEmail();
-        Map<String, Object> map = new HashMap<String, Object>();
-        map.put("username", username);
-        map.put("email", email);
-        System.out.println("map = " + map); // map = {email=ko2@naver.com, username=ko2}
-        return map;
+        HttpHeaders headers = new HttpHeaders();
+        Map<String, Object> body = new HashMap<String, Object>();
+        HttpStatus status;
+        if(principalDetails == null || principalDetails.getUser() == null){
+            status = HttpStatus.FORBIDDEN; // 403
+            body.put("message", "로그인이 필요한 페이지입니다. 로그인 페이지로 이동하시겠습니까?");
+        } else {
+            status = HttpStatus.OK;
+            body.put("message", "정보조회가 성공적으로 이루어졌습니다.");
+            User user = principalDetails.getUser();
+            String username = user.getUsername();
+            String email = user.getEmail();
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("username", username);
+            map.put("email", email);
+            System.out.println("map = " + map); // map = {email=ko2@naver.com, username=ko2}
+            body.put("username", username);
+            body.put("email", email);
+        }
+        System.out.println("status = " + status);
+        System.out.println("body.get(\"message\") = " + body.get("message"));
+        return new ResponseEntity<Object>(body, headers, status);
     }
 
     @PostMapping("/api/update-user-info")// {"username": username, "image_url": image_url}
     public ResponseEntity<Void> updateUserInfo(@AuthenticationPrincipal PrincipalDetails principalDetails, @RequestBody UserInfoDto userInfoDto){
         HttpHeaders headers = new HttpHeaders();
-        HttpStatus status = HttpStatus.OK;
+        HttpStatus status;
         try{
             User principalDetailsUser = principalDetails.getUser();
             userService.updateName(principalDetailsUser.getId(), userInfoDto.getUsername()); // DB에 사용자이름 변경사항 반영
@@ -183,6 +203,22 @@ public class UserApiController implements ErrorController{
         String redirect_uri = "http://4can10000won.shop/login-retry"; // 로그인 재시도
         response.addHeader("login_result", "fail");
         response.sendRedirect(redirect_uri);
+    }
+    @GetMapping("/api/logout")
+    public ResponseEntity logout(@AuthenticationPrincipal PrincipalDetails principalDetails){
+        System.out.println("lougout/principalDetails = " + principalDetails);
+        HttpHeaders headers = new HttpHeaders();
+        Map<String, Object> body = new HashMap<String, Object>();
+        HttpStatus status;
+        if(principalDetails == null || principalDetails.getUser() == null){
+            status = HttpStatus.BAD_REQUEST; // 400
+            body.put("message", "already logout");
+        } else {
+            principalDetails.setUser(null); // logout 기능
+            status = HttpStatus.NO_CONTENT; // 204
+            body.put("message", "success logout");
+        }
+        return new ResponseEntity(body, headers, status);
     }
     //유저 프로필 업로드
     @PostMapping("/api/user/{user_id}/imageUrl")
