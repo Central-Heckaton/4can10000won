@@ -7,6 +7,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "comment")
@@ -26,6 +28,9 @@ public class Comment extends BaseTimeEntity{
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "beer_id")
     private Beer beer;
+
+    @OneToMany(mappedBy = "comment")
+    private List<ReportedComment> reportedComments = new ArrayList<>();
 
     private double point = 0;
 
@@ -56,5 +61,9 @@ public class Comment extends BaseTimeEntity{
         this.parentId = parentId;
     }
 
-
+    //=====연관 관계 편의 메소드====//
+    public void addReportedComment(ReportedComment reportedComment){
+        reportedComments.add(reportedComment);
+        reportedComment.setComment(this);
+    }
 }
