@@ -190,11 +190,6 @@ public class UserApiController implements ErrorController{
         return new ResponseEntity<>(null, headers, status);
     }
 
-    @GetMapping("/api/test")
-    public String test(){
-        return "test good";
-    }
-
     @PostMapping("/api/login-handle")
     public void loginHandle(HttpServletResponse response) throws IOException {
         System.out.println("loginHandle");
