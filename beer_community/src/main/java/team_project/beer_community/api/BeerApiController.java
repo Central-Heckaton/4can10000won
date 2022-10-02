@@ -101,7 +101,7 @@ public class BeerApiController {
             @RequestBody LikeBeerDto likeBeerDto,
             @AuthenticationPrincipal PrincipalDetails principalDetails){
         if (principalDetails == null){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("먼저 로그인을 해주세요");
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("먼저 로그인을 해주세요");
         }
         else {
             User user = userService.getUserWithInitializedLikeBeers(principalDetails.getUser().getId());
