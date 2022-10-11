@@ -6,8 +6,7 @@ import ViewStar from "../ViewStar/ViewStar";
 import styles from "./eachReview.module.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFlag } from "@fortawesome/free-regular-svg-icons";
+import Modal from '../commentReport/commentReport';
 
 const EachReview = (props) => {
   const [showComment, setShowComment] = useState(false);
@@ -15,6 +14,14 @@ const EachReview = (props) => {
   const [beerId, setBeerId] = useState(props.beerId);
   const [parentId, setParentId] = useState(props.parentId);
   const [content, setContent] = useState("");
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const openModal = () => { //댓글 신고 모달
+    setModalOpen(true);
+  };
+  const closeModal = () => {
+    setModalOpen(false);
+  };
 
   const resetInput = () => {
     document.getElementById("input").value = "";
@@ -108,13 +115,17 @@ const EachReview = (props) => {
                 </div>
               ) : (
                 <>
-                  <FontAwesomeIcon
-                    icon={faFlag}
-                    size="1x"
-                    onClick={() => {
-                      alert("댓글 신고가 완료 되었습니다.");
-                    }}
+                  <>
+                  <img
+                    src="/img/siren.png"
+                    alt="report"
+                    className={styles.report}
+                    onClick={openModal}
                   />
+                  <Modal open={modalOpen} close={closeModal} header="신고하기">
+                    해당 코멘트를 신고하였습니다.
+                  </Modal>
+                  </>
                 </>
               )}
             </div>
