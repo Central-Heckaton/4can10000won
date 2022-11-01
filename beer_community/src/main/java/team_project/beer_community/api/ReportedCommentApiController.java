@@ -28,6 +28,7 @@ public class ReportedCommentApiController {
 
     private final ReportedCommentService reportedCommentService;
     private final UserService userService;
+    private final CommentApiController commentApiController;
 
     @GetMapping("/api/reported-comments")
     public ResponseEntity showAllReportedComments(@PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable){
@@ -53,11 +54,24 @@ public class ReportedCommentApiController {
         return new ResponseEntity(HttpStatus.OK); //body를 비워둘 때는 이와 같이 사용
     }
 
-    @GetMapping("/api/reported-comments/delete/{reportedCommentId}")
-    public ResponseEntity deleteReportedComment(@PathVariable("reportedCommentId") Long reportedCommentId){
+    @GetMapping("/api/reported-comments/reject/{reportedCommentId}") //신고 거절
+    public ResponseEntity rejectReportedComment(@PathVariable("reportedCommentId") Long reportedCommentId){
         try{
             ReportedComment reportedComment = reportedCommentService.findOne(reportedCommentId);
             reportedCommentService.delete(reportedComment);
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        }catch(Exception e){
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/api/reported-comments/delete/{reportedCommentId}") //신고된 댓글 삭제
+    public ResponseEntity deleteReportedComment(@PathVariable("reportedCommentId") Long reportedCommentId){
+        try{
+            ReportedComment reportedComment = reportedCommentService.findOne(reportedCommentId);
+            Comment findComment = reportedComment.getComment();
+            reportedCommentService.delete(reportedComment);
+            commentApiController.deleteComment(findComment.getId()); //부모 댓글일 경우 대댓글 또한 삭제
             return new ResponseEntity(HttpStatus.NO_CONTENT);
         }catch(Exception e){
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
