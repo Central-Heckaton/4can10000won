@@ -3,6 +3,7 @@ spring:
     include:
       - aws
       - credentials
+
 servlet:
   multipart:
     enabled: true
