@@ -14,7 +14,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Setter
-public class ReportedComment {
+public class ReportedComment extends BaseTimeEntity{
     @Id @GeneratedValue
     private Long id;
 
@@ -29,4 +29,10 @@ public class ReportedComment {
     @NotNull
     @Enumerated(EnumType.STRING)
     private REPORT_TYPE reportType;
+
+    public ReportedComment(User user, Comment comment, REPORT_TYPE reportType) {
+        this.user = user;
+        this.comment = comment;
+        this.reportType = reportType;
+    }
 }
