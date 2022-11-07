@@ -16,6 +16,7 @@ import HowToDrink from './pages/HowtoDrink';
 import BeerType from './pages/BeerType';
 import EditRate from "./pages/EditRate";
 import Intro from "./pages/Intro";
+import ManageComment from "./pages/ManageComment";
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
           <Route path="/beertype" element={<BeerType/>}/>
           <Route path="/editRate" element={<EditRate />}/>
           <Route path="/testFileUpload" element={<testFileUpload />} />
+          <Route path="/manageComment" element={<ManageComment />} />
         </Routes>
       </BrowserRouter>
     </>
