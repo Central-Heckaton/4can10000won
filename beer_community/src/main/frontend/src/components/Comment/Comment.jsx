@@ -2,14 +2,8 @@
 import React, { useState } from "react";
 import styles from "./comment.module.css";
 import axios from "axios";
-import Modal from '../commentReport/commentReport';
 
 const Comment = (props) => {
-  const [modalOpen, setModalOpen] = useState(false);
-
-  const openModal = () => {
-    setModalOpen(true);
-  };
 
   console.log("Comment.jsx/pospt: ", props);
   console.log("pospt.id: ", props.id);
@@ -66,13 +60,7 @@ const Comment = (props) => {
                     src="/img/siren.png"
                     alt="report"
                     className={styles.report}
-                    onClick={openModal}
                   />
-                  {modalOpen && (
-                    <Modal closeModal={()=>setModalOpen(!modalOpen)}>
-                      해당 코멘트를 신고하였습니다!
-                    </Modal>
-                  )}
                 </>
               )}
             </div>

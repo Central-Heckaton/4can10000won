@@ -6,7 +6,7 @@ import ViewStar from "../ViewStar/ViewStar";
 import styles from "./eachReview.module.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import Modal from '../commentReport/commentReport';
+import Modal from '../CommentReport/CommentReport';
 
 const EachReview = (props) => {
   const [showComment, setShowComment] = useState(false);
@@ -14,13 +14,10 @@ const EachReview = (props) => {
   const [beerId, setBeerId] = useState(props.beerId);
   const [parentId, setParentId] = useState(props.parentId);
   const [content, setContent] = useState("");
-  const [modalOpen, setModalOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
-  const openModal = () => { //댓글 신고 모달
-    setModalOpen(true);
-  };
-  const closeModal = () => {
-    setModalOpen(false);
+  const onClickReport = () => {
+    setIsOpen(true);
   };
 
   const resetInput = () => {
@@ -115,17 +112,21 @@ const EachReview = (props) => {
                 </div>
               ) : (
                 <>
-                  <>
+                  
                   <img
                     src="/img/siren.png"
                     alt="report"
                     className={styles.report}
-                    onClick={openModal}
+                    onClick={onClickReport}
                   />
-                  <Modal open={modalOpen} close={closeModal} header="신고하기">
-                    해당 코멘트를 신고하였습니다.
-                  </Modal>
-                  </>
+                  {isOpen && (<Modal
+                    open={isOpen}
+                    content={props.content}
+                    onClose={()=> {
+                      setIsOpen(false);
+                    }}
+                  />)}
+                  
                 </>
               )}
             </div>
