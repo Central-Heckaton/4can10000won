@@ -1,0 +1,20 @@
+.container {
+        padding: 70px;
+        padding-bottom: 0;
+}
+
+.logo {
+        display: flex;
+}
+
+.imgLogo {
+        width: 3rem;
+        margin-right: 2rem;
+}
+
+.title {
+        margin: 0.2rem;
+        font-size: 24px;
+        font-weight: 700;
+}
+

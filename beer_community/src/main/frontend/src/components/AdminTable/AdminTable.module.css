@@ -1,0 +1,20 @@
+.container {
+        padding: 50px;
+}
+
+.table {
+        width: 100%;
+        border-collapse: collapse;
+}
+
+th {
+        border-bottom: 4px double #dcdcdc;
+        padding: 1rem;
+        color: #c0c0c0;
+}
+
+td {
+        border-bottom: 1px solid #dcdcdc;
+        padding: 1rem;
+        font-weight: 400;
+}
