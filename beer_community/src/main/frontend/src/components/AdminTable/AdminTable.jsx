@@ -7,6 +7,7 @@ const AdminTable = (props) => {
         const [isCheckAll, setIsCheckAll] = useState(false);  // 전체 다 체크했을 때
         const [isCheckingBox, setIsCheckingBox] = useState(false);  // 하나라도 체크했을 때
         const [checkedArr, setCheckedArr] = useState([]);  // 체크한 항목
+        const [pageNumber, setPageNumber] = useState(0);
 
         const changeAllCheck = (e) => {
                 if (e.target.checked) {
@@ -25,7 +26,10 @@ const AdminTable = (props) => {
 
         const getReportedComments = async() => {
                 try {
-                        let response = await axios.get("/api/reported-comments?page={page_number}");
+                        let request_url = `/api/reported-comments?${pageNumber}`
+                        console.log("request_url: ", request_url);
+                        let response = await axios.get(request_url);
+                        console.log("getReportedComments/response: ", response);
                         setReportData(response.data.data);
                         console.log(response);
                 } 
@@ -36,7 +40,7 @@ const AdminTable = (props) => {
 
         useEffect(() => {
                 getReportedComments();
-        })
+        }, [])
 
         return (
                 <div className={styles.container}>
@@ -64,7 +68,7 @@ const AdminTable = (props) => {
                                                                         <td>{i.reporterName}</td>
                                                                         <td>{i.reportType}</td>
                                                                         <td>{i.content}</td>
-                                                                        <td>{i.createdData}</td>
+                                                                        <td>{i.createdDate}</td>
                                                                 </tr>
                                                         ))
                                                 : null }

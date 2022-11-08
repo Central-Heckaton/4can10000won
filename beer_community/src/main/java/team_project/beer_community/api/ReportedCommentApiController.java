@@ -30,8 +30,9 @@ public class ReportedCommentApiController {
     private final UserService userService;
     private final CommentApiController commentApiController;
 
-    @GetMapping("/api/reported-comments")
+    @GetMapping("/api/reported-comments") // /api/reported-comments?0 형태로 요청
     public ResponseEntity showAllReportedComments(@PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable){
+        System.out.println("ReportedCommentApiController.showAllReportedComments");
          List<ReportedCommentDto> reportedCommentDtos = reportedCommentService.findAllReportedComments(pageable)
                  .map(reportedComment -> new ReportedCommentDto(reportedComment, reportedComment.getUser(), reportedComment.getComment())).getContent();
          return ResponseEntity.status(HttpStatus.OK).body(new WrapperClass<>(reportedCommentDtos));
@@ -45,7 +46,7 @@ public class ReportedCommentApiController {
         return new ResponseEntity(HttpStatus.OK); //body를 비워둘 때는 이와 같이 사용
     }
 
-    @PostMapping("/api/reported-comments-test/create")
+    @PostMapping("/api/reported-comments-test/create2")
     public ResponseEntity reportCommentTest(@RequestBody CreateReportedCommentDto createReportedCommentDto){
         REPORT_TYPE type = REPORT_TYPE.valueOf(createReportedCommentDto.getReportType());
         User reporter = userService.findOne(1L);

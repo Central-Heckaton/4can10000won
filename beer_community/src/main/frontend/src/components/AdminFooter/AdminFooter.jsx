@@ -5,7 +5,7 @@ import { axios } from 'axios';
 const AdminFooter = (props) => {
         const handleDeleteClick = async() => {
                 try {
-                        let response = await axios.get("/api/reported-comment/{reportedCommentId}");
+                        let response = await axios.get("/api/reported-comments/delete/{reportedCommentId}");
                         console.log(response);
                 }
                 catch (error) { 

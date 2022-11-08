@@ -34,7 +34,7 @@ class CommentApiControllerTest {
     EntityManager em;
 
     @Test
-//    @Rollback(value = false)
+    @Rollback(value = false)
     public void CommentApiControllerTest() throws Exception {
         User userA = new User("seojio8625@naver.com", "seojo1919@", "서지오", "1998-03-11", null, Role.ROLE_USER);
         userService.join(userA);

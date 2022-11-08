@@ -6,6 +6,8 @@ import team_project.beer_community.domain.REPORT_TYPE;
 import team_project.beer_community.domain.ReportedComment;
 import team_project.beer_community.domain.User;
 
+import java.time.format.DateTimeFormatter;
+
 @Data
 
 public class ReportedCommentDto {
@@ -20,6 +22,7 @@ public class ReportedCommentDto {
         this.reporterName = user.getUsername();
         this.content = comment.getContent();
         this.reportType = reportedComment.getReportType();
-        this.createdDate = reportedComment.getCreatedDate().toString();
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH시 mm분 ss초");
+        this.createdDate = reportedComment.getCreatedDate().format(dtf);
     }
 }
