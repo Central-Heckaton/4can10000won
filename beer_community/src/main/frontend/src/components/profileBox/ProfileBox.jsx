@@ -1,13 +1,16 @@
 import React, { useRef, useState, useEffect } from "react";
 import styles from "./profileBox.module.css";
 import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 
 const ProfileBox = () => {
+  let navigate = useNavigate();
   const [image, setImage] = useState(
     "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
   );
   const [username, setUsername] = useState("");
   const fileInput = useRef(null);
+
   const onChangeImg = (e) => {
     if (e.target.files[0]) {
       // const img=new FormData();
@@ -55,11 +58,24 @@ const ProfileBox = () => {
     return;
   }
   useEffect(() => {
-    axios.get('/api/user')
-    .then((response) => {
-        console.log('response.data: ', response.data);
-        setUsername(response.data['username'])
-    })
+
+    try{
+        axios.get('/api/user')
+        .then((response) => {
+            console.log('response.data: ', response.data);
+            setUsername(response.data['username'])
+        })
+    } catch(e) {
+        console.log('profileBox/useEffect()/error: ', e);
+        console.log('profileBox/useEffect()/error.data: ', e.response.data);
+        if(e.response.status == 403){
+            if(window.confirm(e.response.data.message)){
+              navigate('/login', {});
+            }
+        }
+        navigate('/search', {});
+    }
+
   }, []);
   return (
     <>

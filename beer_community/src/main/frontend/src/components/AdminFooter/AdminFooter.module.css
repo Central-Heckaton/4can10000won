@@ -1,0 +1,13 @@
+.container {
+        padding: 50px;
+}
+
+.delete {
+        font-size: medium;
+        border: none;
+        border-radius: 10px;
+        width: 90px;
+        height: 40px;
+        background-color: #D9D9D9;
+        cursor: pointer;
+}
