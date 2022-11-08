@@ -38,20 +38,26 @@
 
 .commentMenu {
   display: flex;
-  justify-content: space-between;
+  /*justify-content: space-between;*/
 }
+
 .delete {
   width: 12px;
   height: 12px;
-  margin-left: 12px;
+  /*margin-left: 12px;*/
 }
 .edit {
   width: 12px;
   height: 12px;
-  margin-bottom: 6px;
+ /* margin-bottom: 12px;*/
+}
+.report {
+  width: 10px;
+  height: 12px;
 }
 
 .username {
+  flex-grow: 1;
   font-size: 10px;
   font-style: normal;
   font-weight: normal;
