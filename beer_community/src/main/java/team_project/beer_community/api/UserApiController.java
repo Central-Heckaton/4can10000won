@@ -53,7 +53,7 @@ public class UserApiController implements ErrorController{
         Map<String, List<BeerDto>> body = new HashMap<>();
         HttpHeaders headers = new HttpHeaders();
         HttpStatus status = HttpStatus.OK;
-        if(principalDetails == null){ // 현재 사용자가 로그인하지 않았다면 403 Error 발생
+        if(principalDetails == null || principalDetails.getUser() == null){ // 현재 사용자가 로그인하지 않았다면 403 Error 발생
             status = HttpStatus.FORBIDDEN; // 403 권한에러
             return new ResponseEntity(body, headers, status);
         }
@@ -208,12 +208,29 @@ public class UserApiController implements ErrorController{
         if(principalDetails == null || principalDetails.getUser() == null){
             status = HttpStatus.BAD_REQUEST; // 400
             body.put("message", "already logout");
+            System.out.println("UserApiController.logout | 400 BAD_REQUEST | Already Logout");
         } else {
             principalDetails.setUser(null); // logout 기능
             status = HttpStatus.NO_CONTENT; // 204
             body.put("message", "success logout");
+            System.out.println("UserApiController.logout | 204 NO_CONTENT | Success to logout");
         }
         return new ResponseEntity(body, headers, status);
+    }
+    @GetMapping("/api/loginstate")
+    public ResponseEntity checkLoginState(@AuthenticationPrincipal PrincipalDetails principalDetails){
+        Map<String, String> body = new HashMap<>();
+        HttpStatus status;
+        if(principalDetails == null || principalDetails.getUser() == null){
+            body.put("message", "로그인이 필요합니다.");
+            status = HttpStatus.FORBIDDEN; // 403
+            return ResponseEntity.status(status).body(body);
+        } else {
+            body.put("message", "로그인 된 상태입니다.");
+            status = HttpStatus.OK; // 200
+            return ResponseEntity.status(status).body(body);
+        }
+
     }
     //유저 프로필 업로드
     @PostMapping("/api/user/{user_id}/imageUrl")

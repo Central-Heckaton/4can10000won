@@ -1,6 +1,7 @@
 package team_project.beer_community.api;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +28,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
+@Slf4j
 public class BeerApiController {
     private final BeerService beerService;
     private final UserService userService;
@@ -76,7 +78,7 @@ public class BeerApiController {
     {
         Beer beer = beerService.findOne(beerId);
         int parentCount = commentService.findParentCountWithBeerId(beerId);
-        if (principalDetails == null){  //로그인 한 경우
+        if (principalDetails == null || principalDetails.getUser() == null){  //로그인 한 경우
             BeerDetailDto beerDetailDto = new BeerDetailDto(beer, beerService.findAllTaste(beerId), parentCount, Boolean.FALSE);
             return ResponseEntity.status(HttpStatus.OK).body(new WrapperClass<>(beerDetailDto));
         }
@@ -100,8 +102,10 @@ public class BeerApiController {
     public ResponseEntity changeLikeState(
             @RequestBody LikeBeerDto likeBeerDto,
             @AuthenticationPrincipal PrincipalDetails principalDetails){
-        if (principalDetails == null){
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("먼저 로그인을 해주세요");
+        System.out.println("=====BeerApiController.changeLikeState=====");
+        if (principalDetails == null || principalDetails.getUser() == null){
+            log.info("user logouted!");
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("로그인이 필요한 페이지입니다. 로그인 페이지로 이동하시겠습니까?");
         }
         else {
             User user = userService.getUserWithInitializedLikeBeers(principalDetails.getUser().getId());

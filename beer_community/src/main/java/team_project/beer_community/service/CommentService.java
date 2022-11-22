@@ -64,4 +64,8 @@ public class CommentService {
     public int findParentCountWithBeerId(Long beerId) {
         return commentRepository.findParentCommentCountWithBeerId(beerId);
     }
+
+    public List<Comment> findAllWithBeer(Long beerId) {
+        return commentRepository.findByBeerId(beerId);
+    }
 }

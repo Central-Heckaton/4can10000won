@@ -81,7 +81,13 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
 
     @Override
     public String getUsername() {
-        return user.getUsername();
+        String ret;
+        try{
+            ret = user.getUsername();
+        } catch (NullPointerException nullPointerException){
+            ret = "null";
+        }
+        return ret;
     }
 
     @Override
