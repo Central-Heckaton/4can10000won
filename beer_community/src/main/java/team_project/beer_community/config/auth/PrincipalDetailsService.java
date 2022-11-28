@@ -26,7 +26,7 @@ public class PrincipalDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User userEntity = userRepository.findByEmail(email);
-//        세큐리티에서 로그인 시 항상 likebeers 초기화
+//        Security에서 로그인 시 항상 likebeers 초기화
 //        userEntity.getLikeBeers().stream().forEach(lb -> lb.getBeer());
         if(userEntity != null){
             return new PrincipalDetails(userEntity);

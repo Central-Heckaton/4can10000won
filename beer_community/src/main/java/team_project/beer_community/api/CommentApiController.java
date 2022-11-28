@@ -1,6 +1,7 @@
 package team_project.beer_community.api;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
+@Slf4j
 public class CommentApiController {
     private final BeerService beerService;
     private final CommentService commentService;
@@ -28,6 +30,10 @@ public class CommentApiController {
     public ResponseEntity<Void> writeComment(
             @RequestBody WriteCommentDto writeCommentDto,
             @AuthenticationPrincipal PrincipalDetails principalDetails) {
+        if(principalDetails == null || principalDetails.getUser() == null){
+            log.info("user logouted fail to writeComment() | 403 FORBIDDEN");
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN); // 403
+        }
         try{
             User user = userService.getUserWithInitializedComments(principalDetails.getUser().getId());
             Comment comment = new Comment(user, writeCommentDto.getContent(), writeCommentDto.getPoint());
@@ -114,12 +120,24 @@ public class CommentApiController {
             @PathVariable("beerId") Long beerId,
             @AuthenticationPrincipal PrincipalDetails principalDetails){
         //fetch join 사용, comment와 user를 한번에 조회
-        Long userId = principalDetails.getUser().getId();
-        List<Comment> comments = commentService.findAllWithUser(beerId);
-        List<CommentDto> commentDtos = comments.stream()
-                .map(c -> new CommentDto(c.getUser(), c, commentService.findRecommentsCount(c.getId())))
-                .collect(Collectors.toList());
-        return ResponseEntity.status(HttpStatus.OK).body(new WrapperClassWithUserId<>(userId, commentDtos));
+        if(principalDetails == null || principalDetails.getUser() == null){
+            List<Comment> comments = commentService.findAllWithBeer(beerId);
+            for (Comment comment: comments) {
+                System.out.println("comment = " + comment);
+            }
+            List<CommentDto> commentDtos = comments
+                    .stream()
+                    .map(c -> new CommentDto(c.getUser(), c ,commentService.findRecommentsCount(c.getId())))
+                    .collect(Collectors.toList());
+            return ResponseEntity.status(HttpStatus.OK).body(new WrapperClassWithUserId<>(-1L, commentDtos));
+        } else {
+            Long userId = principalDetails.getUser().getId();
+            List<Comment> comments = commentService.findAllWithUser(beerId);
+            List<CommentDto> commentDtos = comments.stream()
+                    .map(c -> new CommentDto(c.getUser(), c, commentService.findRecommentsCount(c.getId())))
+                    .collect(Collectors.toList());
+            return ResponseEntity.status(HttpStatus.OK).body(new WrapperClassWithUserId<>(userId, commentDtos));
+        }
     }
 
 
