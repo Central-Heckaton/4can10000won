@@ -10,17 +10,21 @@ const ProfileBox = () => {
   );
   const [username, setUsername] = useState("");
   const fileInput = useRef(null);
+  const [id, setId] = useState(0);
 
-  const onChangeImg = (e) => {
+  const onChangeImg = async (e) => {
     if (e.target.files[0]) {
-      // const img=new FormData();
-      // img.append("file",e.target.files[0]);
-      // axios.post("...",img).then((res)=>{
-      // setImage(res.data);
-      // }).catch((err)=>{
-      // console.error(err)
-      // });
-
+      const img = new FormData();
+      img.append("file",e.target.files[0]);
+      let response =
+          await axios.post(`/api/user/${id}/imageUrl`, {"profilePhoto": img})
+              .then((res)=>{
+                  console.log("res: ", res);
+                  console.log("res.data: ", res.data);
+                  setImage(res.data);
+              }).catch((err)=>{
+                  console.error(err)
+              });
       setImage(e.target.files[0]);
     } else {
       return;
@@ -71,7 +75,12 @@ const ProfileBox = () => {
         axios.get('/api/user')
         .then((response) => {
             console.log('response.data: ', response.data);
+            setId(response.data['id'])
             setUsername(response.data['username'])
+            if(response.data['imageUrl'] != null){
+                setImage(response.data['imageUrl']);
+            }
+
         })
     } catch(e) {
         console.log('profileBox/useEffect()/error: ', e);

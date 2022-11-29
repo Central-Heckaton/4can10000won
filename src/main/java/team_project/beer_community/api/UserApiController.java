@@ -159,17 +159,11 @@ public class UserApiController implements ErrorController{
             status = HttpStatus.OK;
             body.put("message", "정보조회가 성공적으로 이루어졌습니다.");
             User user = principalDetails.getUser();
-            String username = user.getUsername();
-            String email = user.getEmail();
-            Map<String, Object> map = new HashMap<String, Object>();
-            map.put("username", username);
-            map.put("email", email);
-            System.out.println("map = " + map); // map = {email=ko2@naver.com, username=ko2}
-            body.put("username", username);
-            body.put("email", email);
+            body.put("username", user.getUsername());
+            body.put("email", user.getEmail());
+            body.put("imageUrl", user.getImageUrl());
+            body.put("id", user.getId());
         }
-        System.out.println("status = " + status);
-        System.out.println("body.get(\"message\") = " + body.get("message"));
         return new ResponseEntity<Object>(body, headers, status);
     }
 
@@ -234,13 +228,21 @@ public class UserApiController implements ErrorController{
     }
     //유저 프로필 업로드
     @PostMapping("/api/user/{user_id}/imageUrl")
-    public ResponseEntity<?> uploadProfilePhoto(@PathVariable("user_id") Long userId, @RequestParam("profilePhoto") MultipartFile multipartFile) throws IOException {
+    public ResponseEntity<?> uploadProfilePhoto(
+            @PathVariable("user_id") Long userId,
+            @RequestParam("profilePhoto") MultipartFile multipartFile) throws IOException {
         //S3 Bucket 내부에 "/profile"
         System.out.println("UserApiController.uploadProfilePhoto");
         System.out.println("userId = " + userId); // 1
         System.out.println("multipartFile = " + multipartFile); // org.springframework.web.multipart.support.StandardMultipartHttpServletRequest$StandardMultipartFile@606b1f72
-        FileUploadResponse profile = s3Uploader.upload(userId, multipartFile, "profile");
-        System.out.println("uploadProfilePhoto() / profile = " + profile);
-        return ResponseEntity.ok(profile);
+        try{
+            FileUploadResponse profile = s3Uploader.uploadFiles(userId, multipartFile, "profile");
+            System.out.println("uploadProfilePhoto() / profile = " + profile);
+            return ResponseEntity.ok(profile);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+
+
     }
 }

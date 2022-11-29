@@ -34,15 +34,12 @@ dependencies {
 	//p6spy(쿼리 로그)
 	implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.5.6'
 	// s3를 통해 파일업로드
-	implementation platform('com.amazonaws:aws-java-sdk-bom:1.11.228')
-	implementation 'com.amazonaws:aws-java-sdk-s3'
+	implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-aws', version: '2.2.6.RELEASE'
 	// https://mvnrepository.com/artifact/commons-io/commons-io
 	// commons-io는 File처리 하기 위함
 
 	implementation 'commons-io:commons-io:2.6'
 	compileOnly 'org.projectlombok:lombok'
-	// spring-cloud-starter-aws
-	compileOnly 'org.springframework.cloud:spring-cloud-starter-aws:2.0.2.RELEASE'
 	runtimeOnly 'mysql:mysql-connector-java'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
