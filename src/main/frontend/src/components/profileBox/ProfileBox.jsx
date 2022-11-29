@@ -52,8 +52,16 @@ const ProfileBox = () => {
             alert("정보 수정에 실패했습니다.");
             return;
         }
-    } catch (err) {
-        console.log("handleEditSubmit/err: ", err);
+    } catch (error) {
+        console.log("handleEditSubmit/error: ", error);
+            console.log('error: ', error)
+            console.log('error.response: ', error.response)
+            console.log('error.response.data: ', error.response.data)
+            console.log('error.response.status: ', error.response.status)
+            if (error.response.status == 403){ // Forbidden - 로그인 되지 않은 유저의 접근
+                alert("내 프로필을 확인하기 위해선 로그인이 필요합니다.\n로그인 페이지로 이동합니다")
+                navigate("/login", {});
+            }
     };
     return;
   }

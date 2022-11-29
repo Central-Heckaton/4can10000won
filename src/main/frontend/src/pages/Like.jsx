@@ -24,7 +24,7 @@ const Like = () => {
     console.log('error.response.status: ', error.response.status)
     if (error.response.status == 403){ // Forbidden - 로그인 되지 않은 유저의 접근
         alert("내가 찜한 맥주리스트를 확인하기 위해선 로그인이 필요합니다.\n로그인 페이지로 이동합니다")
-        navigate("/", {});
+        navigate("/login", {});
     }
   }
 
