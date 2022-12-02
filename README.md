@@ -34,6 +34,7 @@ React: 18.2.0, npm: 8.18.0
 
 엔티티 구현 시 FK 조회할 경우 fetch = LAZY옵션을 사용해서 N+1문제를 방지함.
 Eager옵션이 필요한 경우엔 fetch join을 사용해서 해결함.
+
 [Feat: LikeBeer와Beer 조회 쿼리 성능 최적화](https://github.com/Central-Heckaton/4can10000won/pull/10)
 
 ### Commit 메시지 규칙
@@ -72,7 +73,7 @@ test : 테스트 코드 수정에 대한 커밋
 ### 사용자 인증
 1. 이메일 중복검사 기능으로 중복된 이메일 가입 방지
 2. 네이버, 구글 소셜로그인/회원가입을 통해 신규가입자 유입 원활(Spring Security, 세션)
-3. 로그인이 필요한 페이지 접근시 PrincipalDetail의 User정보를 확인해서 로그인 된 사용자가 아니라면 403 Forbidden에러를 보내어 로그인 페이지로 redirect
+3. 로그인이 필요한 페이지 접근시 PrincipalDetail의 User정보를 확인해서 로그인 된 사용자가 아니라면 403 Forbidden에러를 보내어 로그인 페이지로 redirect<br/>
 [Feat: 로그아웃기능 및 상태코드를 통한 페이지 접근제한](https://github.com/Central-Heckaton/4can10000won/pull/82)
 
 ### 관리자
