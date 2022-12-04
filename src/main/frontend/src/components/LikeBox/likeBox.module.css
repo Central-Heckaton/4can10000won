@@ -2,10 +2,10 @@
   display: flex;
   flex-direction: column;
   padding-top: 4rem;
-  width: 20rem;
   border: 2px solid var(--background-color);
   z-index: -1;
   padding-bottom: 5rem;
+  justify-content: center;
   align-items: center;
 }
 .sub {
