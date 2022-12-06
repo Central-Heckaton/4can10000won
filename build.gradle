@@ -37,6 +37,8 @@ dependencies {
 	implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-aws', version: '2.2.6.RELEASE'
 	// https://mvnrepository.com/artifact/commons-io/commons-io
 	// commons-io는 File처리 하기 위함
+	//mail 인증
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
 
 	implementation 'commons-io:commons-io:2.6'
 	compileOnly 'org.projectlombok:lombok'
