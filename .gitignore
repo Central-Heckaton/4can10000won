@@ -20,6 +20,7 @@ bin/
 !**/src/test/**/bin/
 
 ### IntelliJ IDEA ###
+application-email.yml
 application-aws.yml
 application-credentials.yml
 .idea
