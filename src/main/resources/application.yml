@@ -12,8 +12,4 @@ servlet:
 
 logging.level:
   org.hibernate.SQL: debug
-  com:
-    amazonaws:
-      util:
-        Ec2MetadataUtils: error  #spring-cloud-starter-aws 사용 시 로컬에서 프로젝트를 수행하면 뜨는 경고를 안보이게 하기 위해
 # org.hibernate.type: trace
