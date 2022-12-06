@@ -38,6 +38,9 @@ dependencies {
 	// https://mvnrepository.com/artifact/commons-io/commons-io
 	// commons-io는 File처리 하기 위함
 
+	//이메일 인증
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
+
 	implementation 'commons-io:commons-io:2.6'
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'mysql:mysql-connector-java'
