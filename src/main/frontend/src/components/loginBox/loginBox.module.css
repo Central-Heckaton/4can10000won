@@ -1,6 +1,7 @@
 .loginImg {
   width: 7rem;
   margin-bottom: 30%;
+  cursor: pointer;
 }
 .imgDiv {
   justify-content: center;

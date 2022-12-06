@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import styles from "./loginBox.module.css";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const LoginBox = () => {
   const [loginState, setLoginState] = useState(true);
@@ -16,8 +16,8 @@ const LoginBox = () => {
   const [month, setMonth] = useState("");
   const [day, setDay] = useState("");
   const [birthday, setBirthday] = useState("");
-
   const emailMessage = useRef();
+  const navigate = useNavigate();
   // ---------
 
   const resetInput = () => {
@@ -76,11 +76,11 @@ const LoginBox = () => {
       }
     } catch (err) {
       console.log('err.response.data["error"] : ', err.response.data["error"]);
-      console.log('err.response.data.error : ', err.response.data.error);
+      console.log("err.response.data.error : ", err.response.data.error);
       if (err.response.status === 400) {
         //이메일 중복검사 시 양식이 올바르지 않은 경우
         setCheckDuplicate(false);
-//        setMessage(err.response.data["error"]);
+        //        setMessage(err.response.data["error"]);
         setMessage(err.response.data.error);
         setEmail("");
       } else if (err.response.status === 409) {
@@ -176,7 +176,14 @@ const LoginBox = () => {
     <div className={styles.main}>
       <div className={styles.loginBox}>
         <div className={styles.imgDiv}>
-          <img src="/img/logo.png" alt="네캔만원" className={styles.loginImg} />
+          <img
+            src="/img/logo.png"
+            alt="네캔만원"
+            className={styles.loginImg}
+            onClick={() => {
+              navigate("/search");
+            }}
+          />
         </div>
         {loginState === true ? ( // 로그인 화면
           <>

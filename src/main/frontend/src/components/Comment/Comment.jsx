@@ -1,10 +1,9 @@
-// comment.jsx
-import React from "react";
+import React, { useState } from "react";
 import styles from "./comment.module.css";
 import axios from "axios";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFlag } from "@fortawesome/free-regular-svg-icons";
+
 const Comment = (props) => {
+
   console.log("Comment.jsx/pospt: ", props);
   console.log("pospt.id: ", props.id);
   console.log(props.userImageUrl);
@@ -56,11 +55,10 @@ const Comment = (props) => {
                 </div>
               ) : (
                 <>
-                  <FontAwesomeIcon
-                    icon={faFlag}
-                    onClick={() => {
-                      alert("댓글 신고가 완료 되었습니다.");
-                    }}
+                  <img
+                    src="/img/siren.png"
+                    alt="report"
+                    className={styles.report}
                   />
                 </>
               )}
@@ -72,5 +70,4 @@ const Comment = (props) => {
     </>
   );
 };
-
 export default Comment;
