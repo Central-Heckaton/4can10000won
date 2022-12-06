@@ -39,6 +39,33 @@ const DetailFooter = (props) => {
     }
   }, [like]);
 
+  const heartOnclick = async (e) => {
+    e.preventDefault();
+    console.log("click like: ", like);
+    if (props.loginState === false) {
+      //로그아웃 상태일때
+      if (
+        window.confirm("로그인이 필요한 서비스입니다. 로그인 하시겠습니까?")
+      ) {
+        props.navigate("/login");
+      }
+    } else {
+      //로그인 상태일때
+      await setLike(!like);
+    }
+  };
+  const rateOnclick = (e) => {
+    if (props.loginState === false) {
+      if (
+        window.confirm("로그인이 필요한 서비스입니다. 로그인 하시겠습니까?")
+      ) {
+        e.preventDefault();
+        props.navigate("/login");
+      } else {
+        e.preventDefault();
+      }
+    }
+  };
   return (
     <div className={styles.container}>
       <Link
@@ -60,6 +87,7 @@ const DetailFooter = (props) => {
           state={{
             id: props.id,
           }}
+          onClick={rateOnclick}
         >
           <button className={styles.button}>나도 평가하기</button>
         </Link>
@@ -70,12 +98,7 @@ const DetailFooter = (props) => {
             className={styles.heartReg}
             src={like ? "/img/heart-solid.png" : "/img/heart-regular.png"}
             alt="heart"
-            onClick={async (e) => {
-              e.preventDefault();
-              console.log("click like: ", like);
-              await setLike(!like);
-              console.log("after click like : ", like);
-            }}
+            onClick={heartOnclick}
           />
         </button>
       </div>

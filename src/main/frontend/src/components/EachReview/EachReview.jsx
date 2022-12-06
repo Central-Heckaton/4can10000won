@@ -6,8 +6,7 @@ import ViewStar from "../ViewStar/ViewStar";
 import styles from "./eachReview.module.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFlag } from "@fortawesome/free-regular-svg-icons";
+import Modal from "../CommentReport/CommentReport";
 
 const EachReview = (props) => {
   const [showComment, setShowComment] = useState(false);
@@ -15,6 +14,11 @@ const EachReview = (props) => {
   const [beerId, setBeerId] = useState(props.beerId);
   const [parentId, setParentId] = useState(props.parentId);
   const [content, setContent] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
+
+  const onClickReport = () => {
+    setIsOpen(true);
+  };
 
   const resetInput = () => {
     document.getElementById("input").value = "";
@@ -29,7 +33,6 @@ const EachReview = (props) => {
     setShowComment(!showComment);
     getRecomments();
   };
-
   const handleReClick = async (e) => {
     const request_data = {
       beerId: beerId,
@@ -48,7 +51,6 @@ const EachReview = (props) => {
     props.getReviews();
     resetInput();
   };
-
   return (
     <>
       <div className={showComment ? styles.mainDropdown : styles.main}>
@@ -108,18 +110,25 @@ const EachReview = (props) => {
                 </div>
               ) : (
                 <>
-                  <FontAwesomeIcon
-                    icon={faFlag}
-                    size="1x"
-                    onClick={() => {
-                      alert("댓글 신고가 완료 되었습니다.");
-                    }}
+                  <img
+                    src="/img/siren.png"
+                    alt="report"
+                    className={styles.report}
+                    onClick={onClickReport}
                   />
+                  {isOpen && (
+                    <Modal
+                      open={isOpen}
+                      content={props.content}
+                      onClose={() => {
+                        setIsOpen(false);
+                      }}
+                    />
+                  )}
                 </>
               )}
             </div>
           </div>
-
           <div className={styles.writeTime}>작성날짜 {props.createdDate} </div>
           <div className={styles.review}>{props.content}</div>
         </div>
@@ -133,7 +142,6 @@ const EachReview = (props) => {
           ></img>
         </div>
       </div>
-
       {showComment ? (
         <>
           <div className={styles.dropdownMain}>
@@ -149,7 +157,6 @@ const EachReview = (props) => {
                 getReviews={props.getReviews}
               />
             ))}
-
             <div className={styles.inputBox}>
               <input
                 id="input"
@@ -173,5 +180,4 @@ const EachReview = (props) => {
     </>
   );
 };
-
 export default EachReview;

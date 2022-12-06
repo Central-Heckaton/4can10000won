@@ -8,6 +8,7 @@ import axios from "axios";
 import { useNavigate, useLocation } from "react-router-dom";
 import Footer from "./../components/Footer/Footer";
 import RandomLoading from "../components/randomLoading/RandomLoading";
+import useLoginState from "../hooks/useLoginState";
 
 const Detail = (props) => {
   const [imageUrl, setImageUrl] = useState("");
@@ -21,6 +22,7 @@ const Detail = (props) => {
   const [loading, setLoading] = useState(false);
   const location = useLocation();
   const id = location.state.id;
+  const loginState = useLoginState();
   let navigate = useNavigate();
   console.log(id);
   useEffect(() => {
@@ -61,6 +63,8 @@ const Detail = (props) => {
               id={id}
               setIsLiked={setIsLiked}
               reviewCount={reviewCount}
+              navigate={navigate}
+              loginState={loginState}
             />
           </>
         ) : (

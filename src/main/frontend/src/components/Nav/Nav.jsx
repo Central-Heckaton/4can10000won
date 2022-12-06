@@ -1,15 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./nav.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
 import { faArrowRightToBracket } from "@fortawesome/free-solid-svg-icons";
 import { faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
 import axios from "axios";
+import useLoginState from "../../hooks/useLoginState";
+import { useEffect } from "react";
 
-const Nav = (props) => {
-  const [loginState, setLoginState] = useState(true);
-  console.log('hihi');
+const Nav = ({ navigate }) => {
+  const loginstate = useLoginState();
+  console.log("loginstate", loginstate);
   return (
     <>
       <div className={styles.main}>
@@ -18,17 +19,26 @@ const Nav = (props) => {
             icon={faAngleLeft}
             size="1x"
             onClick={() => {
-              props.navigate(-1);
+              navigate(-1);
             }}
           />
           <FontAwesomeIcon
-            icon={loginState===true?faArrowRightToBracket:faArrowRightFromBracket}
+            icon={
+              loginstate === null
+                ? null
+                : loginstate === false
+                ? faArrowRightToBracket
+                : faArrowRightFromBracket
+            }
             size="1x"
             onClick={async () => {
-               // 지금은 로그아웃만 있다
-              let response = await axios.get("/api/logout");
-              console.log("Nav/response: ", response);
-//              props.navigate("/login");
+              if (loginstate === true) {
+                await axios.get("/api/logout");
+                alert("로그아웃되었습니다!");
+                navigate("/search");
+              } else if (loginstate === false) {
+                navigate("/login");
+              }
             }}
           />
         </div>
@@ -36,5 +46,5 @@ const Nav = (props) => {
     </>
   );
 };
-
+Nav.defaultProps = {};
 export default Nav;
