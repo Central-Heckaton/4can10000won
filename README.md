@@ -121,6 +121,6 @@ parentId 필드로 null 인지/아닌지에 따라 부모/자식 댓글로 구�
 
 ### **네캔만원 참여 & 기여자**
 
-| [고경환](https://github.com/kyunghwan1207) | [서지오](https://github.com/seo-jio) | [원동현](https://github.com/Hellol77) | [정채빈](https://github.com/chaevivin) |
-|:---------------------------------------:|:---------------------------------:|:----------------------------------:|:-----------------------------------:|
-|                Back-end                 |             Back-end              |             Front-end              |              Front-end              |
+|[고경환](https://github.com/kyunghwan1207)|[서지오](https://github.com/seo-jio)|[원동현](https://github.com/Hellol77)|[정채빈](https://github.com/chaevivin)
+|:---:|:---:|:---:|:---:|
+Back-end | Back-end | Front-end | Front-end |

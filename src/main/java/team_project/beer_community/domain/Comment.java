@@ -15,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter @Setter
 public class Comment extends BaseTimeEntity{
-    @Id @GeneratedValue
+    @Id @GeneratedValue()
     private Long id;
 
     @NotNull
