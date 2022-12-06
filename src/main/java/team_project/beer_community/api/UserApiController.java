@@ -1,5 +1,6 @@
 package team_project.beer_community.api;
 
+import com.amazonaws.http.HttpResponse;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,7 @@ import team_project.beer_community.dto.EmailDto;
 import team_project.beer_community.dto.UserInfoDto;
 import team_project.beer_community.dto.UserJoinDto;
 import team_project.beer_community.repository.BeerRepository;
+import team_project.beer_community.repository.EmailService;
 import team_project.beer_community.repository.UserRepository;
 import team_project.beer_community.service.*;
 
@@ -44,7 +46,7 @@ public class UserApiController implements ErrorController{
     private final UserService userService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder; // password 암호화할 때 사용
     private final S3Uploader s3Uploader;
-
+    private final EmailServiceImpl emailService;
 
     @GetMapping("/api/likebeers")
     public ResponseEntity showLikeBeers(@AuthenticationPrincipal PrincipalDetails principalDetails){
@@ -244,5 +246,17 @@ public class UserApiController implements ErrorController{
         }
 
 
+    }
+
+    @PostMapping("/api/user/emailConfirm")
+    public ResponseEntity emailConfirm(@RequestParam String email) throws Exception {
+        try {
+            String code = emailService.sendSimpleMessage(email);
+            System.out.println("Email is confirmed");
+            System.out.println("code = " + code);
+            return new ResponseEntity(HttpStatus.OK);
+        }catch(Exception e){
+            return new ResponseEntity(HttpStatus.FORBIDDEN);
+        }
     }
 }
