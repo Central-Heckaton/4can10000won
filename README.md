@@ -17,22 +17,24 @@
 **네캔만원**은 편의점 맥주의 다양한 정보를 제공하고 이를 기반으로 한 커뮤니티를 형성하여 맥주 구매 결정에 도움을 주는 서비스입니다.
 
 
-### **배포링크**
-http://4can10000won.shop/
 
+## 링크
 
-### **시연영상**
-https://youtu.be/obeEv0ZyjpM
+### [배포링크(EC2)](http://4can10000won.shop/)
+
+### [Swagger-UI](http://4can10000won.shop/swagger-ui/index.html)
+
+### [시연영상](https://youtu.be/obeEv0ZyjpM)
 
 ## 프로젝트 구성
 ### BE
-Java: 17, MySQL: 8.0.30, Spring Boot: 2.7.2,
+**Java**: 17, **MySQL**: 8.0.30, **Spring Boot**: 2.7.2,
 ### FE
-React: 18.2.0, npm: 8.18.0
+**React**: 18.2.0, **npm**: 8.18.0
 
 <br/>
 
-엔티티 구현 시 FK 조회할 경우 fetch = LAZY옵션을 사용해서 N+1문제를 방지함.
+엔티티 구현 시 FK 조회할 경우 fetch = LAZY옵션을 사용해서 N+1문제를 방지함.<br/>
 Eager옵션이 필요한 경우엔 fetch join을 사용해서 해결함.
 
 [Feat: LikeBeer와Beer 조회 쿼리 성능 최적화](https://github.com/Central-Heckaton/4can10000won/pull/10)
@@ -81,17 +83,17 @@ test : 테스트 코드 수정에 대한 커밋
 2. 신고된 댓글을 관리하는 페이지는 웹기반이기에 Pagable 객체를 사용한 Pagenation을 적용해서 Controller에서 신고된 댓글 목록 조회 시간 89% 개선
 
 ### 맥주
-1. 맥주 데이터를 확보하기 위해 RateBeer사이트에서 웹크롤링을 통해 데이터 가져옴
+1. 맥주 데이터를 확보하기 위해 [RateBeer사이트](https://www.ratebeer.com/)에서 웹크롤링을 통해 데이터 가져옴([관련 내용 블로그로 작성함](https://velog.io/@kyunghwan1207/2022-%ED%95%98%EA%B3%84-%EB%AA%A8%EA%B0%81%EC%BD%94-Colab%EC%9C%BC%EB%A1%9C-%EB%A7%A5%EC%A3%BC%EC%A0%95%EB%B3%B4-%EC%9B%B9-%ED%81%AC%EB%A1%A4%EB%A7%81))
 2. 사용자가 맥주를 "좋아요" 체크할 수 있도록 해서 관심있는 맥주리스트 유지할 수 있도록 함
 3. "좋아요" 기능을 위해 사용자-맥주 다대다 관계를 LikeBeer 중간테이블을 두어서 다대일, 일다대로 풀어냄
-4. 맥주 이름검색 가능([Feat : 맥주이름 검색기능 구현](https://github.com/Central-Heckaton/4can10000won/pull/26)), 종류(라거, 에일, IPA, 스타우트) 검색 가능([Feat : Search 페이지 filter 기능 + 검색 기능 추가](https://github.com/Central-Heckaton/4can10000won/pull/40))
+4. 맥주 이름검색 가능([Feat : 맥주이름 검색기능 구현](https://github.com/Central-Heckaton/4can10000won/pull/26)), 종류(라거, 에일, IPA, 스타우트) 검색 가능([Feat : Search 페이지 filter 기능 + 검색 기능](https://github.com/Central-Heckaton/4can10000won/pull/40))
 
 ### 댓글
 1. 댓글과 대댓글을 작성할 수 있게하기 위해서
-parentId 필드로 null 인지/아닌지에 따라 부모/자식 댓글로 구분했음(parentId -> null: 댓글, 부모id: 대댓글)
+parentId 필드로 null 인지/아닌지에 따라 부모/자식 댓글로 구분했음<br/>`(parentId가 null일 경우 "댓글(부모 댓글)" / parentId가 not null일 경우(부모id값) "대댓글(부모 댓글에 달린 자식 댓글)")`
 2. 자신이 작성한 댓글은 수정, 삭제할 수 있으며
 부적절한 댓글을 발견할 경우 "깃발" 버튼을 눌러 신고할 수 있음
-3. 댓글, 대댓글 생성 시 fetch = LAZY 옵션으로 인해 발생한 LazyInitalizationException에러 해결함
+3. 댓글, 대댓글 생성 시 fetch = LAZY 옵션으로 인해 발생한 LazyInitalizationException에러 해결함<br/>
 [Chore: 댓글, 대댓글 생성 시 LazyInitializationException에러 해결](https://github.com/Central-Heckaton/4can10000won/pull/45)
 
 
@@ -105,11 +107,11 @@ parentId 필드로 null 인지/아닌지에 따라 부모/자식 댓글로 구�
 
 ### **추가 기능 (앞으로 추가될 기능입니다)**
 - '주간 핫 비어 랭크'를 만들어서 한 주동안 가장 많은 좋아요를 받은 순서대로 맥주 랭킹 1위~3위까지 선정하여 보여줄 것 입니다.
-- 프로필 이미지를 업데이트 가능하도록 할 것입니다.
+- ~~프로필 이미지를 업데이트 가능하도록 할 것입니다.~~ (완료)
 - 스마트폰에 설치할 수 있도록 PWA 형태로 바꾸어 많은 사용자들의 참여를 이끌어낼 것입니다.
-- 검색엔진 최적화로 검색했을 때 나올 수 있도록 할 것 입니다.
+- 검색엔진 최적화(SEO)로 검색했을 때 나올 수 있도록 할 것 입니다.
 - ~~Admin 페이지를 만들어 FAQ를 받고, 댓글을 관리하고, 맥주를 등록할 수 있도록 할 것입니다.~~ (완료)
-
+- 사용자 이메일 인증(BE단 API 구현 완료됨, FE단에 버튼 및 기능 추가중)
 - 사용자가 댓글 신고할 경우 관리자 이메일로 알림오는 기능
 
 <br>
